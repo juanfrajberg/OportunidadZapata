@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable-v24/consultas_roundedmessageborder_background.xml" value="0.37846153846153846" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable-v24/home_roundedaiview_background.xml" value="0.384375" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/blog_roundedcornersview_background.xml" value="0.24932432432432433" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/bottomsheet_drag_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/bottomsheet_layout_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/consultas_roundedcornersview_background.xml" value="0.37846153846153846" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/contact_roundedview_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/contactblog_roundedview_background.xml" value="0.22291666666666668" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/home_aigifbackground_background.xml" value="0.384375" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/home_poeaiimageviewborder_background.xml" value="0.24013157894736842" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/home_roundedbuttons_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/home_roundedsearchtab_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/homeproposal_roundedbuttons_background.xml" value="0.3802083333333333" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/info_roundeddialog_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/proposal_edittext_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/proposal_imagesview_background.xml" value="0.384375" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/proposal_outlineplusicon_background.xml" value="0.384375" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/proposal_spinner_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/proposal_view_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/start_roundedbutton_background.xml" value="0.3416666666666667" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/drawable/wifi_roundedcorners_background.xml" value="0.384375" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/blog_activity.xml" value="0.3640625" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/consultas_activity.xml" value="0.33" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/contact_activity.xml" value="0.3640625" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/data_activitry.xml" value="0.23885135135135135" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/data_activity.xml" value="0.3640625" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/done_activity.xml" value="0.33" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/firstinfo_dialog.xml" value="0.25" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/firstpost_activity.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/home_activity.xml" value="0.3824074074074074" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/home_bottomsheet_colaboracion.xml" value="0.32731481481481484" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/home_bottomsheet_nosotros.xml" value="0.3640625" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/home_bottomsheet_pasosaseguir.xml" value="0.32731481481481484" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/home_bottomsheet_requisitos.xml" value="0.32731481481481484" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/info_dialog.xml" value="0.33" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/post_activity.xml" value="0.3640625" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/posttwo_activity.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/proposal_activity.xml" value="0.3824074074074074" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/proposal_hintspinners_dropdown.xml" value="0.32731481481481484" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/proposal_hintspinners_item.xml" value="0.32731481481481484" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/proposal_spinners_dropdown.xml" value="0.32731481481481484" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/proposal_spinners_item.xml" value="0.32731481481481484" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/secondinfo_dialog.xml" value="0.5260416666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/secondpost_activity.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/start_activity.xml" value="0.34121621621621623" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/thirdinfo_dialog.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/thirdpost_activity.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/wifioff_activity.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/wifioff_dialog.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/layout/wifion_dialog.xml" value="0.36822916666666666" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.384375" />
+        <entry key="..\:/OportunidadZapata/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.384375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

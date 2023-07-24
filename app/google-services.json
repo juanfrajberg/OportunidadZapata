@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "209035576934",
+    "firebase_url": "https://oportunidad-zapata-default-rtdb.firebaseio.com",
+    "project_id": "oportunidad-zapata",
+    "storage_bucket": "oportunidad-zapata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209035576934:android:8b15bc3f7404c90dfbcfa7",
+        "android_client_info": {
+          "package_name": "com.juanfrajberg.oportunidadzapata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209035576934-b0cd9u6048hj43qtgskucghu0tss7djt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwMVFcvhp3vdGz1fkl-HLK5H-XwoXk5IE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209035576934-b0cd9u6048hj43qtgskucghu0tss7djt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

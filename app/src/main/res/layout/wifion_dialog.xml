@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wifi_roundedcorners_background">
+
+    <ImageView
+        android:id="@+id/wifion_crossclose_imageview"
+        android:layout_width="@dimen/_14sdp"
+        android:layout_height="@dimen/_14sdp"
+        android:src="@drawable/infowifi_crossclose_imageview"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/wifion_linearlayout_layout">
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/wifion_linearlayout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_7sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/wifion_connectionlost_imageview"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:src="@drawable/wifi_connectionback_imageview">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/wifion_title_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20ssp"
+            android:fontFamily="@font/nunito_extrabold"
+            android:textAlignment="center"
+            android:text="¡Ya estás de nuevo en línea!">
+        </TextView>
+
+        <TextView
+            android:id="@+id/wifion_subtitle_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="@font/nunito_regular"
+            android:lineSpacingMultiplier=".78"
+            android:text="Ahora que estás conectado a Internet, podrás acceder a todas las funciones de la aplicación. "
+            android:textAlignment="center"
+            android:textColor="#293241"
+            android:textSize="@dimen/_12ssp">
+        </TextView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

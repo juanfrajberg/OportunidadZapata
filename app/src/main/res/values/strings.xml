@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oportunidad Zapata</string>
+    <string name="start_title_text">Oportunidad\nZapata</string>
+    <!-- Fomentamos la colaboración entre las familias de la comunidad escolar ofreciendo oportunidades de trabajo beneficiosas. Nuestra plataforma segura y confiable conecta a las familias para colaborar juntos hacia un mejor futuro. ¡Gracias por ser parte de este proyecto! !-->
+    <string name="start_subtitle_text">La aplicación para facilitar la búsqueda de trabajo. Del Zapata, para la comunidad.</string>
+    <string name="start_iniciar_button">Iniciar</string>
+
+    <string name="home_descubrir_text">Descubrir</string>
+    <string name="home_image_text">Hacé clic para visitar<br></br>\n<b>nuestro blog</b></string>
+
+    <string name="notificacion_text">¡No te olvides de ver las nuevas propuestas que se han añadido y enviar tu currículum para
+        que otras personas puedan conocerte! 😁💼</string>
+
+    <string name="requisitos_text">¡Hola! Si estás interesado en publicar una propuesta en la bolsa de trabajo, necesitas tener en cuenta que existen algunos
+        requisitos que debes cumplir;
+        \n\n<br></br><br></br>• Primero, debes ser <b>mayor de edad y ser padre o hermano de algún alumno que asista a la Escuela</b> de Comercio Martín Zapata.
+        \n\n<br></br><br></br>• Además, es importante que tu propuesta sea <b>legítima</b> y <b>esté en línea con las regulaciones</b> y leyes locales.
+        \n\n<br></br><br></br>¡Tan solo cumpliendo con estos requisitos podés enviar tu solicitud para ser aprobada y publicada!
+        Estos requisitos son importantes para asegurarnos de que nuestra plataforma de bolsa de trabajo sea segura y confiable para los usuarios.
+        <b>Queremos fomentar una comunidad de confianza entre los padres y hermanos de alumnos de la escuela Martín Zapata</b>, y que a través de esta app puedan encontrar
+        oportunidades de trabajo beneficiosas para ellos y sus familias.
+    </string>
+
+    <string name="pasosaseguir_text">Si estás buscando publicar una solicitud de trabajo, acá te indicamos los pasos que debes seguir:
+        \n\n<br></br><br></br>1. <b>Toca el botón con el icono de una persona</b> en la pantalla principal de la app. Esto te va a llevar a una pantalla con un formulario para completar.
+        \n<br></br>2. <b>Completá el formulario con tus datos</b> personales, información de contacto, descripción del trabajo, habilidades, experiencia, y cualquier otra
+        información relevante que creas que puede ayudar a que los demás se interesen en tu propuesta.
+        \n<br></br>3. Una vez que hayas completado el formulario, <b>presioná el botón \"enviar\"</b>
+        para enviar tu solicitud a nuestro equipo.
+        \n<br></br>4. Tus datos van a ser revisados manualmente por y si cumplen con los requisitos, <b>tu solicitud va a ser aprobada y publicada</b>
+        en la plataforma para que los padres de los alumnos de la escuela puedan verla y contactarte.
+        \n\n<br></br><br></br>Si tienes alguna pregunta o problema durante el proceso,
+        no dudes en ponerte en contacto con nosotros:
+    </string>
+
+    <string name="nosotros_text">Esta plataforma fue creada por los <b>alumnos de 4°7°</b>, durante el <b>ciclo lectivo de 2023</b>. Agradecemos el esfuerzo y dedicación de los siguientes equipos que formaron parte en su desarrollo:
+        \n\n<br></br><br></br>
+        <b>• Diseño:</b> Josefina Marsala, Graciana March, Santiago Apoud, Lautaro Albornoz. Dieron forma a la estética y usabilidad de la app.
+        \n<br></br>
+        <b>• Programación:</b> Juan Frajberg, Gonzalo Molina, Fabricio Moran, Bernhard Chiara, Santistevan Santiago, Ernesto Buenanueva. Se encargaron de crear y estructurar el código que da funcionalidad a la app.
+        \n<br></br>
+        <b>• Pruebas:</b> Bruno Marcucci, Fermín Penessi. Contribuyeron en la fase de pruebas, ayudando a identificar y solucionar mejoras para una experiencia óptima.
+        \n<br></br>
+        <b>• Migración de datos:</b> Cristian Fernández, Sofía Parra, Santiago Troiano. Su trabajo fue asegurar una correcta transferencia y disponibilidad de la información.
+        \n<br></br>
+        <b>• Implementación:</b> Bautista Asenjo, Maximiliano Nuñez, Juanse Vía, Sol Bazzana, Sofía Bringa, Ornella Abrego, Dafne Gonzalez, Luciano Renda, Franco Quagliarello, Matías Vilches, Lorenzo Bazzana, Francisco Corzo. Ayudaron a fomentar activamente el uso de la app en los cursos de la escuela.
+        \n<br></br>
+        <b>• Video:</b> Borys Alfonzo, Uriel Cáceres, Fernando Berrios, Lucas Kibysz. Produjeron un video promocional que destaca las características y beneficios de nuestra aplicación.
+        \n\n<br></br><br></br>Agradecemos a los docentes y directivos de la escuela Martín Zapata por su apoyo en este proyecto. A los usuarios, gracias por confiar en nuestra plataforma y ser parte de esta comunidad.
+    </string>
+
+    <!--
+    ¡Muchas gracias por apoyar nuestro proyecto! El objetivo principal de crear esta aplicación es <b>fomentar la colaboración entre las familias de la comunidad escolar</b> y ayudarlas a
+     <b>encontrar y ofrecer oportunidades de trabajo</b> innovadoras y beneficiosas.
+     \n\n<br></br><br></br>Creemos que la colaboración y el apoyo son <b>fundamentales para un mejor futuro</b> y estamos comprometidos
+     en proporcionar una plataforma segura y confiable para conectar a las familias y a ayudarnos entre todos.
+     \n\n<br></br><br></br>Esta plataforma fue creada por los alumnos de 4º7, durante el ciclo lectivo de 2023…
+     !-->
+
+    <string name="mail_pasosaseguir_text">
+        • <i><u>oportunidadzapata@gmail.com</u></i>.
+    </string>
+
+    <string name="contact_firstexampleleer_text">Como psicóloga, mi objetivo es ayudar a mis pacientes a superar los desafíos emocionales y mentales y alcanzar una vida más feliz y satisfactoria. <font color='#3876F6'><u>Leer más.</u></font></string>
+    <string name="contact_secondexampleleer_text">Como pediatra, mi objetivo es proporcionar atención médica de calidad y apoyar el bienestar general de los infantes y sus familias. <font color='#3876F6'><u>Leer más.</u></font></string>
+    <string name="contact_thirdexampleleer_text">Como joyero, mi objetivo es crear y reparar joyas exquisitas, brindando un servicio personalizado y transformando los sueños de mis clientes en piezas únicas de belleza. <font color='#3876F6'><u>Leer más.</u></font></string>
+
+    <string name="blog_firstexampleleer_text">Destacar y hacer que tu propuesta atraiga a potenciales clientes es importante, descubrí cómo volver tu propuesta atractiva con estos tips y así conseguir más oportunidades laborales. <font color='#558CFF'><u>Leer más.</u></font></string>
+    <string name="blog_secondexampleleer_text">Enterate de las funciones que se sumaron a nuestra app en esta última versión. <font color='#558CFF'><u>Leer más.</u></font></string>
+    <string name="blog_thirdexampleleer_text">Nuestra meta es fomentar la colaboración entre las familias de la comunidad escolar y ayudarlas a encontrar y ofrecer oportunidades de trabajo innovadoras y beneficiosas. <font color='#558CFF'><u>Leer más.</u></font></string>
+
+    <string name="firstpost_description_text">Cuando se trata de publicar una propuesta de trabajo, es crucial destacar y captar la atención de los usuarios.
+        Acá vas a encontrar algunos tips para volver tu a propuesta más llamativa y atractiva.
+        <br></br><br></br>\n\n<b>Descripción completa de tu servicio:</b> al redactar tu propuesta, asegurate de describir de manera completa el servicio que ofreces y tu forma de trabajo.
+        Los clientes tienen que poder comprender claramente qué es lo que ofreces y cómo pueden beneficiarse de ello. Detallá los aspectos clave, resalta los
+        puntos fuertes y mostrá cómo puedes solucionar los problemas o necesidades de tus clientes. Una descripción completa y convincente despertará el interés de los usuarios.
+        <br></br><br></br>\n\n<b>Añadí imágenes y elementos visuales:</b> Si tienes un emprendimiento o podés agregar imágenes que ayuden a visualizar mejor tu servicio, no dudes en hacerlo.
+        Mostrar ejemplos de tu trabajo/productos, les permite a los clientes visualizar cómo sería trabajar con vos.
+        <br></br><br></br>\n\n<b>Ampliá tus canales de contacto:</b> no te limites solo a proporcionar tu número de teléfono como única forma de contacto. En el formulario, tenés la
+        opción de agregar otra forma de contacto, como enlaces a tu perfil de Instagram, Facebook, TikTok o cualquier otra plataforma relevante para tu propuesta. Aprovechá
+        las redes sociales para compartir contenido relevante, interactuar con tu audiencia y mostrar tu experiencia.
+        <br></br><br></br>\n\nAdemás de lo mencionado, otras ideas para hacer tu propuesta más llamativa son: ofrecer promociones o descuentos especiales, crear un perfil en las
+        redes o página de destino para obtener más información, realizar videos cortos o tutoriales para mostrar tus habilidades y proceso de trabajo. ¡La clave
+        está en ser creativo y encontrar formas únicas de destacarte!</string>
+
+    <string name="secondpost_description_text">
+        ¡Estamos más que contentos de poder <b>compartir las últimas novedades y actualizaciones</b> de nuestra aplicación! Hemos estado trabajado para mejorar tu experiencia y brindarte más funcionalidades.
+        <br></br><br></br>\n\nUna de las mejoras más destacadas es que <b>ahora nuestra aplicación es totalmente responsiva</b>, lo que significa que ahora se puede acceder a ella desde <b>cualquier tipo de celular y también desde tu tablet</b>.
+        No importa el dispositivo que utilices, vas a poder disfrutar de todas las funciones de nuestra plataforma de manera óptima.
+        <br></br><br></br>\n\nAdemás, queremos presentar a nuestro nuevo miembro del equipo: ¡nuestro <b>asistente virtual impulsado por inteligencia artificial</b>! Este asistente está disponible para resolver todas tus dudas y
+        preguntas, brindándote respuestas rápidas y precisas. Ya no vas a tener que esperar para obtener la información que necesites, nuestro asistente está disponible 24/7 para ayudarte.
+        <br></br><br></br>\n\nPor último, también agregamos otra funcionalidad: <b>ahora podés adjuntar imágenes a tus propuestas</b>. ¿Tenes un emprendimiento o querés mostrar ejemplos de tu trabajo? Con esta nueva característica, vas a poder complementar tu propuesta con imágenes que ayudarán a los usuarios a visualizar mejor tus servicios y productos.
+        <br></br><br></br>\n\nEperamos que puedas aprovechar al máximo las nuevas funciones que se encuentran disponibles en esta actualización.</string>
+
+    <string name="thirdpost_description_text">¡Estamos muy emocionados de presentar nuestra nueva aplicación diseñada especialmente para vos! <b>Si sos padre o hermano de un alumno de
+        la escuela Martín Zapata, el objetivo esta plataforma es conseguir nuevas oportunidades laborales para vos</b>. Conectate con otras familias de la comunidad escolar y
+        descubrí cómo encontrar trabajos que se adapten a tus habilidades y preferencias.<br></br><br></br>\n\nDiseñamos una interfaz sencilla para que puedas utilizar la app <b>de
+        manera fácil y rápida</b>.
+        Completá un formulario con tus datos en pocos minutos, especificando tus habilidades y servicio que ofrecés o <b>explorá las propuestas de trabajo disponibles</b> para contratar
+        trabajos/servicios que se adapten a tus necesidades.
+        <br></br><br></br>\n\nVas a tener acceso a oportunidades laborales sin tener que buscar en otros lugares, ya que <b>la plataforma se enfoca en conectar
+        a las familias de la escuela, lo que crea un ambiente de confianza y colaboración</b>, y abre puertas a futuras oportunidades. Además, nuestra aplicación te brinda la comodidad de
+        encontrar trabajos desde tu celular, que te permite ahorrar tiempo y esfuerzo.</string>
+
+
+    <string name="consultas_title_text"><font color='#000000'>Tu guía virtual\n<br></br>inteligente\n<br></br>para resolver</font>\n<br></br><font color='#558CFF'>todas tus dudas.</font></string>
+
+    <string name="home_contactus_subjectmail">Duda / sugerencia sobre Oportunidad Zapata</string>
+    <string name="home_contactusbodymail">Hola, me contacto con ustedes para preguntarles sobre...\n¡Muchas gracias!</string>
+
+    <string name="home_shareappmessage_text">Te recomiendo que descargues Oportunidad Zapata, una excelente aplicación que actúa como bolsa de trabajo. 😁👔\nPuedes instalarla desde este enlace: https://mega.nz/file/8xV0EDiD#izbW9t8pQ2swmk_orPfeJ7FWMW4RjL8GKfpaKsJayYk\n¡Espero que te guste! 🙌
+    </string>
+
+    <string-array name="cursos_array">
+        <item>Curso</item>
+        <item>1ro</item>
+        <item>2do</item>
+        <item>3ro</item>
+        <item>4to</item>
+        <item>5to</item>
+    </string-array>
+
+    <string-array name="divisiones_array">
+        <item>División</item>
+        <item>1ra</item>
+        <item>2da</item>
+        <item>3ra</item>
+        <item>4ta</item>
+        <item>5ta</item>
+        <item>6ta</item>
+        <item>7ma</item>
+        <item>8va</item>
+    </string-array>
+
+    <string-array name="redes_array">
+        <item>Red social<social></social></item>
+        <item>LinkedIn</item>
+        <item>Gmail</item>
+        <item>Facebook</item>
+        <item>Instagram</item>
+        <item>Twitter</item>
+    </string-array>
+</resources>

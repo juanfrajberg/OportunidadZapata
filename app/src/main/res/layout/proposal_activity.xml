@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/proposal_layout_constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/white"
+    tools:context=".ProposalActivity">
+
+    <ImageView
+        android:id="@+id/proposal_proposal_imageview"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icon_proposal_selected" />
+
+    <ImageView
+        android:id="@+id/proposal_home_imageview"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:scaleX="1.06"
+        android:scaleY="1.06"
+        app:layout_constraintBottom_toBottomOf="@+id/proposal_proposal_imageview"
+        app:layout_constraintEnd_toStartOf="@+id/proposal_proposal_imageview"
+        app:layout_constraintTop_toTopOf="@+id/proposal_proposal_imageview"
+        app:layout_constraintVertical_bias="0.48000002"
+        app:srcCompat="@drawable/icon_home_unselected" />
+
+    <ImageView
+        android:id="@+id/proposal_contact_imageview"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/proposal_proposal_imageview"
+        app:layout_constraintStart_toEndOf="@+id/proposal_proposal_imageview"
+        app:layout_constraintTop_toTopOf="@+id/proposal_proposal_imageview"
+        app:srcCompat="@drawable/icon_contact_unselected" />
+
+    <TextView
+        android:id="@+id/proposal_subtitlecontact_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/proposal_home_imageview"
+        app:layout_constraintEnd_toEndOf="@id/proposal_home_imageview"
+        app:layout_constraintTop_toBottomOf="@id/proposal_home_imageview"
+        android:textColor="#B4B4B4"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="Explorar inicio"
+        android:fontFamily="@font/nunito_bold" />
+
+    <TextView
+        android:id="@+id/proposal_subtitleproposal_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/proposal_contact_imageview"
+        app:layout_constraintEnd_toEndOf="@id/proposal_contact_imageview"
+        app:layout_constraintTop_toBottomOf="@id/proposal_contact_imageview"
+        android:textColor="#B4B4B4"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="Ver propuestas"
+        android:fontFamily="@font/nunito_bold" />
+
+    <TextView
+        android:id="@+id/proposal_title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="Enviar propuesta"
+        android:textColor="#000000"
+        android:textSize="@dimen/_21ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/proposal_scrolllayout_scrollview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_18sdp"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/proposal_proposal_imageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/proposal_title_textview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/proposal_insidescroll_constraintlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/proposal_nombrecompleto_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Nombre completo"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/proposal_nombrecompleto_view"
+                android:layout_width="@dimen/_220sdp"
+                android:layout_height="@dimen/_33sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/proposal_view_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_nombrecompleto_textview" />
+
+            <EditText
+                android:id="@+id/proposal_nombrecompleto_edittext"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginEnd="@dimen/_11sdp"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/nunito_bold"
+                android:hint="Escriba aquí"
+                android:inputType="textCapWords"
+                android:lines="1"
+                android:textColor="#3C3C3C"
+                android:textColorHint="#B4B4B4"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/proposal_nombrecompleto_view"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_nombrecompleto_view"
+                app:layout_constraintStart_toStartOf="@+id/proposal_nombrecompleto_view"
+                app:layout_constraintTop_toTopOf="@+id/proposal_nombrecompleto_view" />
+
+            <TextView
+                android:id="@+id/proposal_mailtitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Dirección de e-mail"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_nombrecompleto_view" />
+
+            <TextView
+                android:id="@+id/proposal_mailsubtitle_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".7"
+                android:text="Serás notificado con un e-mail cuando tu propuesta haya sido aprobada y publicada."
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/proposal_mailtitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_mailtitle_textview" />
+
+            <View
+                android:id="@+id/proposal_mail_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_33sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_32sdp"
+                android:background="@drawable/proposal_view_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_mailsubtitle_textview" />
+
+            <EditText
+                android:id="@+id/proposal_mail_edittext"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginEnd="@dimen/_11sdp"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/nunito_bold"
+                android:hint="ejemplo@mail.com"
+                android:inputType="textEmailAddress"
+                android:lines="1"
+                android:textColor="#3C3C3C"
+                android:textColorHint="#B4B4B4"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/proposal_mail_view"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_mail_view"
+                app:layout_constraintStart_toStartOf="@+id/proposal_mail_view"
+                app:layout_constraintTop_toTopOf="@+id/proposal_mail_view" />
+
+            <TextView
+                android:id="@+id/proposal_numerotitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Número de teléfono"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_mail_view" />
+
+            <TextView
+                android:id="@+id/proposal_numerosubtitle_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".7"
+                android:text="Ingresá el número de teléfono que utilizas para tu trabajo, este va a ser mostrado en la publicación para que tus potenciales clientes se comuniquen con vos."
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/proposal_numerotitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_numerotitle_textview" />
+
+            <View
+                android:id="@+id/proposal_numero_view"
+                android:layout_width="@dimen/_165sdp"
+                android:layout_height="@dimen/_33sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/proposal_view_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_numerosubtitle_textview" />
+
+            <EditText
+                android:id="@+id/proposal_numero_edittext"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginEnd="@dimen/_11sdp"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/nunito_bold"
+                android:hint="ej.: 2617654321"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:lines="1"
+                android:maxLength="10"
+                android:textColor="#3C3C3C"
+                android:textColorHint="#B4B4B4"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/proposal_numero_view"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_numero_view"
+                app:layout_constraintStart_toStartOf="@+id/proposal_numero_view"
+                app:layout_constraintTop_toTopOf="@+id/proposal_numero_view" />
+
+            <TextView
+                android:id="@+id/proposal_rubrolaboral_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Rubro laboral"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_numero_view" />
+
+            <com.juanfrajberg.oportunidadzapata.CustomSpinner
+                android:id="@+id/proposal_seleccionrubro_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:background="@android:color/transparent"
+                android:scrollbars="none"
+                android:spinnerMode="dropdown"
+                app:layout_constraintStart_toEndOf="@+id/proposal_arrow_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_rubrolaboral_textview" />
+
+
+            <ImageView
+                android:id="@+id/proposal_arrow_imageview"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="@+id/proposal_seleccionrubro_spinner"
+                app:layout_constraintStart_toStartOf="@+id/proposal_numero_edittext"
+                app:layout_constraintTop_toTopOf="@+id/proposal_seleccionrubro_spinner"
+                app:srcCompat="@drawable/proposal_arrowup_image" />
+
+            <TextView
+                android:id="@+id/proposal_profesion_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Profesión / servicio que ofrece"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_seleccionrubro_spinner" />
+
+            <View
+                android:id="@+id/proposal_profesion_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_33sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@drawable/proposal_view_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_profesion_textview" />
+
+            <EditText
+                android:id="@+id/proposal_profesion_edittext"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginEnd="@dimen/_11sdp"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/nunito_bold"
+                android:hint="Escriba aquí"
+                android:inputType="textCapSentences"
+                android:lines="1"
+                android:textColor="#3C3C3C"
+                android:textColorHint="#B4B4B4"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/proposal_profesion_view"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_profesion_view"
+                app:layout_constraintStart_toStartOf="@+id/proposal_profesion_view"
+                app:layout_constraintTop_toTopOf="@+id/proposal_profesion_view" />
+
+            <TextView
+                android:id="@+id/proposal_alumnotitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Nombre del alumno"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_profesion_view" />
+
+            <TextView
+                android:id="@+id/proposal_alumnosubtitle_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".7"
+                android:text="Ingresa el nombre del alumno pariente suyo (esta información no se mostrará al publicar la solicitud, es únicamente para asegurar la veracidad de la propuesta."
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/proposal_numerotitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_alumnotitle_textview" />
+
+            <CheckBox
+                android:id="@+id/proposal_checkboxalumno_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:buttonTint="#D1CECE"
+                android:checked="true"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Enseñar el nombre del alumno en la solicitud"
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proposal_alumnolayout_horizontalscrollview" />
+
+            <HorizontalScrollView
+                android:id="@+id/proposal_alumnolayout_horizontalscrollview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proposal_alumnosubtitle_textview">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/proposal_alumno_view"
+                        android:layout_width="@dimen/_162sdp"
+                        android:layout_height="@dimen/_33sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/proposal_view_background"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <EditText
+                        android:id="@+id/proposal_alumno_editext"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/_11sdp"
+                        android:layout_marginEnd="@dimen/_11sdp"
+                        android:background="#00FFFFFF"
+                        android:ems="10"
+                        android:fontFamily="@font/nunito_bold"
+                        android:hint="Escriba aquí"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:lines="1"
+                        android:textColor="#3C3C3C"
+                        android:textColorHint="#B4B4B4"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        android:singleLine="true"
+                        app:layout_constraintBottom_toBottomOf="@+id/proposal_alumno_view"
+                        app:layout_constraintEnd_toEndOf="@+id/proposal_alumno_view"
+                        app:layout_constraintStart_toStartOf="@+id/proposal_alumno_view"
+                        app:layout_constraintTop_toTopOf="@+id/proposal_alumno_view" />
+
+                    <Spinner
+                        android:id="@+id/proposal_cursos_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:background="@drawable/proposal_spinner_background"
+                        android:includeFontPadding="false"
+                        android:spinnerMode="dropdown"
+                        app:layout_constraintBottom_toBottomOf="@+id/proposal_alumno_view"
+                        app:layout_constraintStart_toEndOf="@+id/proposal_alumno_view"
+                        app:layout_constraintTop_toTopOf="@+id/proposal_alumno_view" />
+
+                    <Spinner
+                        android:id="@+id/proposal_division_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:background="@drawable/proposal_spinner_background"
+                        android:includeFontPadding="false"
+                        android:spinnerMode="dropdown"
+                        app:layout_constraintBottom_toBottomOf="@+id/proposal_alumno_view"
+                        app:layout_constraintStart_toEndOf="@+id/proposal_cursos_spinner"
+                        app:layout_constraintTop_toTopOf="@+id/proposal_alumno_view" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/proposal_descripciontitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Breve descripción"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_checkboxalumno_checkbox" />
+
+            <TextView
+                android:id="@+id/proposal_descripcionsubtitle_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".7"
+                android:text="Describa, en un texto de no más de 450 caracteres, cuáles son sus habilidades/servicios o cualquier tipo información que considere útil para que los usuarios conozcan su propuesta."
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/proposal_numerotitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_descripciontitle_textview" />
+
+            <View
+                android:id="@+id/proposal_descripcion_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_220sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/proposal_view_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_descripcionsubtitle_textview" />
+
+            <EditText
+                android:id="@+id/proposal_descripcion_edittext"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/nunito_bold"
+                android:gravity="start"
+                android:hint="Escriba aquí"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxHeight="@dimen/_210sdp"
+                android:overScrollMode="always"
+                android:maxLength="450"
+                android:scrollbars="vertical"
+                android:textColor="#3C3C3C"
+                android:textColorHint="#B4B4B4"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/proposal_counterdescription_textview"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_descripcion_view"
+                app:layout_constraintStart_toStartOf="@+id/proposal_descripcion_view"
+                app:layout_constraintTop_toTopOf="@id/proposal_descripcion_view" />
+
+            <TextView
+                android:id="@+id/proposal_counterdescription_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="0/450"
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/proposal_descripcion_view"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_descripcion_view" />
+
+            <TextView
+                android:id="@+id/proposal_contactotitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Contacto"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_descripcion_view" />
+
+            <TextView
+                android:id="@+id/proposal_contactosubtitle_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".7"
+                android:text="(Opcional) Añadí a tu propuesta, además de un télefono, alguna dirección de mail, cuenta de Instagram, Facebook, etc."
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/proposal_numerotitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_contactotitle_textview" />
+
+            <HorizontalScrollView
+                android:id="@+id/proposal_contacto_scrollview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_contactosubtitle_textview" >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/proposal_contacto_view"
+                        android:layout_width="@dimen/_160sdp"
+                        android:layout_height="@dimen/_33sdp"
+                        android:layout_marginLeft="@dimen/_11sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/proposal_view_background"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/proposal_contacto_spinner"/>
+
+                    <EditText
+                        android:id="@+id/proposal_contacto_edittext"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/_11sdp"
+                        android:layout_marginEnd="@dimen/_11sdp"
+                        android:background="#00FFFFFF"
+                        android:ems="10"
+                        android:fontFamily="@font/nunito_bold"
+                        android:hint="Nombre de usuario"
+                        android:imeOptions="actionDone"
+                        android:inputType="text|textFilter"
+                        android:lines="1"
+                        android:textColor="#3C3C3C"
+                        android:textColorHint="#B4B4B4"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/proposal_contacto_view"
+                        app:layout_constraintEnd_toEndOf="@+id/proposal_contacto_view"
+                        app:layout_constraintStart_toStartOf="@+id/proposal_contacto_view"
+                        app:layout_constraintTop_toTopOf="@id/proposal_contacto_view" />
+
+                    <Spinner
+                        android:id="@+id/proposal_contacto_spinner"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_33sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/proposal_spinner_background"
+                        android:includeFontPadding="false"
+                        android:spinnerMode="dropdown"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/proposal_archivostitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Adjuntar archivos"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_contacto_scrollview" />
+
+            <TextView
+                android:id="@+id/proposal_archivossubtitle_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".7"
+                android:text="(Opcional) Te recomendamos agregar a tu propuesta imágenes que sean relevantes / ayuden a promocionar tu servicio."
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/proposal_archivostitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_archivostitle_textview" />
+
+            <RelativeLayout
+                android:id="@+id/proposal_archivosview_view"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:background="@drawable/proposal_imagesview_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_archivossubtitle_textview">
+
+                <ImageView
+                    android:id="@+id/proposal_archivosplusicon_imageview"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_centerInParent="true"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/proposal_plusicon_imageview"
+                    app:tint="#B4B4B4" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/proposal_archivosdivider_view"
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:background="#E9EDF1"
+                app:layout_constraintBottom_toBottomOf="@id/proposal_archivosview_view"
+                app:layout_constraintStart_toEndOf="@id/proposal_archivosview_view"
+                app:layout_constraintTop_toTopOf="@id/proposal_archivosview_view" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/proposal_archivosdivider_view"
+                app:layout_constraintStart_toEndOf="@id/proposal_archivosdivider_view"
+                app:layout_constraintTop_toTopOf="@id/proposal_archivosdivider_view">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="imagen123.jpg"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="img123.jpg"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="foto123456.jpg"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/proposal_subtitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".8"
+                android:text='Si tienes alguna pregunta o problema durante el proceso, no dudes en ponerte en contacto con nosotros desde la pestaña "Pasos a seguir".'
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_archivosview_view" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/proposal_done_button"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="@dimen/_135sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/homeproposal_roundedbuttons_background"
+                android:backgroundTint="#3876F6"
+                android:fontFamily="@font/nunito_extrabold"
+                android:includeFontPadding="false"
+                android:text="Enviar"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/proposal_insidescroll_constraintlayout"
+                app:layout_constraintEnd_toEndOf="@id/proposal_insidescroll_constraintlayout"
+                app:layout_constraintStart_toStartOf="@id/proposal_insidescroll_constraintlayout"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_subtitle_textview" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

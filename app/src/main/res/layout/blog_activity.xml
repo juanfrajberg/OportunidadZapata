@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".BlogActivity">
+
+    <ImageView
+        android:id="@+id/blog_background_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_475sdp"
+        android:src="@drawable/contactblog_background_image"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/blog_titleblog_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="Blog"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_25ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/blog_arrow_imageview"
+        app:layout_constraintTop_toTopOf="@id/blog_arrow_imageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/blog_arrow_imageview"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_19sdp"
+        android:src="@drawable/blogconsultas_leftarrow_imageview"
+        app:layout_constraintBottom_toTopOf="@+id/blog_scrollview_scrollview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/blog_scrollview_scrollview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blog_titleblog_textview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/blog_alert_imageview"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:src="@drawable/blog_alert_imageview"
+                android:layout_marginTop="@dimen/_3sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/blog_description_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_3sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/blog_alert_imageview"
+                app:layout_constraintTop_toTopOf="@+id/blog_alert_imageview"
+                android:background="@drawable/blog_roundedcornersview_background"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:id="@+id/blog_subtitle_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="¡Bienvenido al foro de nuestra app! Acá vas a encontrar las últimas novedades sobre nuestra plataforma. Queremos compartirte información útil para que aproveches al máximo nuestra aplicación. Mantenete al tanto de noticias, mejoras y funcionalidades que hemos implementado."
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/blog_firstexampleposttime_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="24 de Octubre de 2023"
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintTop_toBottomOf="@id/blog_description_relativelayout"
+                app:layout_constraintBottom_toTopOf="@+id/blog_firstexamplepostview_relativelayout"
+                app:layout_constraintStart_toStartOf="@+id/blog_firstexamplepostview_relativelayout" />
+
+            <RelativeLayout
+                android:id="@+id/blog_firstexamplepostview_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/contactblog_roundedview_background"
+                app:layout_constraintTop_toBottomOf="@id/blog_firstexampleposttime_textview"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/blog_firstexampleposttitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:lineSpacingMultiplier=".8"
+                    android:text="¿Cómo hago más llamativa mi propuesta?"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/blog_firstexamplepostsubtitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blog_firstexampleposttitlerl_textview"
+                    android:layout_alignStart="@+id/blog_firstexampleposttitlerl_textview"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="Escrito por Josefina Marsala y Juan Frajberg"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/blog_firstexamplepostdescriptionrl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blog_firstexamplepostsubtitlerl_textview"
+                    android:layout_alignStart="@+id/blog_firstexamplepostsubtitlerl_textview"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_12ssp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:text="@string/blog_firstexampleleer_text"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/blog_secondexampleposttime_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="3 de Abril de 2023"
+                android:textColor="#B4B4B4"
+                app:layout_constraintStart_toStartOf="@+id/blog_firstexamplepostview_relativelayout"
+                app:layout_constraintTop_toBottomOf="@id/blog_firstexamplepostview_relativelayout">
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/blog_secondexamplepostview_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/contactblog_roundedview_background"
+                app:layout_constraintTop_toBottomOf="@id/blog_secondexampleposttime_textview"
+                android:layout_marginTop="6dp"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/blog_secondexampleposttitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:lineSpacingMultiplier=".8"
+                    android:text="Novedades y actualizaciones"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/blog_secondexamplepostsubtitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blog_secondexampleposttitlerl_textview"
+                    android:layout_alignStart="@+id/blog_secondexampleposttitlerl_textview"
+                    android:layout_marginEnd="@dimen/_12ssp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="Escrito por Gabi Ríos"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/blog_secondexamplepostdescriptionrl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blog_secondexamplepostsubtitlerl_textview"
+                    android:layout_alignStart="@id/blog_secondexamplepostsubtitlerl_textview"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_12ssp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:text="@string/blog_secondexampleleer_text"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/blog_thirdexampleposttime_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="27 de Febrero de 2023"
+                android:textColor="#B4B4B4"
+                app:layout_constraintStart_toStartOf="@+id/blog_secondexamplepostview_relativelayout"
+                app:layout_constraintTop_toBottomOf="@id/blog_secondexamplepostview_relativelayout">
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/blog_thirdexamplepostview_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/contactblog_roundedview_background"
+                app:layout_constraintTop_toBottomOf="@id/blog_thirdexampleposttime_textview"
+                android:layout_marginTop="6dp"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/blog_thirdexampleposttitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:lineSpacingMultiplier=".8"
+                    android:text="¡Lanzamos nuestra aplicación!"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_16ssp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/blog_thirdexamplepostsubtitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blog_thirdexampleposttitlerl_textview"
+                    android:layout_alignStart="@+id/blog_thirdexampleposttitlerl_textview"
+                    android:layout_marginEnd="@dimen/_12ssp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="Escrito por Gabi Ríos"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/blog_thirdexamplepostdescriptionrl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blog_thirdexamplepostsubtitlerl_textview"
+                    android:layout_alignStart="@id/blog_thirdexamplepostsubtitlerl_textview"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_12ssp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:text="@string/blog_thirdexampleleer_text"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@id/blog_thirdexamplepostview_relativelayout"
+                app:layout_constraintStart_toStartOf="@id/blog_thirdexamplepostview_relativelayout"
+                app:layout_constraintEnd_toEndOf="@id/blog_thirdexamplepostview_relativelayout">
+            </View>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

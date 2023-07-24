@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/_46sdp" />
+    <solid android:color="#E9EDF1" />
+</shape>
+    <!-- Drawable del fondo de los Spinners de todos los Edit Text de la Actividad Proposal -->

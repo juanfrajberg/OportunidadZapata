@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    android:padding="@dimen/_7sdp">
+
+    <solid android:color="#E9EDF1" />
+    <corners
+        android:bottomRightRadius="@dimen/_17sdp"
+        android:bottomLeftRadius="@dimen/_17sdp"
+        android:topLeftRadius="@dimen/_17sdp"
+        android:topRightRadius="@dimen/_17sdp" />
+</shape>
+    <!-- Drawable del fondo de los Views de todos los Edit Text de la Actividad Proposal -->

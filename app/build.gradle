@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdk 33 //En 32, al igual que el target para poder editar el XML y tener las sugerencias al tipear
+
+    defaultConfig {
+        applicationId "com.juanfrajberg.oportunidadzapata"
+        minSdk 21
+        targetSdk 33 //En 32, al igual que el compile para poder editar el XML y tener las sugerencias al tipear
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.firebase:firebase-database-ktx:20.2.1'
+    implementation 'com.google.firebase:firebase-database:20.2.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25' //Implementación para usar GIFs
+    implementation 'com.intuit.sdp:sdp-android:1.1.0' //Implementación para hacer que la medida dp sea responsive
+    implementation 'com.intuit.ssp:ssp-android:1.1.0' //Implementación para hacer que la medida sp sea responsive
+    implementation 'com.daimajia.androidanimations:library:2.4@aar' //Implementación para poder usar animaciones en los elementos del layout
+
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="notification_hour">12</integer>
+    <integer name="notification_minute">30</integer>
+    <integer name="notification_second">0</integer>
+</resources>

@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ContactActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_475sdp"
+        android:src="@drawable/contactblog_background_image"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/contact_contact_imageview"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icon_contact_selected" />
+
+    <ImageView
+        android:id="@+id/contact_proposal_imageview"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/contact_contact_imageview"
+        app:layout_constraintEnd_toStartOf="@+id/contact_contact_imageview"
+        app:layout_constraintTop_toTopOf="@+id/contact_contact_imageview"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        app:layout_constraintVertical_bias="0.48000002"
+        app:srcCompat="@drawable/icon_proposal_unselected" />
+
+    <ImageView
+        android:id="@+id/contact_home_imageview"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:scaleX="1.06"
+        android:scaleY="1.06"
+        app:layout_constraintBottom_toBottomOf="@+id/contact_contact_imageview"
+        app:layout_constraintStart_toEndOf="@+id/contact_contact_imageview"
+        app:layout_constraintTop_toTopOf="@+id/contact_contact_imageview"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/icon_home_unselected" />
+
+    <TextView
+        android:id="@+id/contact_subtitlecontact_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/contact_home_imageview"
+        app:layout_constraintEnd_toEndOf="@id/contact_home_imageview"
+        app:layout_constraintTop_toBottomOf="@id/contact_home_imageview"
+        android:textColor="#B4B4B4"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="Explorar inicio"
+        android:fontFamily="@font/nunito_bold" />
+
+    <TextView
+        android:id="@+id/contact_subtitleproposal_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/contact_proposal_imageview"
+        app:layout_constraintEnd_toEndOf="@id/contact_proposal_imageview"
+        app:layout_constraintTop_toBottomOf="@id/contact_proposal_imageview"
+        android:textColor="#B4B4B4"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="Enviar solicitud"
+        android:fontFamily="@font/nunito_bold" />
+
+    <TextView
+        android:id="@+id/contact_title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="Filtrar propuestas"
+        android:textColor="#000000"
+        android:textSize="@dimen/_21ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <HorizontalScrollView
+        android:id="@+id/contact_jobscroll_horizontalscrollview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_title_textview">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/contact_salud_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="Salud"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_tecnologia_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Tecnología"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_finanzas_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Finanzas"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_educacion_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Educación"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_ventas_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Ventas"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_ingenieria_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Ingeniería"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_recursoshumanos_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Recursos humanos"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_servicios_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Servicios"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_asesorialegal_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Asesoría legal"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_artesyentretenimiento_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Artes y entretenimiento"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact_otros_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:text="Otros"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:id="@+id/contact_layoutscroll_scrollview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/contact_contact_imageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/contact_jobscroll_horizontalscrollview"
+        app:layout_constraintTop_toBottomOf="@+id/contact_jobscroll_horizontalscrollview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/contact_firstexampleview_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/contactblog_roundedview_background"
+                app:layout_constraintTop_toBottomOf="@id/contact_firstexampletime_textview"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/contact_firstexampletitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Licenciada en psicología"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/contact_firstexamplesubtitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contact_firstexampletitlerl_textview"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="Roxana Pérez"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/contact_firstexampledescriptionrl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contact_firstexamplesubtitlerl_textview"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_11sdp"
+                    android:text="@string/contact_firstexampleleer_text"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/contact_firstexamplephone_imageview"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                app:layout_constraintStart_toStartOf="@+id/contact_firstexampleview_relativelayout"
+                app:layout_constraintTop_toBottomOf="@+id/contact_firstexampleview_relativelayout"
+                app:srcCompat="@drawable/contact_phone_image"
+                android:onClick="openPhone"/>
+
+            <ImageView
+                android:id="@+id/contact_firstexamplewhatsapp_imageview"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                app:layout_constraintStart_toEndOf="@+id/contact_firstexamplephone_imageview"
+                app:layout_constraintTop_toTopOf="@+id/contact_firstexamplephone_imageview"
+                app:srcCompat="@drawable/contact_whatsapp_image"
+                android:onClick="openWhatsApp"/>
+
+            <TextView
+                android:id="@+id/contact_firstexampletime_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="14 de Mayo de 2023"
+                android:textColor="#B4B4B4"
+                app:layout_constraintBottom_toTopOf="@+id/contact_firstexampleview_relativelayout"
+                app:layout_constraintStart_toStartOf="@+id/contact_firstexampleview_relativelayout" />
+
+            <RelativeLayout
+                android:id="@+id/contact_secondexampleview_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/contactblog_roundedview_background"
+                app:layout_constraintTop_toBottomOf="@+id/contact_secondexampletime_textview"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/contact_secondexampletitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Licenciado en pediatría"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/contact_secondexamplesubtitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contact_secondexampletitlerl_textview"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="Diego Vía"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/contact_secondexampledescriptionrl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contact_secondexamplesubtitlerl_textview"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_11sdp"
+                    android:text="@string/contact_secondexampleleer_text"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/contact_secondexampletime_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="14 de Mayo de 2023"
+                android:textColor="#B4B4B4"
+                app:layout_constraintStart_toStartOf="@+id/contact_firstexampletime_textview"
+                app:layout_constraintTop_toBottomOf="@+id/contact_firstexamplewhatsapp_imageview" />
+
+            <ImageView
+                android:id="@+id/contact_secondexamplephone_imageview"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                app:layout_constraintStart_toStartOf="@+id/contact_secondexampleview_relativelayout"
+                app:layout_constraintTop_toBottomOf="@+id/contact_secondexampleview_relativelayout"
+                app:srcCompat="@drawable/contact_phone_image"
+                android:onClick="openPhone"/>
+
+            <TextView
+                android:id="@+id/contact_thirdexampletime_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textSize="@dimen/_11ssp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="1 de Abril del 2023"
+                android:textColor="#B4B4B4"
+                app:layout_constraintStart_toStartOf="@+id/contact_firstexampletime_textview"
+                app:layout_constraintTop_toBottomOf="@+id/contact_secondexamplephone_imageview" />
+
+            <RelativeLayout
+                android:id="@+id/contact_thirdexampleview_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/contactblog_roundedview_background"
+                app:layout_constraintTop_toBottomOf="@+id/contact_thirdexampletime_textview"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/contact_thirdexampletitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/nunito_extrabold"
+                    android:text="Emprendedor"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/contact_thirdexamplesubtitlerl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contact_thirdexampletitlerl_textview"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="Lucas Vázquez"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/contact_thirdexampledescriptionrl_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contact_thirdexamplesubtitlerl_textview"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_11sdp"
+                    android:text="@string/contact_thirdexampleleer_text"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/contact_thirdexamplephone_imageview"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                app:layout_constraintStart_toStartOf="@+id/contact_thirdexampleview_relativelayout"
+                app:layout_constraintTop_toBottomOf="@+id/contact_thirdexampleview_relativelayout"
+                app:srcCompat="@drawable/contact_phone_image"
+                android:onClick="openPhone"/>
+
+            <ImageView
+                android:id="@+id/contact_thirdexamplewhatsapp_imageview"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                app:layout_constraintStart_toEndOf="@+id/contact_thirdexamplephone_imageview"
+                app:layout_constraintTop_toTopOf="@+id/contact_thirdexamplephone_imageview"
+                app:srcCompat="@drawable/contact_whatsapp_image"
+                android:onClick="openWhatsApp"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

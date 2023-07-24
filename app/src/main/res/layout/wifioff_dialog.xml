@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wifi_roundedcorners_background"
+    android:backgroundTint="#E9EDF1"
+    tools:context=".WiFiActivity">
+
+    <ImageView
+        android:id="@+id/wifioff_crossclose_imageview"
+        android:layout_width="@dimen/_14sdp"
+        android:layout_height="@dimen/_14sdp"
+        android:src="@drawable/infowifi_crossclose_imageview"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/wifioff_linearlayout_layout">
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/wifioff_linearlayout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/wifioff_connectionlost_imageview"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:src="@drawable/wifi_internetlost_imageview">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/wifioff_title_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_17ssp"
+            android:fontFamily="@font/nunito_extrabold"
+            android:textAlignment="center"
+            android:text="¡Ups! Parece que no tienes conexión a Internet">
+        </TextView>
+
+        <TextView
+            android:id="@+id/wifioff_subtitle_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/nunito_regular"
+            android:lineSpacingMultiplier=".78"
+            android:text="No te preocupes, si subiste una propuesta, se enviará automáticamente cuando te conectes a la red. Tené en cuenta que algunas funciones de la app no estarán disponibles, como ver las propuestas con información actualizada en tiempo real o utilizar la inteligencia artificial. Por favor, asegurate de estar conectado para disfrutar de todas las funcionalidades."
+            android:textAlignment="center"
+            android:textColor="#8B8B8B"
+            android:textSize="@dimen/_11ssp">
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/wifioff_donotshowagain_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:buttonTint="#000000"
+            android:text="No volver a mostrar"
+            android:textColor="#000000"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

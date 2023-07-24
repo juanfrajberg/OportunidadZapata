@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/info_roundeddialog_background">
+
+    <ImageView
+        android:id="@+id/info_close_imageview"
+        android:layout_width="@dimen/_14sdp"
+        android:layout_height="@dimen/_14sdp"
+        android:adjustViewBounds="true"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:src="@drawable/infowifi_crossclose_imageview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/info_title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_black"
+        android:text="Datos de la propuesta"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/info_close_imageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/info_close_imageview" />
+
+    <TextView
+        android:id="@+id/info_alumnoquelorecomienda_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/info_title_textview"
+        android:fontFamily="@font/nunito_bold"
+        android:textColor="#B4B4B4"
+        android:text="Prefiere ocultar el nombre del alumno que la/lo recomienda"
+        android:textAlignment="center"
+        android:textSize="@dimen/_11ssp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </TextView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/info_scrollviewlayout_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info_alumnoquelorecomienda_textview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/info_personicon_imageview"
+                android:layout_width="@dimen/_33sdp"
+                android:layout_height="@dimen/_33sdp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/info_defaulticon_imageview"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/info_personicon_imageview"
+                app:layout_constraintStart_toEndOf="@+id/info_personicon_imageview"
+                app:layout_constraintTop_toTopOf="@+id/info_personicon_imageview">
+
+                <TextView
+                    android:id="@+id/info_personname_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="Roxana Perez "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15ssp" />
+
+                <TextView
+                    android:id="@+id/info_personmail_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="roxanaperez@gmail.com"
+                    android:textColor="#B4B4B4"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/info_job_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Licenciado en psicología"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintStart_toStartOf="@+id/info_personicon_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            <TextView
+                android:id="@+id/info_time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Publicado el 10/11/23"
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="@+id/info_personicon_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/info_job_textview" />
+
+            <TextView
+                android:id="@+id/info_description_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Como psicóloga, mi objetivo es apoyar a mis pacientes en la superación de desafíos emocionales y mentales, para que vivan una vida más plena y satisfactoria. Utilizando enfoques terapéuticos basados en evidencia y brindando un espacio de confianza y apoyo, estoy comprometida en ayudar a mis pacientes a mejorar su bienestar emocional y alcanzar un mayor equilibrio en su vida."
+                android:textColor="#000000"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/info_personicon_imageview"
+                app:layout_constraintTop_toBottomOf="@+id/info_time_textview" />
+
+            <ImageView
+                android:id="@+id/info_whatsappicon_imageview"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:src="@drawable/info_whatsapp_imageview"
+                app:layout_constraintStart_toStartOf="@+id/info_description_textview"
+                app:layout_constraintTop_toBottomOf="@+id/info_description_textview" />
+
+            <TextView
+                android:id="@+id/info_whatsappnumber_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="+54 9 261 123-4567"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/info_whatsappicon_imageview"
+                app:layout_constraintStart_toEndOf="@+id/info_whatsappicon_imageview"
+                app:layout_constraintTop_toTopOf="@+id/info_whatsappicon_imageview" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_11sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info_whatsappicon_imageview" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

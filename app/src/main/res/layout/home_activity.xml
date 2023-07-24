@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".HomeActivity">
+
+    <TextView
+        android:id="@+id/home_descubrir_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:text="@string/home_descubrir_text"
+        android:textColor="#000000"
+        android:textSize="@dimen/_21ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/home_extraoptions_linearlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/home_searchtab_view"
+        app:layout_constraintTop_toTopOf="@id/home_descubrir_text"
+        app:layout_constraintBottom_toBottomOf="@id/home_descubrir_text">
+
+        <LinearLayout
+            android:id="@+id/home_contactus_linearlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/home_contactus_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                app:tint="#3876F6"
+                android:src="@drawable/home_contactusicon_imageview">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/home_contactus_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:textColor="#3876F6"
+                android:textSize="@dimen/_9ssp"
+                android:text="Contáctanos">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/home_shareapp_linearlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/home_shareapp_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                app:tint="#3876F6"
+                android:src="@drawable/home_shareapp_imageview">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/home_shareapp_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:textColor="#3876F6"
+                android:textSize="@dimen/_9ssp"
+                android:text="Compartir app">
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/home_searchtab_view"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:background="@drawable/homeconsultas_roundedsearchtab_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_descubrir_text"/>
+
+    <EditText
+        android:id="@+id/home_searchtab_edittext"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_32sdp"
+        app:layout_constraintTop_toTopOf="@id/home_searchtab_view"
+        app:layout_constraintBottom_toBottomOf="@id/home_searchtab_view"
+        android:includeFontPadding="false"
+        android:layout_marginEnd="@dimen/_9sdp"
+        android:layout_marginStart="@dimen/_9sdp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#E9EDF1"
+        android:ems="10"
+        android:fontFamily="@font/nunito_bold"
+        android:hint="Busca propuestas de trabajo"
+        android:inputType="textCapSentences"
+        android:textColor="#3C3C3C"
+        android:textColorHint="#B4B4B4"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toStartOf="@id/home_search_imageview"
+        app:layout_constraintStart_toStartOf="@+id/home_searchtab_view"
+        app:layout_constraintTop_toBottomOf="@+id/home_descubrir_text"
+        android:imeOptions="actionDone"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/home_search_imageview"
+        android:layout_width="@dimen/_22sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:onClick="onSearchClick"
+        android:adjustViewBounds="true"
+        android:contentDescription="search_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/home_searchtab_edittext"
+        app:layout_constraintEnd_toEndOf="@+id/home_searchtab_view"
+        app:layout_constraintHorizontal_bias="0.977"
+        app:layout_constraintStart_toStartOf="@+id/home_searchtab_edittext"
+        app:layout_constraintTop_toTopOf="@+id/home_searchtab_edittext"
+        app:srcCompat="@drawable/home_start_icon"
+        app:tint="#B4B4B4"
+        tools:ignore="ImageContrastCheck" />
+
+    <ScrollView
+        android:id="@+id/home_scrolllayout_scrollview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginBottom="20dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/home_home_imageview"
+        app:layout_constraintEnd_toEndOf="@+id/home_searchtab_view"
+        app:layout_constraintStart_toStartOf="@+id/home_searchtab_view"
+        app:layout_constraintTop_toBottomOf="@+id/home_searchtab_edittext">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/home_requisitos_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Requisitos"
+                android:textColor="#254B98"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/home_requisitos_button"
+                app:layout_constraintEnd_toEndOf="@+id/home_requisitos_button"
+                app:layout_constraintStart_toStartOf="@+id/home_requisitos_button"
+                android:layout_marginBottom="@dimen/_7sdp"/>
+
+            <ImageView
+                android:id="@+id/home_requisitos_imageview"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_54sdp"
+                android:elevation="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/home_requisitos_button"
+                app:layout_constraintEnd_toEndOf="@+id/home_requisitos_button"
+                app:layout_constraintStart_toStartOf="@+id/home_requisitos_button"
+                app:layout_constraintTop_toTopOf="@+id/home_requisitos_button"
+                app:layout_constraintVertical_bias="0.368"
+                app:srcCompat="@drawable/home_requisitos_image" />
+
+            <Button
+                android:id="@+id/home_requisitos_button"
+                android:layout_width="@dimen/_89sdp"
+                android:layout_height="@dimen/_89sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/homeproposal_roundedbuttons_background"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/buttons"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/home_nosotros_button"
+                android:layout_width="@dimen/_89sdp"
+                android:layout_height="@dimen/_89sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/homeproposal_roundedbuttons_background"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/buttons"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/home_pasosaseguir_button"
+                android:layout_width="@dimen/_89sdp"
+                android:layout_height="@dimen/_89sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/homeproposal_roundedbuttons_background"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/buttons"
+                app:layout_constraintEnd_toStartOf="@+id/home_nosotros_button"
+                app:layout_constraintHorizontal_bias="0.48"
+                app:layout_constraintStart_toEndOf="@+id/home_requisitos_button"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/home_pasosaseguir_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Pasos a seguir"
+                android:textColor="#254B98"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintEnd_toEndOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintStart_toStartOf="@+id/home_pasosaseguir_button"
+                android:layout_marginBottom="@dimen/_7sdp" />
+
+            <ImageView
+                android:id="@+id/home_pasosaseguir_imageview"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_54sdp"
+                android:elevation="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintEnd_toEndOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintStart_toStartOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintTop_toTopOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintVertical_bias="0.368"
+                app:srcCompat="@drawable/home_pasosaseguir_image" />
+
+            <TextView
+                android:id="@+id/home_nosotros_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Nosotros"
+                android:textColor="#254B98"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/home_nosotros_button"
+                app:layout_constraintEnd_toEndOf="@+id/home_nosotros_button"
+                app:layout_constraintStart_toStartOf="@+id/home_nosotros_button"
+                android:layout_marginBottom="@dimen/_7sdp" />
+
+            <ImageView
+                android:id="@+id/home_nosotros_pasosaseguir"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_54sdp"
+                android:elevation="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/home_nosotros_button"
+                app:layout_constraintEnd_toEndOf="@+id/home_nosotros_button"
+                app:layout_constraintStart_toStartOf="@+id/home_nosotros_button"
+                app:layout_constraintTop_toTopOf="@+id/home_nosotros_button"
+                app:layout_constraintVertical_bias="0.368"
+                app:srcCompat="@drawable/home_nosotros_image" />
+
+            <ImageView
+                android:id="@+id/home_school_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.48"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintVertical_bias="0.06"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="@dimen/_9sdp"
+                app:srcCompat="@drawable/home_school_image" />
+
+            <TextView
+                android:id="@+id/home_school_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_extrabold"
+                android:lineSpacingMultiplier=".75"
+                android:text="@string/home_image_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/home_school_imageview"
+                app:layout_constraintHorizontal_bias="0.07"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@+id/home_school_imageview"
+                app:layout_constraintVertical_bias="0.98" />
+
+            <ImageView
+                android:id="@+id/home_browserAI_imageview"
+                android:layout_width="0dp"
+                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:background="@drawable/home_poeaiimageviewborder_background"
+                android:src="@drawable/home_poeai_image"
+                android:layout_marginTop="@dimen/_9sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_school_imageview">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/home_propuestas_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_extrabold"
+                android:text="Propuestas más destacadas"
+                android:textColor="#000000"
+                android:textSize="@dimen/_19ssp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/home_browserAI_imageview" />
+
+            <TextView
+                android:id="@+id/home_exampletitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Licenciado en arquitectura"
+                android:textColor="#000000"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintStart_toStartOf="@+id/home_propuestas_textview"
+                app:layout_constraintTop_toBottomOf="@+id/home_linedivider_imageview" />
+
+            <ImageView
+                android:id="@+id/home_linedivider_imageview"
+                android:layout_width="@dimen/_220sdp"
+                android:layout_height="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="@+id/home_propuestas_textview"
+                app:layout_constraintTop_toBottomOf="@+id/home_propuestas_textview"
+                app:srcCompat="@drawable/homeproposal_line_image"
+                app:tint="#E9EDF1" />
+
+            <TextView
+                android:id="@+id/home_examplesubtitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Óscar Gómez"
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="@+id/home_exampletitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/home_exampletitle_textview" />
+
+            <TextView
+                android:id="@+id/home_exampledescription_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Como arquitecto, mi trabajo implica la conceptualización y diseño de edificios, espacios urbanos y paisajes. También tengo que asegurarme de que el diseño sea viable y seguro."
+                android:textColor="#000000"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/home_examplesubtitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/home_examplesubtitle_textview" />
+
+            <RelativeLayout
+                android:id="@+id/home_aimessage_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/homeconsultas_roundedmessageborder_background"
+                app:layout_constraintBottom_toBottomOf="@id/home_aiiconbackground_view"
+                android:layout_marginBottom="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:padding="@dimen/_10sdp"
+                >
+
+                <TextView
+                    android:id="@+id/home_aimessage_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="¡Hola! Soy tu asistente virtual, ¿en qué puedo ayudarte? Hacé clic acá si necesitás algo."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/_11ssp" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/home_aiiconbackground_view"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/home_roundedaiview_background"
+                android:backgroundTint="#254B98"
+                android:layout_marginTop="@dimen/_50sdp"
+                app:layout_constraintTop_toBottomOf="@id/home_exampledescription_textview"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/home_aiicongif_gif"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:src="@drawable/home_aiicon_gif"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:elevation="1dp"
+                app:layout_constraintTop_toBottomOf="@id/home_exampledescription_textview"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/home_home_imageview"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/icon_home_selected" />
+
+    <ImageView
+        android:id="@+id/home_contact_imageview"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/home_home_imageview"
+        app:layout_constraintEnd_toStartOf="@+id/home_home_imageview"
+        app:layout_constraintTop_toTopOf="@+id/home_home_imageview"
+        app:layout_constraintVertical_bias="0.48000002"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/icon_contact_unselected" />
+
+    <ImageView
+        android:id="@+id/home_proposal_imageview"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/home_home_imageview"
+        app:layout_constraintStart_toEndOf="@+id/home_home_imageview"
+        app:layout_constraintTop_toTopOf="@+id/home_home_imageview"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/icon_proposal_unselected" />
+
+    <TextView
+        android:id="@+id/home_subtitlecontact_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/home_contact_imageview"
+        app:layout_constraintEnd_toEndOf="@id/home_contact_imageview"
+        app:layout_constraintTop_toBottomOf="@id/home_contact_imageview"
+        android:textColor="#B4B4B4"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="Ver propuestas"
+        android:fontFamily="@font/nunito_bold" />
+
+    <TextView
+        android:id="@+id/home_subtitleproposal_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/home_proposal_imageview"
+        app:layout_constraintEnd_toEndOf="@id/home_proposal_imageview"
+        app:layout_constraintTop_toBottomOf="@id/home_proposal_imageview"
+        android:textColor="#B4B4B4"
+        android:textSize="@dimen/_10ssp"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:text="Enviar solicitud"
+        android:fontFamily="@font/nunito_bold" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

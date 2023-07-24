@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".PostActivity">
+
+    <ImageView
+        android:id="@+id/post_arrow_imageview"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_19sdp"
+        android:layout_marginTop="@dimen/_19sdp"
+        android:src="@drawable/blogconsultas_leftarrow_imageview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_time_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_regular"
+        android:text="24 de Octubre de 2023"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="#B4B4B4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_arrow_imageview" />
+
+    <TextView
+        android:id="@+id/post_title_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_20ssp"
+        android:layout_marginEnd="@dimen/_12ssp"
+        android:fontFamily="@font/nunito_extrabold"
+        android:textStyle="bold"
+        android:text="¿Cómo hago más llamativa mi propuesta?"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/post_time_textview"
+        app:layout_constraintTop_toBottomOf="@+id/post_time_textview" />
+
+    <TextView
+        android:id="@+id/post_subtitle_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14ssp"
+        android:layout_marginEnd="@dimen/_12ssp"
+        android:fontFamily="@font/nunito_light"
+        android:textStyle="bold"
+        android:text="Escrito por Josefina Marsala y Juan Frajberg"
+        android:textColor="#000000"
+        android:layout_marginTop="@dimen/_2sdp"
+        app:layout_constraintStart_toStartOf="@+id/post_title_textview"
+        app:layout_constraintTop_toBottomOf="@+id/post_title_textview" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:scrollbars="none"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_12ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/post_title_textview"
+        app:layout_constraintTop_toBottomOf="@+id/post_subtitle_textview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/post_description_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_light"
+                android:text="@string/firstpost_description_text"
+                android:textColor="#000000"
+                android:textSize="@dimen/_11ssp"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/post_firstpostimage_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_description_textview" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

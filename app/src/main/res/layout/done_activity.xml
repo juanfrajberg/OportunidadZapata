@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".DoneActivity">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/done_layout_relativelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/done_tick_gif"
+                android:layout_width="@dimen/_240sdp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/done_tick_gif"
+                app:loopCount="1" />
+
+            <TextView
+                android:id="@+id/done_title_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/done_tick_gif"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/nunito_extrabold"
+                android:lineSpacingMultiplier=".65"
+                android:text="¡Tu solicitud se\nregistró con éxito!"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/_25ssp" />
+
+            <TextView
+                android:id="@+id/done_subtitle_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/done_title_textview"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".65"
+                android:text="Nos pondremos en contacto con vos al momento que tu solicitud sea aprobada o publicada."
+                android:textAlignment="center"
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
