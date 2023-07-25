@@ -12,6 +12,9 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 public class WiFiActivity extends AppCompatActivity {
 
     //Botón para cerrar la actividad (Dialog)
@@ -63,6 +66,11 @@ public class WiFiActivity extends AppCompatActivity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Animación del botón
+                YoYo.with(Techniques.Pulse)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(closeButton);
                 finish();
                 overridePendingTransition(R.anim.slidezoom_frombottom, R.anim.slidezoom_tobottom); //Animación
             }
