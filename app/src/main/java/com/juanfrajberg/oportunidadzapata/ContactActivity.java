@@ -481,30 +481,89 @@ public class ContactActivity extends AppCompatActivity {
         closeDialogImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Animación del botón
+                YoYo.with(Techniques.Pulse)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(closeDialogImage);
                 infoDialog.dismiss();
             }
         });
 
+        //Abrir WhatsApp al hacer clic en el texto e imagen de WhatsApp
+        ImageView whatsAppImage = (ImageView) infoDialog.findViewById(R.id.info_whatsappicon_imageview);
+        whatsAppImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Animación del botón
+                YoYo.with(Techniques.RubberBand)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(whatsAppImage);
+                openWhatsAppFromInfoDialog();
+            }
+        });
+        TextView whatsAppText = (TextView) infoDialog.findViewById(R.id.info_whatsappnumber_textview);
+        whatsAppText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Animación del botón
+                YoYo.with(Techniques.RubberBand)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(whatsAppText);
+                openWhatsAppFromInfoDialog();
+            }
+        });
+
+        //Abrir Instagram al hacer clic en el texto e imagen de Instagram
+        //Se ejecuta en un try porque no todos publican su usuario de Instagram, es opcional
+        try{
+            ImageView instagramImage = (ImageView) infoDialog.findViewById(R.id.info_instagramicon_imageview);
+            instagramImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Animación del botón
+                    YoYo.with(Techniques.RubberBand)
+                            .duration(450)
+                            .repeat(0)
+                            .playOn(instagramImage);
+                    openInstagramFromInfoDialog();
+                }
+            });
+            TextView instagramText = (TextView) infoDialog.findViewById(R.id.info_instagramusername_textview);
+            instagramText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Animación del botón
+                    YoYo.with(Techniques.RubberBand)
+                            .duration(450)
+                            .repeat(0)
+                            .playOn(instagramText);
+                    openInstagramFromInfoDialog();
+                }
+            });
+        } catch (Exception e) {}
+
         infoDialog.show();
 
-        int width = (int)(getResources().getDisplayMetrics().widthPixels* 0.92); //Un 92% de la pantalla para la anchura
-        int height = (int)(getResources().getDisplayMetrics().heightPixels* 0.85); //Un 85% de la pantalla para la altura
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.92); //Un 92% de la pantalla para la anchura
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.85); //Un 85% de la pantalla para la altura
         infoDialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT); //ViewGroup.LayoutParams.MATCH_PARENT (para ajustar con WRAP_CONTENT)
         infoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
-    //Función para abrir WhatsApp
+    //Función para abrir WhatsApp (más adelante habrá que actualizarla, y buscar el número desde la base de datos)
     public void openWhatsApp(View view) {
         //Animación del botón
         YoYo.with(Techniques.Bounce)
                 .duration(450)
                 .repeat(0)
                 .playOn(view);
-        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://api.whatsapp.com/send?phone=542616330460&text=%C2%A1Hola!%20Este%20es%20un%20mensaje%20de%20prueba%20al%20creador%20de%20la%20aplicaci%C3%B3n%2C%20gracias%20por%20usarla%20%F0%9F%98%81")));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=542616330460&text=%C2%A1Hola!%20Este%20es%20un%20mensaje%20de%20prueba%20al%20creador%20de%20la%20aplicaci%C3%B3n%2C%20gracias%20por%20usarla%20%F0%9F%98%81")));
     }
 
-    //Función para marcar el teléfono (no llamar, solamente se abre la app de teléfono y se ingresa
-    //el número)
+    //Función para marcar el teléfono (no llamar, solamente se abre la app de teléfono y se ingresa el número. Más adelante habrá que actualizarla, y buscar el número desde la base de datos)
     public void openPhone(View view) {
         //Animación del botón
         YoYo.with(Techniques.Bounce)
@@ -617,7 +676,7 @@ public class ContactActivity extends AppCompatActivity {
         firstExampleWhatsAppButton.setClickable(state);
         secondExamplePhoneButton.setClickable(state);
         thirdExamplePhoneButton.setClickable(state);
-        thirdExampleWhatsAppButton .setClickable(state);
+        thirdExampleWhatsAppButton.setClickable(state);
         salud.setClickable(state);
         tecnologia.setClickable(state);
         finanzas.setClickable(state);
@@ -635,5 +694,35 @@ public class ContactActivity extends AppCompatActivity {
         firstProposal.setClickable(state);
         secondProposal.setClickable(state);
         thirdProposal.setClickable(state);
+    }
+
+    //Función para abrir el chat de WhatsApp desde el Dialog con más información sobre una persona a contactar
+    public void openWhatsAppFromInfoDialog() {
+        //Obtenemos el número de WhatsApp tal cual está escrito en el Dialog
+        TextView whatsAppNumber = (TextView) infoDialog.findViewById(R.id.info_whatsappnumber_textview);
+        String whatsAppNumberString = whatsAppNumber.getText().toString();
+
+        //Quitamos los espacios en blanco y el guión del número de teléfono
+        whatsAppNumberString = whatsAppNumberString.replaceAll("\\s+", "");
+        whatsAppNumberString = whatsAppNumberString.replaceAll("\\W+", "");
+        //Quitamos el 9 que continúa de +54
+        int i = 2;
+        whatsAppNumberString = whatsAppNumberString.substring(0, i) + whatsAppNumberString.substring(i + 1);
+
+        //Abrimos el chat con el número del Dialog
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=+" + whatsAppNumberString + "&text=Hola%2C%20¿cómo%20estás%3F%20Te%20contacto%20porque%20me%20gustaría%20obtener%20más%20información%20sobre%20los%20servicios%20que%20ofrecés%2C%20muchas%20gracias%20☺")));
+    }
+
+    //Función para abrir el chat de WhatsApp desde el Dialog con más información sobre una persona a contactar
+    public void openInstagramFromInfoDialog() {
+        //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
+        TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_instagramusername_textview);
+        String instagramUserNameString = instagramUserName.getText().toString();
+
+        //Eliminamos el @ (arroba) del String
+        instagramUserNameString = instagramUserNameString.replace("@", "");
+
+        //Abrimos Instagram con el perfil del Dialog
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
     }
 }
