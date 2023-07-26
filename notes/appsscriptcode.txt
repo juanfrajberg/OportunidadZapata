@@ -1,0 +1,177 @@
+# This is the code used in AppsScript for the implementation with the database
+# First, a Firebase database has to be created, with the read and write options set to true
+# Secondly, a Biblioteca has to be added with the name of FirebaseApp and version 29
+# Lastly, there has to be two activators: one called getAllData(), executed every minute
+# And another one with the name importSheet(), executed with every change in the spreadsheet
+
+-> FirebaseToExcel.gs
+//GitHub
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/535a878109aba694ced1bba7758eaf0530a5211b/excelCode.gs
+
+//Vídeo de Firebase to Excel
+//https://www.youtube.com/watch?v=uYgbwOrW-p4&t=173s
+
+//Se actualiza cada minuto
+//Ejecutar la función "getAllData"
+
+//JSON code
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/1645e424909122dd8a7e75b69697ca81e5e0b1a3/appscript.json"
+
+function getAllData() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var sheets = spreadsheet.getSheets(); //Útil si hubiesen distintas hojas
+  var sheet = spreadsheet.getActiveSheet(); //Puedo cambiar esto para usar solamente la primer hoja, buenísimo para un futuro
+
+  var firebaseUrl = "https://oportunidad-zapata-default-rtdb.firebaseio.com/1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers";
+
+  var base = FirebaseApp.getDatabaseByUrl(firebaseUrl);
+
+  var dataSet = [base.getData()];
+
+  // Las siguientes líneas dependen de la estructura de tu data (comentario original)
+  var rows = [],
+    data;
+
+  for (i = 0; i < dataSet.length; i++) {
+    data = dataSet[i];
+    for (j = 1; j < dataSet[i].length; j++) {
+      //Verificar el tipo de dato en Firebase y actualizarlo de forma acorde
+      //Por ejemplo, mis tipos de dato son id, name, phone, etc.
+      rows.push([data[j].id, data[j].fullname, data[j].phone, data[j].time, data[j].email, data[j].job, data[j].student, data[j].course, data[j].division]); //"Empujo" los datos al Excel
+    }
+
+    //Código para eliminar las filas que queden en el Excel que no correspondan a la base de datos de Firebase
+    //En prueba, después lo agrego
+    /*
+    if (sheet.getMaxRows() + 1 > dataSet.length) { //Obtengo la cantidad de filas, le sumo uno por el encabezado y lo comparo con la longitud de la base de datos
+      sheet.deleteRow(dataSet[0].length); //Si es verdadero, se borra la última fila
+    }
+    */
+  }
+
+  //Para subir los valores de la base de datos al Sheets
+
+  dataRange = sheet.getRange(2, 1, rows.length, 9); //Fila inicial, columna inicial, fila final, columna final
+  dataRange.setValues(rows);
+
+}
+
+//Nueva parte del código para eliminar los datos (en prueba)
+//El código anterior lo único que hace es empujar los nuevos cambios, pero cuando faltan datos no hace nada
+//Con este fragmento de código, si dice "undefined / null" o está en blanco, se elimina toda la fila
+
+function readRows() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var rows = sheet.getDataRange();
+  var numRows = rows.getNumRows();
+  var values = rows.getValues();
+
+  var rowsDeleted = 0;
+  for (var i = 0; i <= numRows - 1; i++) {
+    var row = values[i];
+    if (row[0] == 'undefined' || row[0] == 'null' || row[0] == '') {
+      sheet.deleteRow((parseInt(i) + 1) - rowsDeleted);
+      rowsDeleted++;
+    }
+  }
+};
+
+-> ExcelToFirebase.gs
+//GitHub
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/9c87a1c06b7b33337a5a60471a59ac20be3e74a3/code.gs
+
+//Vídeo de Excel to Firebase
+//https://www.youtube.com/watch?v=dOwZ5gzl9wI
+
+//Se actualiza con cada cambio en Excel automáticamente
+//Ejecutar la función "importSheet"
+
+//JSON code
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/1645e424909122dd8a7e75b69697ca81e5e0b1a3/appscript.json"
+
+function getEnvironment() {
+  var environment = {
+    spreadsheetID: "1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0",
+    firebaseUrl: "https://oportunidad-zapata-default-rtdb.firebaseio.com/",
+  };
+  return environment;
+}
+
+//Crea un trigger ante un cambio en Google Sheets para la hoja específica
+function createSpreadsheetEditTrigger(sheetID) {
+  var triggers = ScriptApp.getProjectTriggers();
+  var triggerExists = false;
+  for (var i = 0; i < triggers.length; i++) {
+    if (triggers[i].getTriggerSourceId() == sheetID) {
+      triggerExists = true;
+      break;
+    }
+  }
+
+  if (!triggerExists) {
+    var spreadsheet = SpreadsheetApp.openById(sheetID);
+    ScriptApp.newTrigger("importSheet")
+      .forSpreadsheet(spreadsheet)
+      .onChange()
+      .create();
+  }
+}
+
+//Elimina todos los triggers existentes para el proyecto
+function deleteTriggers() {
+  var triggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < triggers.length; i++) {
+    ScriptApp.deleteTrigger(triggers[i]);
+  }
+}
+
+//Inicializa
+function initialize(e) {
+  writeDataToFirebase(getEnvironment().spreadsheetID);
+}
+
+//Escribe la data en la URL de Firebase
+function writeDataToFirebase(sheetID) {
+  var ss = SpreadsheetApp.openById(sheetID);
+  SpreadsheetApp.setActiveSpreadsheet(ss);
+  createSpreadsheetEditTrigger(sheetID);
+  var sheets = ss.getSheets();
+  for (var i = 0; i < sheets.length; i++) {
+    importSheet(sheets[i]);
+    SpreadsheetApp.setActiveSheet(sheets[i]);
+  }
+}
+
+//Una función de utilidad para generar objetos anidados cuando se dan claves en array
+function assign(obj, keyPath, value) {
+  lastKeyIndex = keyPath.length - 1;
+  for (var i = 0; i < lastKeyIndex; ++i) {
+    key = keyPath[i];
+    if (!(key in obj)) obj[key] = {};
+    obj = obj[key];
+  }
+  obj[keyPath[lastKeyIndex]] = value;
+}
+
+//Importar cada hoja cuando hay algún cambio
+function importSheet() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var name = sheet.getName();
+  var data = sheet.getDataRange().getValues();
+
+  var dataToImport = {};
+
+  for (var i = 1; i < data.length; i++) {
+    dataToImport[data[i][0]] = {};
+    for (var j = 0; j < data[0].length; j++) {
+      assign(dataToImport[data[i][0]], data[0][j].split("__"), data[i][j]);
+    }
+  }
+
+  var token = ScriptApp.getOAuthToken();
+
+  var firebaseUrl =
+    getEnvironment().firebaseUrl + sheet.getParent().getId() + "/" + name;
+  var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, token);
+  base.setData("", dataToImport);
+}
