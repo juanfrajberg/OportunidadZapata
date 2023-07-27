@@ -28,6 +28,6 @@ An application for Android mobile devices that acts as a job board, with a simpl
 
 [//]: # (URLs used in this document)
 [Juan Frajberg]: <https://github.com/juanfrajberg>
-[MEGA link]: <https://mega.nz/file/R0lyHZyB#iuxt76rE0UaVX-KtaaT3ziEF_1s7C-7ix0vroU8eRzY>
+[MEGA link]: <https://mega.nz/file/9skVVASY#ZrzBDxXoglB29ex9vBUuu7rSmFeDR7_3BhQF2oncpR8>
 [Instagram]: <https://instagram.com/juanfrajberg>
 [Twitter]: <https://twitter.com/juanfrajberg>
