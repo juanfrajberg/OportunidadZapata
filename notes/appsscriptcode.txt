@@ -28,6 +28,13 @@ function getAllData() {
 
   var dataSet = [base.getData()];
 
+  //Añadir una columna en limpio para que el código de abajo no de error
+  var rowLast = sheet.getLastRow();
+  sheet.insertRowAfter(rowLast); 
+
+  //Elimina toda la tabla y la actualiza completamente
+  sheet.deleteRows(2, sheet.getLastRow()); //sheet.getMaxRows()
+
   // Las siguientes líneas dependen de la estructura de tu data (comentario original)
   var rows = [],
     data;
@@ -39,42 +46,56 @@ function getAllData() {
       //Por ejemplo, mis tipos de dato son id, name, phone, etc.
       rows.push([data[j].id, data[j].fullname, data[j].phone, data[j].time, data[j].email, data[j].job, data[j].student, data[j].course, data[j].division]); //"Empujo" los datos al Excel
     }
-
-    //Código para eliminar las filas que queden en el Excel que no correspondan a la base de datos de Firebase
-    //En prueba, después lo agrego
-    /*
-    if (sheet.getMaxRows() + 1 > dataSet.length) { //Obtengo la cantidad de filas, le sumo uno por el encabezado y lo comparo con la longitud de la base de datos
-      sheet.deleteRow(dataSet[0].length); //Si es verdadero, se borra la última fila
-    }
-    */
   }
 
   //Para subir los valores de la base de datos al Sheets
-
   dataRange = sheet.getRange(2, 1, rows.length, 9); //Fila inicial, columna inicial, fila final, columna final
   dataRange.setValues(rows);
+  //Logger.log(rows.length); Imprimir la cantidad de filas
 
+  //Cambiar el color de las columnas
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheets()[0];
+
+  var column1 = sheet.getRange(2, 1, sheet.getLastRow());
+  column1.setBackgroundRGB(159, 197, 232);
+  column1.setFontWeight("normal");
+
+  var column2 = sheet.getRange(2, 2, sheet.getLastRow());
+  column2.setBackgroundRGB(217, 210, 233);
+  column2.setFontWeight("normal");
+
+  var column3 = sheet.getRange(2, 3, sheet.getLastRow());
+  column3.setBackgroundRGB(252, 229, 205);
+  column3.setFontWeight("normal");
+
+  var column4 = sheet.getRange(2, 4, sheet.getLastRow());
+  column4.setBackgroundRGB(255, 229, 153);
+  column4.setFontWeight("normal");
+
+  var column5 = sheet.getRange(2, 5, sheet.getLastRow());
+  column5.setBackgroundRGB(208, 224, 227);
+  column5.setFontWeight("normal");
+
+  var column6 = sheet.getRange(2, 6, sheet.getLastRow());
+  column6.setBackgroundRGB(147, 196, 125);
+  column6.setFontWeight("normal");
+
+  var column7 = sheet.getRange(2, 7, sheet.getLastRow());
+  column7.setBackgroundRGB(244, 204, 204);
+  column7.setFontWeight("normal");
+
+  var column8 = sheet.getRange(2, 8, sheet.getLastRow());
+  column8.setBackgroundRGB(244, 204, 204);
+  column8.setFontWeight("normal");
+
+  var column9 = sheet.getRange(2, 9, sheet.getLastRow());
+  column9.setBackgroundRGB(244, 204, 204);
+  column9.setFontWeight("normal");
+
+//Eliminar la última columna que se genera de más
+  sheet.deleteRow(sheet.getLastRow() + 1);
 }
-
-//Nueva parte del código para eliminar los datos (en prueba)
-//El código anterior lo único que hace es empujar los nuevos cambios, pero cuando faltan datos no hace nada
-//Con este fragmento de código, si dice "undefined / null" o está en blanco, se elimina toda la fila
-
-function readRows() {
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var rows = sheet.getDataRange();
-  var numRows = rows.getNumRows();
-  var values = rows.getValues();
-
-  var rowsDeleted = 0;
-  for (var i = 0; i <= numRows - 1; i++) {
-    var row = values[i];
-    if (row[0] == 'undefined' || row[0] == 'null' || row[0] == '') {
-      sheet.deleteRow((parseInt(i) + 1) - rowsDeleted);
-      rowsDeleted++;
-    }
-  }
-};
 
 -> ExcelToFirebase.gs
 //GitHub
@@ -170,8 +191,37 @@ function importSheet() {
 
   var token = ScriptApp.getOAuthToken();
 
-  var firebaseUrl =
-    getEnvironment().firebaseUrl + sheet.getParent().getId() + "/" + name;
+  var firebaseUrl = getEnvironment().firebaseUrl + sheet.getParent().getId() + "/" + name;
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, token);
   base.setData("", dataToImport);
+}
+
+-> appsscript.json
+{
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {
+    "libraries": [
+      {
+        "userSymbol": "FirebaseApp",
+        "libraryId": "1hguuh4Zx72XVC1Zldm_vTtcUUKUA6iBUOoGnJUWLfqDWx5WlOJHqYkrt",
+        "version": "29",
+        "developmentMode": true
+      }
+    ]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/firebase.database",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/script.scriptapp",
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "executionApi": {
+    "access": "DOMAIN"
+  },
+  "webapp": {
+    "executeAs": "USER_DEPLOYING",
+    "access": "ANYONE_ANONYMOUS"
+  }
 }
