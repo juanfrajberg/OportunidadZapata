@@ -24,7 +24,7 @@ public class DoneActivity extends AppCompatActivity {
                 //La línea de código de abajo era para mostrar que funcionaba el traspaso de datos
                 //startActivity(new Intent(DoneActivity.this, DataActivity.class));
             }
-        }, 3500); //3500 es el valor por defecto, lo anoto para cuando hago pruebas
+        }, 6000); //3500 es el valor por defecto, lo anoto para cuando hago pruebas
     }
 
     //Función para que no se pueda cerrar la pantalla con el botón atrás
