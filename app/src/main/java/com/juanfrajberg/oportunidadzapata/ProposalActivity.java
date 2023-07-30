@@ -1,6 +1,5 @@
 package com.juanfrajberg.oportunidadzapata;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,11 +36,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.safetynet.SafetyNet;
+import com.google.android.gms.safetynet.SafetyNetApi;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -102,7 +104,6 @@ public class ProposalActivity extends AppCompatActivity {
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
@@ -153,11 +154,9 @@ public class ProposalActivity extends AppCompatActivity {
         nombreUsuarioEditText.addTextChangedListener(nombreUsuarioTextEditorWatcher);
 
         //Para el CheckBox de elegir mostrar el nombre del alumno se usa este código
-        mostrarNombreAlumno.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
+        mostrarNombreAlumno.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor dataPersonRegistered = preferences.edit();
                 dataPersonRegistered.putBoolean("showStudentName", isChecked);
@@ -235,8 +234,8 @@ public class ProposalActivity extends AppCompatActivity {
                         || (contactoSpinner.getSelectedItem().toString().equals("Red social") && !TextUtils.isEmpty(nombreUsuarioEditText.getText()))
 
                         || (!mailEditText.getText().toString().contains(("@")) && !TextUtils.isEmpty(mailEditText.getText()))
-                        //|| (numeroTelefonoEditText.getText().length() < 10) Ya no es necesario, limité la cantidad a 10 desde el XML, porque sino
-                        // da un error desde Firebase y no se puede subir
+                    //|| (numeroTelefonoEditText.getText().length() < 10) Ya no es necesario, limité la cantidad a 10 desde el XML, porque sino
+                    // da un error desde Firebase y no se puede subir
                 ) {
                     Toast.makeText(getApplicationContext(), "¡Faltan campos por rellenar!",
                             Toast.LENGTH_SHORT).show();
@@ -246,94 +245,24 @@ public class ProposalActivity extends AppCompatActivity {
                             .duration(700)
                             .repeat(0)
                             .playOn(doneButton);
-                }
-                else {
-                    finish();
-
-                    //Se guarda toda la información de la persona que se registró en Shared Preferences
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor dataPersonRegistered = preferences.edit();
-
-                    dataPersonRegistered.putString("fullname", nombreCompletoEditText.getText().toString());
-                    dataPersonRegistered.putLong("phoneDB", Long.parseLong(numeroTelefonoEditText.getText().toString()));
-
-                    //Data Format es para elegir el formato en el que se guardará la hora
-                    //Tipos de Data Format
-                    /*
-                    "yyyy.MM.dd G 'at' HH:mm:ss z" ---- 2001.07.04 AD at 12:08:56 PDT
-                    "hh 'o''clock' a, zzzz" ----------- 12 o'clock PM, Pacific Daylight Time
-                    "EEE, d MMM yyyy HH:mm:ss Z"------- Wed, 4 Jul 2001 12:08:56 -0700
-                    "yyyy-MM-dd'T'HH:mm:ss.SSSZ"------- 2001-07-04T12:08:56.235-0700
-                    "yyMMddHHmmssZ"-------------------- 010704120856-0700
-                    "K:mm a, z" ----------------------- 0:08 PM, PDT
-                    "h:mm a" -------------------------- 12:08 PM
-                    "EEE, MMM d, ''yy" ---------------- Wed, Jul 4, '01
-                     */
-
-                    //Así, guardamos la fecha actual en el mismo formato que las del Excel
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-                    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT-3")); //La zona horaria que usamos en Argentina
-                    String date = dateFormat.format(Calendar.getInstance().getTime());
-
-                    dataPersonRegistered.putString("time", date);
-                    dataPersonRegistered.putString("email", mailEditText.getText().toString());
-                    dataPersonRegistered.putString("job", profesionEditText.getText().toString());
-                    dataPersonRegistered.putString("student", nombreAlumnoEditText.getText().toString());
-                    dataPersonRegistered.putString("course", cursosSpinner.getSelectedItem().toString());
-                    dataPersonRegistered.putString("division", divisionSpinner.getSelectedItem().toString());
-                    dataPersonRegistered.putString("description", descripcionEditText.getText().toString());
-
-                    //Verificar si hay algo escrito
-                    if (!contactoSpinner.getSelectedItem().toString().equals("Tipo") && !TextUtils.isEmpty(nombreUsuarioEditText.getText())) {
-                        dataPersonRegistered.putString("contact", contactoSpinner.getSelectedItem().toString());
-                        dataPersonRegistered.putString("username", nombreUsuarioEditText.getText().toString());
-                    }
-
-                    //Guardamos todos los cambios hechos
-                    dataPersonRegistered.apply();
-
-                    //Enviamos la información a Firebase
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference databaseReference = database.getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
-
-                    //Función para saber cuál es el último child (hijo) de la base de datos, para que se cree en el número que sigue
-                    Query lastQuery = databaseReference.orderByKey().limitToLast(1);
-                    lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot data : dataSnapshot.getChildren())
-                            {
-                                //Nos devuelve el número que se usa como ID
-                                lastID = data.getKey();
-
-                                //Se le suma una posición a lastID
-                                int lastIDPlusOne = Integer.parseInt(lastID) + 1;
-                                lastID = String.valueOf(lastIDPlusOne);
-                                //Toast.makeText(getApplicationContext(), lastID, Toast.LENGTH_SHORT).show(); //Para comprobar que funcione
-
-                                //Usamos la clase Worker para guardar todos los datos
-                                Worker worker = new Worker(preferences.getString("fullname", "null"),
-                                        preferences.getLong("phoneDB", 0L),
-                                        preferences.getString("time", "null"),
-                                        preferences.getString("email", "null"),
-                                        preferences.getString("job", "null"),
-                                        preferences.getString("student", "null"),
-                                        preferences.getString("course", "null"),
-                                        preferences.getString("division", "null"),
-                                        Integer.parseInt(lastID));
-
-                                //Se almacena en nuestra Realtime Database
-                                databaseReference.child(String.valueOf(lastID)).setValue(worker);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }});
-
-                    //Iniciamos la Actividad Done
-                    startActivity(new Intent(ProposalActivity.this, DoneActivity.class));
+                } else {
+                    //Se ejecuta la verificación reCAPTCHA
+                    SafetyNet.getClient(ProposalActivity.this).verifyWithRecaptcha("6Lfji2onAAAAAACfatQPqo8Y6quWKHivTN24JTHq")
+                            .addOnSuccessListener(ProposalActivity.this,
+                                    new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
+                                        @Override
+                                        public void onSuccess(SafetyNetApi.RecaptchaTokenResponse response) {
+                                            //La comunicación con reCAPTCHA fue exitosa y se envía la propuesta
+                                            sendProposal();
+                                        }
+                                    })
+                            .addOnFailureListener(ProposalActivity.this, new OnFailureListener() {
+                                @Override
+                                public void onFailure(Exception e) {
+                                    //Se imprime el error y no se puede enviar la propuesta
+                                    Toast.makeText(getApplicationContext(), "No se pudo realizar la verificación reCAPTCHA.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
         });
@@ -403,7 +332,7 @@ public class ProposalActivity extends AppCompatActivity {
             }
 
             @Override
-            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            public View getDropDownView(int position, View convertView, ViewGroup parent) { //@NonNull ViewGroup parent
                 //Conseguir el número de ítem
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView textView = (TextView) view;
@@ -458,7 +387,7 @@ public class ProposalActivity extends AppCompatActivity {
             }
 
             @Override
-            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            public View getDropDownView(int position, View convertView, ViewGroup parent) { //@NonNull ViewGroup parent
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView textView = (TextView) view;
                 if (position == 0) {
@@ -501,8 +430,9 @@ public class ProposalActivity extends AppCompatActivity {
             }
 
             @Override
-            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);TextView textView = (TextView) view;
+            public View getDropDownView(int position, View convertView, ViewGroup parent) { //@NonNull ViewGroup parent
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
                 if (position == 0) {
                     textView.setTextColor(Color.GRAY);
                 }
@@ -876,5 +806,94 @@ public class ProposalActivity extends AppCompatActivity {
 
     public static void makeArrowUpRubroLaboralLookUp() {
         arrowUpRubroLaboralImageView.setRotation(0); //Dejamos la flecha como estaba, en su rotación original
+    }
+
+    //Función para enviar la propuesta una vez completada
+    public void sendProposal() {
+        finish(); //Para que al cerrarse DoneActivity, no regrese a esta actividad
+
+        //Se guarda toda la información de la persona que se registró en Shared Preferences
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor dataPersonRegistered = preferences.edit();
+
+        dataPersonRegistered.putString("fullname", nombreCompletoEditText.getText().toString());
+        dataPersonRegistered.putLong("phoneDB", Long.parseLong(numeroTelefonoEditText.getText().toString()));
+
+        //Data Format es para elegir el formato en el que se guardará la hora
+        //Tipos de Data Format
+                    /*
+                    "yyyy.MM.dd G 'at' HH:mm:ss z" ---- 2001.07.04 AD at 12:08:56 PDT
+                    "hh 'o''clock' a, zzzz" ----------- 12 o'clock PM, Pacific Daylight Time
+                    "EEE, d MMM yyyy HH:mm:ss Z"------- Wed, 4 Jul 2001 12:08:56 -0700
+                    "yyyy-MM-dd'T'HH:mm:ss.SSSZ"------- 2001-07-04T12:08:56.235-0700
+                    "yyMMddHHmmssZ"-------------------- 010704120856-0700
+                    "K:mm a, z" ----------------------- 0:08 PM, PDT
+                    "h:mm a" -------------------------- 12:08 PM
+                    "EEE, MMM d, ''yy" ---------------- Wed, Jul 4, '01
+                     */
+
+        //Así, guardamos la fecha actual en el mismo formato que las del Excel
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT-3")); //La zona horaria que usamos en Argentina
+        String date = dateFormat.format(Calendar.getInstance().getTime());
+
+        dataPersonRegistered.putString("time", date);
+        dataPersonRegistered.putString("email", mailEditText.getText().toString());
+        dataPersonRegistered.putString("job", profesionEditText.getText().toString());
+        dataPersonRegistered.putString("student", nombreAlumnoEditText.getText().toString());
+        dataPersonRegistered.putString("course", cursosSpinner.getSelectedItem().toString());
+        dataPersonRegistered.putString("division", divisionSpinner.getSelectedItem().toString());
+        dataPersonRegistered.putString("description", descripcionEditText.getText().toString());
+
+        //Verificar si hay algo escrito
+        if (!contactoSpinner.getSelectedItem().toString().equals("Tipo") && !TextUtils.isEmpty(nombreUsuarioEditText.getText())) {
+            dataPersonRegistered.putString("contact", contactoSpinner.getSelectedItem().toString());
+            dataPersonRegistered.putString("username", nombreUsuarioEditText.getText().toString());
+        }
+
+        //Guardamos todos los cambios hechos
+        dataPersonRegistered.apply();
+
+        //Enviamos la información a Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
+
+        //Función para saber cuál es el último child (hijo) de la base de datos, para que se cree en el número que sigue
+        Query lastQuery = databaseReference.orderByKey().limitToLast(1);
+        lastQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    //Nos devuelve el número que se usa como ID
+                    lastID = data.getKey();
+
+                    //Se le suma una posición a lastID
+                    int lastIDPlusOne = Integer.parseInt(lastID) + 1;
+                    lastID = String.valueOf(lastIDPlusOne);
+                    //Toast.makeText(getApplicationContext(), lastID, Toast.LENGTH_SHORT).show(); //Para comprobar que funcione
+
+                    //Usamos la clase Worker para guardar todos los datos
+                    Worker worker = new Worker(preferences.getString("fullname", "null"),
+                            preferences.getLong("phoneDB", 0L),
+                            preferences.getString("time", "null"),
+                            preferences.getString("email", "null"),
+                            preferences.getString("job", "null"),
+                            preferences.getString("student", "null"),
+                            preferences.getString("course", "null"),
+                            preferences.getString("division", "null"),
+                            Integer.parseInt(lastID));
+
+                    //Se almacena en nuestra Realtime Database
+                    databaseReference.child(String.valueOf(lastID)).setValue(worker);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        //Iniciamos la Actividad Done
+        startActivity(new Intent(ProposalActivity.this, DoneActivity.class));
     }
 }
