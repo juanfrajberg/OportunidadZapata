@@ -18,7 +18,7 @@ An application for Android mobile devices that acts as a job board, with a simpl
 - [Juan Frajberg]
 
 ## Download the app 📱
-- [MEGA link]
+- [MediaFire link]
 
 ## Contact me 👋
 - [Instagram]
@@ -28,6 +28,6 @@ An application for Android mobile devices that acts as a job board, with a simpl
 
 [//]: # (URLs used in this document)
 [Juan Frajberg]: <https://github.com/juanfrajberg>
-[MEGA link]: <https://mega.nz/file/9skVVASY#ZrzBDxXoglB29ex9vBUuu7rSmFeDR7_3BhQF2oncpR8>
+[MediaFire link]: <https://www.mediafire.com/file/gzsn8cyincsi8zo/Oportunidad_Zapata.apk/file>
 [Instagram]: <https://instagram.com/juanfrajberg>
 [Twitter]: <https://twitter.com/juanfrajberg>
