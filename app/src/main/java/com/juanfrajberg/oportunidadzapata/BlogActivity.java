@@ -13,11 +13,18 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class BlogActivity extends AppCompatActivity {
 
@@ -109,6 +116,33 @@ public class BlogActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(thirdExampleView);
+            }
+        });
+
+        //Leer el título y descripción de cada publiccación del blog desde Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/blog");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            //Este método se llama una vez con el valor inciial y luego cada que vez que la data es actualizada
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Guardamos los datos en Strings
+                String firstPostTitle = dataSnapshot.child("1").child("title").getValue(String.class);
+                String secondPostTitle = dataSnapshot.child("2").child("title").getValue(String.class);
+                String thirdPostTitle = dataSnapshot.child("3").child("title").getValue(String.class);
+                //Se le asigna el nombre a los elementos del layout
+                TextView firstPostTitleTextView = (TextView) findViewById(R.id.blog_firstexampleposttitlerl_textview);
+                TextView secondPostTitleTextView = (TextView) findViewById(R.id.blog_secondexampleposttitlerl_textview);
+                TextView thirdPostTitleTextView = (TextView) findViewById(R.id.blog_thirdexampleposttitlerl_textview);
+                firstPostTitleTextView.setText(firstPostTitle);
+                secondPostTitleTextView.setText(secondPostTitle);
+                thirdPostTitleTextView.setText(thirdPostTitle);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //No se pudo leer el valor
+                Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
