@@ -3,24 +3,114 @@
 # Secondly, a Biblioteca has to be added with the name of FirebaseApp and version 29
 # Lastly, there has to be two activators: one called getAllData(), executed every minute
 # And another one with the name importSheet(), executed with every change in the spreadsheet
+# UPDATE: now you will need to have a third one for getAllDataBlog(), and get AllData transforms into getAllDataWorkers()
 
--> FirebaseToExcel.gs
+-> FirebaseToExcelBlog.gs
 //GitHub
 //https://github.com/anish-gyawali/Ionic-firebase-excel/blob/535a878109aba694ced1bba7758eaf0530a5211b/excelCode.gs
 
-//Vídeo de Firebase to Excel
-//https://www.youtube.com/watch?v=uYgbwOrW-p4&t=173s
+//Vídeo de Excel to Firebase
+//https://www.youtube.com/watch?v=dOwZ5gzl9wI
 
 //Se actualiza cada minuto
-//Ejecutar la función "getAllData"
+//Ejecutar la función "getAllDataBlog"
 
 //JSON code
 //https://github.com/anish-gyawali/Ionic-firebase-excel/blob/1645e424909122dd8a7e75b69697ca81e5e0b1a3/appscript.json"
 
-function getAllData() {
-  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  var sheets = spreadsheet.getSheets(); //Útil si hubiesen distintas hojas
-  var sheet = spreadsheet.getActiveSheet(); //Puedo cambiar esto para usar solamente la primer hoja, buenísimo para un futuro
+function getAllDataBlog() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var sheet = spreadsheet[1]; //Puedo cambiar esto para usar solamente la primer hoja, buenísimo para un futuro
+
+  var firebaseUrl = "https://oportunidad-zapata-default-rtdb.firebaseio.com/1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/blog";
+
+  var base = FirebaseApp.getDatabaseByUrl(firebaseUrl);
+
+  var dataSet = [base.getData()];
+
+  //Añadir una columna en limpio para que el código de abajo no de error
+  var rowLast = sheet.getLastRow();
+  sheet.insertRowAfter(rowLast);
+
+  //Elimina toda la tabla y la actualiza completamente
+  sheet.deleteRows(2, sheet.getLastRow()); //sheet.getMaxRows()
+
+  // Las siguientes líneas dependen de la estructura de tu data (comentario original)
+  var rows = [],
+    data;
+
+  var column5 = sheet.getRange(2, 5, sheet.getLastRow());
+  column5.setNumberFormat("@");
+
+  for (i = 0; i < dataSet.length; i++) {
+    data = dataSet[i];
+    for (j = 1; j < dataSet[i].length; j++) {
+      //Verificar el tipo de dato en Firebase y actualizarlo de forma acorde
+      //Por ejemplo, mis tipos de dato son id, name, phone, etc.
+      rows.push([data[j].number, data[j].title, data[j].description, data[j].information, data[j].time, data[j].writers]); //"Empujo" los datos al Excel
+    }
+  }
+
+  //Para subir los valores de la base de datos al Sheets
+  dataRange = sheet.getRange(2, 1, rows.length, 6); //Fila inicial, columna inicial, fila final, columna final
+  dataRange.setValues(rows);
+  //Logger.log(rows.length); Imprimir la cantidad de filas
+
+  //Cambiar el color de las columnas
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheets()[1];
+
+  var column1 = sheet.getRange(2, 1, sheet.getLastRow());
+  column1.setBackgroundRGB(252, 229, 205);
+  column1.setFontWeight("normal");
+  column1.setHorizontalAlignment("center");
+
+  var column2 = sheet.getRange(2, 2, sheet.getLastRow());
+  column2.setBackgroundRGB(255, 242, 204);
+  column2.setFontWeight("normal");
+  column2.setHorizontalAlignment("center");
+
+  var column3 = sheet.getRange(2, 3, sheet.getLastRow());
+  column3.setBackgroundRGB(217, 210, 233);
+  column3.setFontWeight("normal");
+  column3.setHorizontalAlignment("center");
+
+  var column4 = sheet.getRange(2, 4, sheet.getLastRow());
+  column4.setBackgroundRGB(234, 209, 220);
+  column4.setFontWeight("normal");
+  column4.setHorizontalAlignment("center");
+
+  var column5 = sheet.getRange(2, 5, sheet.getLastRow());
+  column5.setBackgroundRGB(230, 184, 175);
+  column5.setFontWeight("normal");
+  column5.setHorizontalAlignment("center");
+  column5.setNumberFormat("@"); //Para que el formato de texto sea solamente texto, y no como una fecha
+
+  var column6 = sheet.getRange(2, 6, sheet.getLastRow());
+  column6.setBackgroundRGB(217, 234, 211);
+  column6.setFontWeight("normal");
+  column6.setHorizontalAlignment("center");
+
+//Eliminar la última columna que se genera de más
+  sheet.deleteRow(sheet.getLastRow() + 1);
+}
+
+-> FirebaseToExcelWorkers.gs
+//GitHub
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/535a878109aba694ced1bba7758eaf0530a5211b/excelCode.gs
+
+//Vídeo de Excel to Firebase
+//https://www.youtube.com/watch?v=dOwZ5gzl9wI
+
+//Se actualiza cada minuto
+//Ejecutar la función "getAllDataWorkers"
+
+//JSON code
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/1645e424909122dd8a7e75b69697ca81e5e0b1a3/appscript.json"
+
+function getAllDataWorkers() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var sheet = spreadsheet[0]; //Puedo cambiar esto para usar solamente la primer hoja, buenísimo para un futuro
 
   var firebaseUrl = "https://oportunidad-zapata-default-rtdb.firebaseio.com/1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers";
 
@@ -30,7 +120,7 @@ function getAllData() {
 
   //Añadir una columna en limpio para que el código de abajo no de error
   var rowLast = sheet.getLastRow();
-  sheet.insertRowAfter(rowLast); 
+  sheet.insertRowAfter(rowLast);
 
   //Elimina toda la tabla y la actualiza completamente
   sheet.deleteRows(2, sheet.getLastRow()); //sheet.getMaxRows()
@@ -60,38 +150,47 @@ function getAllData() {
   var column1 = sheet.getRange(2, 1, sheet.getLastRow());
   column1.setBackgroundRGB(159, 197, 232);
   column1.setFontWeight("normal");
+  column1.setHorizontalAlignment("center");
 
   var column2 = sheet.getRange(2, 2, sheet.getLastRow());
   column2.setBackgroundRGB(217, 210, 233);
   column2.setFontWeight("normal");
+  column2.setHorizontalAlignment("center");
 
   var column3 = sheet.getRange(2, 3, sheet.getLastRow());
   column3.setBackgroundRGB(252, 229, 205);
   column3.setFontWeight("normal");
+  column3.setHorizontalAlignment("center");
 
   var column4 = sheet.getRange(2, 4, sheet.getLastRow());
   column4.setBackgroundRGB(255, 229, 153);
   column4.setFontWeight("normal");
+  column4.setHorizontalAlignment("center");
 
   var column5 = sheet.getRange(2, 5, sheet.getLastRow());
   column5.setBackgroundRGB(208, 224, 227);
   column5.setFontWeight("normal");
+  column5.setHorizontalAlignment("center");
 
   var column6 = sheet.getRange(2, 6, sheet.getLastRow());
   column6.setBackgroundRGB(147, 196, 125);
   column6.setFontWeight("normal");
+  column6.setHorizontalAlignment("center");
 
   var column7 = sheet.getRange(2, 7, sheet.getLastRow());
   column7.setBackgroundRGB(244, 204, 204);
   column7.setFontWeight("normal");
+  column7.setHorizontalAlignment("center");
 
   var column8 = sheet.getRange(2, 8, sheet.getLastRow());
   column8.setBackgroundRGB(244, 204, 204);
   column8.setFontWeight("normal");
+  column8.setHorizontalAlignment("center");
 
   var column9 = sheet.getRange(2, 9, sheet.getLastRow());
   column9.setBackgroundRGB(244, 204, 204);
   column9.setFontWeight("normal");
+  column9.setHorizontalAlignment("center");
 
 //Eliminar la última columna que se genera de más
   sheet.deleteRow(sheet.getLastRow() + 1);
@@ -101,8 +200,8 @@ function getAllData() {
 //GitHub
 //https://github.com/anish-gyawali/Ionic-firebase-excel/blob/9c87a1c06b7b33337a5a60471a59ac20be3e74a3/code.gs
 
-//Vídeo de Excel to Firebase
-//https://www.youtube.com/watch?v=dOwZ5gzl9wI
+//Vídeo de Firebase to Excel
+//https://www.youtube.com/watch?v=uYgbwOrW-p4&t=173s
 
 //Se actualiza con cada cambio en Excel automáticamente
 //Ejecutar la función "importSheet"
@@ -156,7 +255,7 @@ function writeDataToFirebase(sheetID) {
   var ss = SpreadsheetApp.openById(sheetID);
   SpreadsheetApp.setActiveSpreadsheet(ss);
   createSpreadsheetEditTrigger(sheetID);
-  var sheets = ss.getSheets();
+  var sheets = ss.getSheets(); //[1] Para que ocurra con la primer hoja
   for (var i = 0; i < sheets.length; i++) {
     importSheet(sheets[i]);
     SpreadsheetApp.setActiveSheet(sheets[i]);

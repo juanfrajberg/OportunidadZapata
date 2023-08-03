@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -130,6 +129,11 @@ public class BlogActivity extends AppCompatActivity {
                 String firstPostTitle = dataSnapshot.child("1").child("title").getValue(String.class);
                 String secondPostTitle = dataSnapshot.child("2").child("title").getValue(String.class);
                 String thirdPostTitle = dataSnapshot.child("3").child("title").getValue(String.class);
+
+                String firstPostWriters = dataSnapshot.child("1").child("writers").getValue(String.class);
+                String secondPostWriters = dataSnapshot.child("2").child("writers").getValue(String.class);
+                String thirdPostWriters = dataSnapshot.child("3").child("writers").getValue(String.class);
+
                 //Se le asigna el nombre a los elementos del layout
                 TextView firstPostTitleTextView = (TextView) findViewById(R.id.blog_firstexampleposttitlerl_textview);
                 TextView secondPostTitleTextView = (TextView) findViewById(R.id.blog_secondexampleposttitlerl_textview);
@@ -137,12 +141,18 @@ public class BlogActivity extends AppCompatActivity {
                 firstPostTitleTextView.setText(firstPostTitle);
                 secondPostTitleTextView.setText(secondPostTitle);
                 thirdPostTitleTextView.setText(thirdPostTitle);
+
+                TextView firstPostWritersTextView = (TextView) findViewById(R.id.contact_firstexamplesubtitlerl_textview);
+                TextView secondPostWritersTextView = (TextView) findViewById(R.id.contact_secondexamplesubtitlerl_textview);
+                TextView thirdPostWritersTextView = (TextView) findViewById(R.id.contact_thirdexamplesubtitlerl_textview);
+                firstPostWritersTextView.setText(firstPostWriters);
+                secondPostWritersTextView.setText(secondPostWriters);
+                thirdPostWritersTextView.setText(thirdPostWriters);
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 //No se pudo leer el valor
-                Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
