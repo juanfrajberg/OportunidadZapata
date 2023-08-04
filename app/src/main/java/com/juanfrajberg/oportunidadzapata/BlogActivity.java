@@ -142,16 +142,16 @@ public class BlogActivity extends AppCompatActivity {
                 secondPostTitleTextView.setText(secondPostTitle);
                 thirdPostTitleTextView.setText(thirdPostTitle);
 
-                TextView firstPostWritersTextView = (TextView) findViewById(R.id.contact_firstexamplesubtitlerl_textview);
-                TextView secondPostWritersTextView = (TextView) findViewById(R.id.contact_secondexamplesubtitlerl_textview);
-                TextView thirdPostWritersTextView = (TextView) findViewById(R.id.contact_thirdexamplesubtitlerl_textview);
+                TextView firstPostWritersTextView = (TextView) findViewById(R.id.blog_firstexamplepostwritersrl_textview);
+                TextView secondPostWritersTextView = (TextView) findViewById(R.id.blog_secondexamplepostwritersrl_textview);
+                TextView thirdPostWritersTextView = (TextView) findViewById(R.id.blog_thirdexamplepostwritersrl_textview);
                 firstPostWritersTextView.setText(firstPostWriters);
                 secondPostWritersTextView.setText(secondPostWriters);
                 thirdPostWritersTextView.setText(thirdPostWriters);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(DatabaseError e) {
                 //No se pudo leer el valor
             }
         });
