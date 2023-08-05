@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -134,6 +135,10 @@ public class BlogActivity extends AppCompatActivity {
                 String secondPostWriters = dataSnapshot.child("2").child("writers").getValue(String.class);
                 String thirdPostWriters = dataSnapshot.child("3").child("writers").getValue(String.class);
 
+                String firstPostDescription = dataSnapshot.child("1").child("description").getValue(String.class);
+                String secondPostDescription = dataSnapshot.child("2").child("description").getValue(String.class);
+                String thirdPostDescription = dataSnapshot.child("3").child("description").getValue(String.class);
+
                 //Se le asigna el nombre a los elementos del layout
                 TextView firstPostTitleTextView = (TextView) findViewById(R.id.blog_firstexampleposttitlerl_textview);
                 TextView secondPostTitleTextView = (TextView) findViewById(R.id.blog_secondexampleposttitlerl_textview);
@@ -148,6 +153,13 @@ public class BlogActivity extends AppCompatActivity {
                 firstPostWritersTextView.setText(firstPostWriters);
                 secondPostWritersTextView.setText(secondPostWriters);
                 thirdPostWritersTextView.setText(thirdPostWriters);
+
+                TextView firstPostDescriptionTextView = (TextView) findViewById(R.id.blog_firstexamplepostdescriptionrl_textview);
+                TextView secondPostDescriptionTextView = (TextView) findViewById(R.id.blog_secondexamplepostdescriptionrl_textview);
+                TextView thirdPostDescriptionTextView = (TextView) findViewById(R.id.blog_thirdexamplepostdescriptionrl_textview);
+                firstPostDescriptionTextView.setText(Html.fromHtml(firstPostDescription));
+                secondPostDescriptionTextView.setText(Html.fromHtml(secondPostDescription));
+                thirdPostDescriptionTextView.setText(Html.fromHtml(thirdPostDescription));
             }
 
             @Override
