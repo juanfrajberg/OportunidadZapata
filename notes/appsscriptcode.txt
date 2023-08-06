@@ -47,12 +47,12 @@ function getAllDataBlog() {
     for (j = 1; j < dataSet[i].length; j++) {
       //Verificar el tipo de dato en Firebase y actualizarlo de forma acorde
       //Por ejemplo, mis tipos de dato son id, name, phone, etc.
-      rows.push([data[j].number, data[j].title, data[j].description, data[j].information, data[j].time, data[j].writers]); //"Empujo" los datos al Excel
+      rows.push([data[j].number, data[j].title, data[j].description, data[j].information, data[j].time, data[j].writers, data[j].image]); //"Empujo" los datos al Excel
     }
   }
 
   //Para subir los valores de la base de datos al Sheets
-  dataRange = sheet.getRange(2, 1, rows.length, 6); //Fila inicial, columna inicial, fila final, columna final
+  dataRange = sheet.getRange(2, 1, rows.length, 7); //Fila inicial, columna inicial, fila final, columna final
   dataRange.setValues(rows);
   //Logger.log(rows.length); Imprimir la cantidad de filas
 

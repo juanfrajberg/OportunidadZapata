@@ -10,6 +10,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -102,9 +104,11 @@ public class PostActivity extends AppCompatActivity {
                     postTimeTextView.setText(postTime);
                     postTitleTextView.setText(postTitle);
                     postWritersTextView.setText(postWriters);
-                    postContentTextView.setText(postContent);
+                    postContentTextView.setText(Html.fromHtml(postContent));
                     Picasso.get().load(postImage).into(postImageImageView);
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    Log.e("OZ", "" + e);
+                }
             }
 
             @Override
