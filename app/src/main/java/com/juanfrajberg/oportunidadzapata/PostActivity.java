@@ -94,6 +94,9 @@ public class PostActivity extends AppCompatActivity {
                     String postContent = dataSnapshot.child(String.valueOf(postNumber)).child("content").getValue(String.class);
                     String postImage = dataSnapshot.child(String.valueOf(postNumber)).child("image").getValue(String.class);
 
+                    //Se reemplaza "\n" por texto en blanco, en algunos dispositivos es necesario para comenzar otra línea y <br> no funciona
+                    postContent = postContent.replace("\n", "");
+
                     //Se le asigna el valor a los elementos del layout
                     TextView postTimeTextView = (TextView) findViewById(R.id.post_time_textview);
                     TextView postTitleTextView = (TextView) findViewById(R.id.post_title_textview);

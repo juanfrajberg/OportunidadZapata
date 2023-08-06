@@ -9,7 +9,7 @@
 //GitHub
 //https://github.com/anish-gyawali/Ionic-firebase-excel/blob/535a878109aba694ced1bba7758eaf0530a5211b/excelCode.gs
 
-//Vídeo de Excel to Firebase
+//Vídeo de Firebase to Excel
 //https://www.youtube.com/watch?v=dOwZ5gzl9wI
 
 //Se actualiza cada minuto
@@ -47,7 +47,7 @@ function getAllDataBlog() {
     for (j = 1; j < dataSet[i].length; j++) {
       //Verificar el tipo de dato en Firebase y actualizarlo de forma acorde
       //Por ejemplo, mis tipos de dato son id, name, phone, etc.
-      rows.push([data[j].number, data[j].title, data[j].description, data[j].information, data[j].time, data[j].writers, data[j].image]); //"Empujo" los datos al Excel
+      rows.push([data[j].number, data[j].title, data[j].description, data[j].content, data[j].time, data[j].writers, data[j].image]); //"Empujo" los datos al Excel
     }
   }
 
@@ -104,7 +104,7 @@ function getAllDataBlog() {
 //GitHub
 //https://github.com/anish-gyawali/Ionic-firebase-excel/blob/535a878109aba694ced1bba7758eaf0530a5211b/excelCode.gs
 
-//Vídeo de Excel to Firebase
+//Vídeo de Firebase to Excel
 //https://www.youtube.com/watch?v=dOwZ5gzl9wI
 
 //Se actualiza cada minuto
@@ -205,7 +205,7 @@ function getAllDataWorkers() {
 //GitHub
 //https://github.com/anish-gyawali/Ionic-firebase-excel/blob/9c87a1c06b7b33337a5a60471a59ac20be3e74a3/code.gs
 
-//Vídeo de Firebase to Excel
+//Vídeo de Excel to Firebase
 //https://www.youtube.com/watch?v=uYgbwOrW-p4&t=173s
 
 //Se actualiza con cada cambio en Excel automáticamente
