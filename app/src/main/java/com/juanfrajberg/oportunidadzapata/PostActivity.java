@@ -12,11 +12,18 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -26,13 +33,16 @@ public class PostActivity extends AppCompatActivity {
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
 
+    //Variable para saber de qué child (hijo) obtener la información de la DB según el número de publicación
+    int postNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
         super.onCreate(savedInstanceState);
 
         //Switch para saber qué post mostrar
-        int postNumber = getIntent().getIntExtra("postNumber", 1);
+        postNumber = getIntent().getIntExtra("postNumber", 1);
         switch (postNumber) { //No hay un caso "default" porque en la línea de arriba el valor por defecto es 1
             case 1:
                 setContentView(R.layout.firstpost_activity);
@@ -65,7 +75,45 @@ public class PostActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_up_in, R.anim.push_down_out); //Animación
             }
         });
+
+        //Leer la fecha, título, autores, contenido e imagen de cada publicación del blog desde Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/blog");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            //Este método se llama una vez con el valor inciial y luego cada que vez que la data es actualizada
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Uso un try catch por si hay algún error en la lectura de datos de la DB
+                try {
+                    //Guardamos los datos en Strings
+                    String postTime = dataSnapshot.child(String.valueOf(postNumber)).child("time").getValue(String.class);
+                    String postTitle = dataSnapshot.child(String.valueOf(postNumber)).child("title").getValue(String.class);
+                    String postWriters = dataSnapshot.child(String.valueOf(postNumber)).child("writers").getValue(String.class);
+                    String postContent = dataSnapshot.child(String.valueOf(postNumber)).child("content").getValue(String.class);
+                    String postImage = dataSnapshot.child(String.valueOf(postNumber)).child("image").getValue(String.class);
+
+                    //Se le asigna el valor a los elementos del layout
+                    TextView postTimeTextView = (TextView) findViewById(R.id.post_time_textview);
+                    TextView postTitleTextView = (TextView) findViewById(R.id.post_title_textview);
+                    TextView postWritersTextView = (TextView) findViewById(R.id.post_writers_textview);
+                    TextView postContentTextView = (TextView) findViewById(R.id.post_content_textview);
+                    ImageView postImageImageView = (ImageView) findViewById(R.id.post_image_imageview);
+
+                    postTimeTextView.setText(postTime);
+                    postTitleTextView.setText(postTitle);
+                    postWritersTextView.setText(postWriters);
+                    postContentTextView.setText(postContent);
+                    Picasso.get().load(postImage).into(postImageImageView);
+                } catch (Exception e) {}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError e) {
+                //No se pudo leer el valor
+            }
+        });
     }
+
 
     @Override
     public void onBackPressed() {

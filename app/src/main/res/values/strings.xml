@@ -70,7 +70,7 @@
     <string name="blog_secondexampleleer_text">Enterate de las funciones que se sumaron a nuestra app en esta última versión. <font color='#558CFF'><u>Leer más.</u></font></string>
     <string name="blog_thirdexampleleer_text">Nuestra meta es fomentar la colaboración entre las familias de la comunidad escolar y ayudarlas a encontrar y ofrecer oportunidades de trabajo innovadoras y beneficiosas. <font color='#558CFF'><u>Leer más.</u></font></string>
 
-    <string name="firstpost_description_text">Cuando se trata de publicar una propuesta de trabajo, es crucial destacar y captar la atención de los usuarios.
+    <string name="firstpost_content_text">Cuando se trata de publicar una propuesta de trabajo, es crucial destacar y captar la atención de los usuarios.
         Acá vas a encontrar algunos tips para volver tu a propuesta más llamativa y atractiva.
         <br></br><br></br>\n\n<b>Descripción completa de tu servicio:</b> al redactar tu propuesta, asegurate de describir de manera completa el servicio que ofreces y tu forma de trabajo.
         Los clientes tienen que poder comprender claramente qué es lo que ofreces y cómo pueden beneficiarse de ello. Detallá los aspectos clave, resalta los
@@ -84,7 +84,7 @@
         redes o página de destino para obtener más información, realizar videos cortos o tutoriales para mostrar tus habilidades y proceso de trabajo. ¡La clave
         está en ser creativo y encontrar formas únicas de destacarte!</string>
 
-    <string name="secondpost_description_text">
+    <string name="secondpost_content_text">
         ¡Estamos más que contentos de poder <b>compartir las últimas novedades y actualizaciones</b> de nuestra aplicación! Hemos estado trabajado para mejorar tu experiencia y brindarte más funcionalidades.
         <br></br><br></br>\n\nUna de las mejoras más destacadas es que <b>ahora nuestra aplicación es totalmente responsiva</b>, lo que significa que ahora se puede acceder a ella desde <b>cualquier tipo de celular y también desde tu tablet</b>.
         No importa el dispositivo que utilices, vas a poder disfrutar de todas las funciones de nuestra plataforma de manera óptima.
@@ -93,7 +93,7 @@
         <br></br><br></br>\n\nPor último, también agregamos otra funcionalidad: <b>ahora podés adjuntar imágenes a tus propuestas</b>. ¿Tenes un emprendimiento o querés mostrar ejemplos de tu trabajo? Con esta nueva característica, vas a poder complementar tu propuesta con imágenes que ayudarán a los usuarios a visualizar mejor tus servicios y productos.
         <br></br><br></br>\n\nEperamos que puedas aprovechar al máximo las nuevas funciones que se encuentran disponibles en esta actualización.</string>
 
-    <string name="thirdpost_description_text">¡Estamos muy emocionados de presentar nuestra nueva aplicación diseñada especialmente para vos! <b>Si sos padre o hermano de un alumno de
+    <string name="thirdpost_content_text">¡Estamos muy emocionados de presentar nuestra nueva aplicación diseñada especialmente para vos! <b>Si sos padre o hermano de un alumno de
         la escuela Martín Zapata, el objetivo esta plataforma es conseguir nuevas oportunidades laborales para vos</b>. Conectate con otras familias de la comunidad escolar y
         descubrí cómo encontrar trabajos que se adapten a tus habilidades y preferencias.<br></br><br></br>\n\nDiseñamos una interfaz sencilla para que puedas utilizar la app <b>de
         manera fácil y rápida</b>.

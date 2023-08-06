@@ -91,6 +91,11 @@ function getAllDataBlog() {
   column6.setFontWeight("normal");
   column6.setHorizontalAlignment("center");
 
+  var column7 = sheet.getRange(2, 7, sheet.getLastRow());
+  column7.setBackgroundRGB(234, 209, 220);
+  column7.setFontWeight("normal");
+  column7.setHorizontalAlignment("center");
+
 //Eliminar la última columna que se genera de más
   sheet.deleteRow(sheet.getLastRow() + 1);
 }
