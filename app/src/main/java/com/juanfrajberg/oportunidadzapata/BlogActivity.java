@@ -10,14 +10,21 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class BlogActivity extends AppCompatActivity {
 
@@ -109,6 +116,58 @@ public class BlogActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(thirdExampleView);
+            }
+        });
+
+        //Leer el título, escritor y descripción de cada publicación del blog desde Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/blog");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            //Este método se llama una vez con el valor inciial y luego cada que vez que la data es actualizada
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Uso un try catch por si hay algún error en la lectura de datos de la DB
+                try {
+                    //Guardamos los datos en Strings
+                    String firstPostTitle = dataSnapshot.child("1").child("title").getValue(String.class);
+                    String secondPostTitle = dataSnapshot.child("2").child("title").getValue(String.class);
+                    String thirdPostTitle = dataSnapshot.child("3").child("title").getValue(String.class);
+
+                    String firstPostWriters = dataSnapshot.child("1").child("writers").getValue(String.class);
+                    String secondPostWriters = dataSnapshot.child("2").child("writers").getValue(String.class);
+                    String thirdPostWriters = dataSnapshot.child("3").child("writers").getValue(String.class);
+
+                    String firstPostDescription = dataSnapshot.child("1").child("description").getValue(String.class);
+                    String secondPostDescription = dataSnapshot.child("2").child("description").getValue(String.class);
+                    String thirdPostDescription = dataSnapshot.child("3").child("description").getValue(String.class);
+
+                    //Se le asigna el valor a los elementos del layout
+                    TextView firstPostTitleTextView = (TextView) findViewById(R.id.blog_firstexampleposttitlerl_textview);
+                    TextView secondPostTitleTextView = (TextView) findViewById(R.id.blog_secondexampleposttitlerl_textview);
+                    TextView thirdPostTitleTextView = (TextView) findViewById(R.id.blog_thirdexampleposttitlerl_textview);
+                    firstPostTitleTextView.setText(firstPostTitle);
+                    secondPostTitleTextView.setText(secondPostTitle);
+                    thirdPostTitleTextView.setText(thirdPostTitle);
+
+                    TextView firstPostWritersTextView = (TextView) findViewById(R.id.blog_firstexamplepostwritersrl_textview);
+                    TextView secondPostWritersTextView = (TextView) findViewById(R.id.blog_secondexamplepostwritersrl_textview);
+                    TextView thirdPostWritersTextView = (TextView) findViewById(R.id.blog_thirdexamplepostwritersrl_textview);
+                    firstPostWritersTextView.setText(firstPostWriters);
+                    secondPostWritersTextView.setText(secondPostWriters);
+                    thirdPostWritersTextView.setText(thirdPostWriters);
+
+                    TextView firstPostDescriptionTextView = (TextView) findViewById(R.id.blog_firstexamplepostdescriptionrl_textview);
+                    TextView secondPostDescriptionTextView = (TextView) findViewById(R.id.blog_secondexamplepostdescriptionrl_textview);
+                    TextView thirdPostDescriptionTextView = (TextView) findViewById(R.id.blog_thirdexamplepostdescriptionrl_textview);
+                    firstPostDescriptionTextView.setText(Html.fromHtml(firstPostDescription));
+                    secondPostDescriptionTextView.setText(Html.fromHtml(secondPostDescription));
+                    thirdPostDescriptionTextView.setText(Html.fromHtml(thirdPostDescription));
+                } catch (Exception e) {}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError e) {
+                //No se pudo leer el valor
             }
         });
     }

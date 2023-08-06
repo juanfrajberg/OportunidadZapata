@@ -35,7 +35,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.2.1'
     implementation 'com.google.firebase:firebase-database:20.2.1'
-    //implementation 'androidx.annotation:annotation-jvm:1.6.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
@@ -44,4 +43,5 @@ dependencies {
     implementation 'com.intuit.ssp:ssp-android:1.1.0' //Implementación para hacer que la medida sp sea responsive
     implementation 'com.daimajia.androidanimations:library:2.4@aar' //Implementación para poder usar animaciones en los elementos del layout
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0' //Implementación para usar el CAPTCHA al enviar una solicitud
+    implementation 'com.squareup.picasso:picasso:2.8' //Implementación para poder ver imágenes desde una URL
 }

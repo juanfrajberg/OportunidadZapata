@@ -134,7 +134,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/blog_firstexamplepostsubtitlerl_textview"
+                    android:id="@+id/blog_firstexamplepostwritersrl_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/blog_firstexampleposttitlerl_textview"
@@ -149,8 +149,8 @@
                     android:id="@+id/blog_firstexamplepostdescriptionrl_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/blog_firstexamplepostsubtitlerl_textview"
-                    android:layout_alignStart="@+id/blog_firstexamplepostsubtitlerl_textview"
+                    android:layout_below="@id/blog_firstexamplepostwritersrl_textview"
+                    android:layout_alignStart="@+id/blog_firstexamplepostwritersrl_textview"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_12ssp"
                     android:layout_marginBottom="@dimen/_15sdp"
@@ -200,7 +200,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/blog_secondexamplepostsubtitlerl_textview"
+                    android:id="@+id/blog_secondexamplepostwritersrl_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/blog_secondexampleposttitlerl_textview"
@@ -215,8 +215,8 @@
                     android:id="@+id/blog_secondexamplepostdescriptionrl_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/blog_secondexamplepostsubtitlerl_textview"
-                    android:layout_alignStart="@id/blog_secondexamplepostsubtitlerl_textview"
+                    android:layout_below="@id/blog_secondexamplepostwritersrl_textview"
+                    android:layout_alignStart="@id/blog_secondexamplepostwritersrl_textview"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_12ssp"
                     android:layout_marginBottom="@dimen/_15sdp"
@@ -266,7 +266,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/blog_thirdexamplepostsubtitlerl_textview"
+                    android:id="@+id/blog_thirdexamplepostwritersrl_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/blog_thirdexampleposttitlerl_textview"
@@ -281,8 +281,8 @@
                     android:id="@+id/blog_thirdexamplepostdescriptionrl_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/blog_thirdexamplepostsubtitlerl_textview"
-                    android:layout_alignStart="@id/blog_thirdexamplepostsubtitlerl_textview"
+                    android:layout_below="@id/blog_thirdexamplepostwritersrl_textview"
+                    android:layout_alignStart="@id/blog_thirdexamplepostwritersrl_textview"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_12ssp"
                     android:layout_marginBottom="@dimen/_15sdp"
