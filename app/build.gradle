@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 33 //En 32, al igual que el target para poder editar el XML y tener las sugerencias al tipear
+    compileSdk 33 //En 32, al igual que el target, para poder editar el XML y tener las sugerencias al tipear
 
     defaultConfig {
         applicationId "com.juanfrajberg.oportunidadzapata"
         minSdk 21
-        targetSdk 33 //En 32, al igual que el compile para poder editar el XML y tener las sugerencias al tipear
+        targetSdk 33 //En 32, al igual que el compile, para poder editar el XML y tener las sugerencias al tipear
         versionCode 1
         versionName "1.0"
 
