@@ -11,6 +11,8 @@ An application for Android mobile devices that acts as a job board, with a simpl
 ## Made with 🛠
 - Java
 - Extensible Markup Language
+- HyperText Markup Language
+- Firebase
 - JavaScript Object Notation
 - Google Apps Script
 
