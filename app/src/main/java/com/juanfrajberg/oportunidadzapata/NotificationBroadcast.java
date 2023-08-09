@@ -1,5 +1,7 @@
 package com.juanfrajberg.oportunidadzapata;
 
+//Clase para enviar notificaciones de manera más sencilla
+
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
