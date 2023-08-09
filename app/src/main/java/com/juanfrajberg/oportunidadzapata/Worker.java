@@ -1,5 +1,7 @@
 package com.juanfrajberg.oportunidadzapata;
 
+//Clase para guardar la información de manera más fácil al subirla a la DB
+
 public class Worker {
     private String fullname;
     private long phone;
