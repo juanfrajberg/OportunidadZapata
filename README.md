@@ -16,6 +16,15 @@ An application for Android mobile devices that acts as a job board, with a simpl
 - JavaScript Object Notation
 - Google Apps Script
 
+## Features 😮
+```sh
+Toast.makeText(getApplicationContext(), "Easy to use, no login required, secure and available for everyone!", Toast.LENGTH_SHORT).show();
+
+public void bestApplicationEver() {
+  return OportunidadZapata;
+}
+```
+
 ## Programmed by 👨‍💻
 - [Juan Frajberg]
 
