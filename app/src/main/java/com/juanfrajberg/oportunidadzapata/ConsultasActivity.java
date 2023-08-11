@@ -1,5 +1,6 @@
 package com.juanfrajberg.oportunidadzapata;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -32,6 +35,9 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Pestaña de mensaje
     static EditText messageTabEditText;
+
+    //Botón para enviar mensaje
+    static ImageView sendMessageButton;
 
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
@@ -50,6 +56,8 @@ public class ConsultasActivity extends AppCompatActivity {
 
         messageTabEditText = findViewById(R.id.consultas_messagetab_edittext);
 
+        sendMessageButton = findViewById(R.id.consultas_sendmessage_imageview);
+
         //Configurar que se vuelva atrás al hacer clic en la flecha
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +71,18 @@ public class ConsultasActivity extends AppCompatActivity {
         messageTabEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE){
-                    //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
-                    messageTabEditText.clearFocus();
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    View view = getCurrentFocus();
+                    sendMessage(view);
                 }
                 return false;
+            }
+        });
+
+        sendMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage(view);
             }
         });
     }
@@ -86,14 +101,14 @@ public class ConsultasActivity extends AppCompatActivity {
             if (v instanceof EditText) {
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     v.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         }
-        return super.dispatchTouchEvent( event );
+        return super.dispatchTouchEvent(event);
     }
 
     //Todo este código es para implementar el cartel de la conectividad
@@ -179,6 +194,7 @@ public class ConsultasActivity extends AppCompatActivity {
     public static void setElementsLayoutClickeable(boolean state) {
         backArrow.setClickable(state);
         messageTabEditText.setClickable(state);
+        sendMessageButton.setClickable(state);
     }
 
     //Función que se llama desde el XML de este layout para animar los cuadros de más información sobre la AI
@@ -190,11 +206,23 @@ public class ConsultasActivity extends AppCompatActivity {
                 .playOn(view);
     }
 
-    public void onSendClick(View view) {
-        //Animación del botón
-        YoYo.with(Techniques.Pulse)
-                .duration(300)
-                .repeat(0)
-                .playOn(view);
+    public void sendMessage(View view) {
+        if (!TextUtils.isEmpty((messageTabEditText.getText().toString()))) {
+            //Animación del botón
+            YoYo.with(Techniques.Pulse)
+                    .duration(300)
+                    .repeat(0)
+                    .playOn(sendMessageButton);
+
+            //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
+            messageTabEditText.clearFocus();
+            messageTabEditText.setText(null);
+
+            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+            ConstraintLayout AIInfoLayout = (ConstraintLayout) findViewById(R.id.consultas_aielements_constraintlayout);
+            AIInfoLayout.removeAllViews();
+        }
     }
 }

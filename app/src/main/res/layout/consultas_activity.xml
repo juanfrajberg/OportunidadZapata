@@ -45,6 +45,8 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consultas_aielements_constraintlayout"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -278,17 +280,16 @@
         android:textColor="#3C3C3C"
         android:textColorHint="#B4B4B4"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintEnd_toStartOf="@id/consultas_message_imageview"
+        app:layout_constraintEnd_toStartOf="@id/consultas_sendmessage_imageview"
         app:layout_constraintStart_toStartOf="@+id/consultas_messagetab_view"
         app:layout_constraintTop_toBottomOf="@+id/consultas_messagetab_view"
         android:imeOptions="actionDone"
         tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
-        android:id="@+id/consultas_message_imageview"
+        android:id="@+id/consultas_sendmessage_imageview"
         android:layout_width="@dimen/_26sdp"
         android:layout_height="@dimen/_26sdp"
-        android:onClick="onSendClick"
         android:adjustViewBounds="true"
         android:contentDescription="search_icon"
         app:layout_constraintBottom_toBottomOf="@+id/consultas_messagetab_edittext"
