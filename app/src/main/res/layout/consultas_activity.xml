@@ -162,91 +162,29 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/consultas_aimessage_relativelayout"
-                android:visibility="gone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/homeconsultas_roundedmessageborder_background"
-                app:layout_constraintTop_toBottomOf="@id/consultas_humanicon_imageview"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:padding="@dimen/_10sdp"
-                >
-
-                <TextView
-                    android:id="@+id/consultas_aimessage_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/nunito_regular"
-                    android:textAlignment="center"
-                    android:textColor="#707070"
-                    android:textSize="@dimen/_11ssp" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_centerInParent="true"
-                    android:elevation="1dp"
-                    android:scaleX="7"
-                    android:scaleY="7"
-                    android:src="@drawable/consultas_loadingdots_gif" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/consultas_humanmessage_relativelayout"
-                android:visibility="gone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/homeconsultas_roundedmessageborder_background"
-                android:backgroundTint="#A0BFFF"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:padding="@dimen/_10sdp"
-                >
-
-                <TextView
-                    android:id="@+id/consultas_humanmessage_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/nunito_regular"
-                    android:text="¿Cómo puedo publicar una solicitud para mi emprendimiento?"
-                    android:textAlignment="center"
-                    android:textColor="#707070"
-                    android:textSize="@dimen/_12ssp" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/consultas_aiicon_imageview"
-                android:visibility="gone"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/consultas_aiicon_imageview"
-                android:layout_marginTop="@dimen/_3sdp"
-                app:layout_constraintTop_toBottomOf="@id/consultas_aimessage_relativelayout"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <ImageView
-                android:id="@+id/consultas_humanicon_imageview"
-                android:visibility="gone"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/consultas_humanicon_imageview"
-                app:layout_constraintTop_toBottomOf="@id/consultas_humanmessage_relativelayout"
-                android:layout_marginTop="@dimen/_3sdp"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:scrollbars="none"
+        android:layout_marginStart="@dimen/_19sdp"
+        android:layout_marginEnd="@dimen/_19sdp"
+        app:layout_constraintTop_toBottomOf="@id/consultas_title_textview"
+        app:layout_constraintBottom_toTopOf="@id/consultas_messagetab_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/consultas_messageslayout_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
 
     </ScrollView>
 

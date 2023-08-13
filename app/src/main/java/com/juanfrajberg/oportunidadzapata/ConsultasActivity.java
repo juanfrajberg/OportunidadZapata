@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,6 +39,9 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Botón para enviar mensaje
     static ImageView sendMessageButton;
+
+    //Para que no se adjunte un marginTop en el primer mensaje y se vea mal
+    boolean firstTimeTalkingWithAI = true;
 
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
@@ -206,25 +210,17 @@ public class ConsultasActivity extends AppCompatActivity {
                 .playOn(view);
     }
 
+    //Función para enviar mensajes y recibir respuesta de AI (todavía no configurada)
     public void sendMessage(View view) {
-        boolean isEmpty = TextUtils.isEmpty((messageTabEditText.getText()));
-        if (!isEmpty) {
+        //Si el EditText no está vacío se ejecuta
+        if (!TextUtils.isEmpty((messageTabEditText.getText()))) {
             //Animación del botón
             YoYo.with(Techniques.Pulse)
                     .duration(300)
                     .repeat(0)
                     .playOn(sendMessageButton);
 
-            TextView messageTextView = (TextView) findViewById(R.id.consultas_humanmessage_textview);
-            messageTextView.setText(messageTabEditText.getText().toString());
-
-            //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
-            messageTabEditText.clearFocus();
-            messageTabEditText.setText(null);
-
-            InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
+            //Se comprueba si se está mostrando la introducción y ayuda sobre AI, si es así se esconde
             TextView explanationText = (TextView) findViewById(R.id.consultas_subtitle_textview);
             RelativeLayout firstItem = (RelativeLayout) findViewById(R.id.consultas_firstitem_relativelayout);
             RelativeLayout secondItem = (RelativeLayout) findViewById(R.id.consultas_seconditem_relativelayout);
@@ -251,6 +247,7 @@ public class ConsultasActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(thirdItem);
 
+                //Se espera medio segundo (duración de la animación de salida) para esconder los elementos
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
@@ -262,39 +259,38 @@ public class ConsultasActivity extends AppCompatActivity {
                 }, 500);
             }
 
-            RelativeLayout AImessageLayout = (RelativeLayout) findViewById(R.id.consultas_aimessage_relativelayout);
-            RelativeLayout humanmessageLayout = (RelativeLayout) findViewById(R.id.consultas_humanmessage_relativelayout);
-            ImageView AIiconImageView = (ImageView) findViewById(R.id.consultas_aiicon_imageview);
-            ImageView humaniconImageView = (ImageView) findViewById(R.id.consultas_humanicon_imageview);
+            //Se crea (infla) el layout con los mensajes del usuario y el bot
+            LinearLayout AIElementsLayout = (LinearLayout) findViewById(R.id.consultas_messageslayout_linearlayout);
+            View messagesToAdd = getLayoutInflater().inflate(R.layout.message_layout, AIElementsLayout, false);
+            AIElementsLayout.addView(messagesToAdd);
 
-            AImessageLayout.setVisibility(View.VISIBLE);
-            humanmessageLayout.setVisibility(View.VISIBLE);
-            AIiconImageView.setVisibility(View.VISIBLE);
-            humaniconImageView.setVisibility(View.VISIBLE);
+            //Se le asigna el texto que escribimos
+            TextView humanMessage = (TextView) messagesToAdd.findViewById(R.id.consultas_humanmessage_textview);
+            humanMessage.setText(messageTabEditText.getText().toString());
 
-            //La animación SlideInUp también se ve muy bien
+            //Si es la primera vez hablando con la AI, el marginTop será de 0, sino queda un espacio feo en la parte superior
+            if (firstTimeTalkingWithAI) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 0, 0, 0); //Todos los márgnes en 0
+                RelativeLayout firstHumanMessage = (RelativeLayout) messagesToAdd.findViewById(R.id.consultas_humanmessage_relativelayout);
+                firstHumanMessage.setLayoutParams(params);
 
-            YoYo.with(Techniques.FadeInUp)
+                //El valor de la variable se asigna a falso para que no se vuelva a ejecutar
+                firstTimeTalkingWithAI = false;
+            }
+
+            //La animación FadeInUp también se ve muy bien
+            YoYo.with(Techniques.SlideInUp)
                     .duration(500)
                     .repeat(0)
-                    .playOn(AImessageLayout);
+                    .playOn(messagesToAdd);
 
-            YoYo.with(Techniques.FadeInUp)
-                    .duration(500)
-                    .repeat(0)
-                    .playOn(humanmessageLayout);
-
-            YoYo.with(Techniques.FadeInUp)
-                    .duration(500)
-                    .repeat(0)
-                    .playOn(AIiconImageView);
-
-            YoYo.with(Techniques.FadeInUp)
-                    .duration(500)
-                    .repeat(0)
-                    .playOn(humaniconImageView);
+            //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
+            messageTabEditText.clearFocus();
+            messageTabEditText.setText(null);
 
         } else {
+            //Pierde el focus de todas formas
             messageTabEditText.clearFocus();
         }
     }
