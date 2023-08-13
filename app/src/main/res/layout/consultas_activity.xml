@@ -46,7 +46,6 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/consultas_aielements_constraintlayout"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -56,9 +55,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_extrabold"
                 android:textSize="@dimen/_30ssp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_12sdp"
                 android:text="@string/consultas_title_text" />
 
             <RelativeLayout
@@ -165,13 +164,14 @@
 
             <RelativeLayout
                 android:id="@+id/consultas_aimessage_relativelayout"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/homeconsultas_roundedmessageborder_background"
-                app:layout_constraintBottom_toBottomOf="@id/consultas_aiicon_imageview"
+                app:layout_constraintTop_toBottomOf="@id/consultas_humanicon_imageview"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:padding="@dimen/_10sdp"
                 >
 
@@ -198,12 +198,12 @@
 
             <RelativeLayout
                 android:id="@+id/consultas_humanmessage_relativelayout"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/homeconsultas_roundedmessageborder_background"
                 android:backgroundTint="#A0BFFF"
-                app:layout_constraintBottom_toBottomOf="@id/consultas_humanicon_imageview"
-                android:layout_marginBottom="@dimen/_16sdp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:padding="@dimen/_10sdp"
@@ -224,26 +224,26 @@
 
             <ImageView
                 android:id="@+id/consultas_aiicon_imageview"
+                android:visibility="gone"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/consultas_aiicon_imageview"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                app:layout_constraintTop_toBottomOf="@id/consultas_humanicon_imageview"
+                android:layout_marginTop="@dimen/_3sdp"
+                app:layout_constraintTop_toBottomOf="@id/consultas_aimessage_relativelayout"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <ImageView
                 android:id="@+id/consultas_humanicon_imageview"
+                android:visibility="gone"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/consultas_humanicon_imageview"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_50sdp"
-                app:layout_constraintTop_toBottomOf="@id/consultas_thirditem_relativelayout"
+                app:layout_constraintTop_toBottomOf="@id/consultas_humanmessage_relativelayout"
+                android:layout_marginTop="@dimen/_3sdp"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

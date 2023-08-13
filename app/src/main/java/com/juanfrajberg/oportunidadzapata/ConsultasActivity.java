@@ -20,10 +20,10 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -207,12 +207,16 @@ public class ConsultasActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
-        if (!TextUtils.isEmpty((messageTabEditText.getText().toString()))) {
+        boolean isEmpty = TextUtils.isEmpty((messageTabEditText.getText()));
+        if (!isEmpty) {
             //Animación del botón
             YoYo.with(Techniques.Pulse)
                     .duration(300)
                     .repeat(0)
                     .playOn(sendMessageButton);
+
+            TextView messageTextView = (TextView) findViewById(R.id.consultas_humanmessage_textview);
+            messageTextView.setText(messageTabEditText.getText().toString());
 
             //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
             messageTabEditText.clearFocus();
@@ -221,8 +225,77 @@ public class ConsultasActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-            ConstraintLayout AIInfoLayout = (ConstraintLayout) findViewById(R.id.consultas_aielements_constraintlayout);
-            AIInfoLayout.removeAllViews();
+            TextView explanationText = (TextView) findViewById(R.id.consultas_subtitle_textview);
+            RelativeLayout firstItem = (RelativeLayout) findViewById(R.id.consultas_firstitem_relativelayout);
+            RelativeLayout secondItem = (RelativeLayout) findViewById(R.id.consultas_seconditem_relativelayout);
+            RelativeLayout thirdItem = (RelativeLayout) findViewById(R.id.consultas_thirditem_relativelayout);
+
+            if (explanationText.isShown() || firstItem.isShown() || secondItem.isShown() || thirdItem.isShown()) {
+                YoYo.with(Techniques.SlideOutRight)
+                        .duration(500)
+                        .repeat(0)
+                        .playOn(explanationText);
+
+                YoYo.with(Techniques.SlideOutLeft)
+                        .duration(500)
+                        .repeat(0)
+                        .playOn(firstItem);
+
+                YoYo.with(Techniques.SlideOutRight)
+                        .duration(500)
+                        .repeat(0)
+                        .playOn(secondItem);
+
+                YoYo.with(Techniques.SlideOutLeft)
+                        .duration(500)
+                        .repeat(0)
+                        .playOn(thirdItem);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        explanationText.setVisibility(View.GONE);
+                        firstItem.setVisibility(View.GONE);
+                        secondItem.setVisibility(View.GONE);
+                        thirdItem.setVisibility(View.GONE);
+                    }
+                }, 500);
+            }
+
+            RelativeLayout AImessageLayout = (RelativeLayout) findViewById(R.id.consultas_aimessage_relativelayout);
+            RelativeLayout humanmessageLayout = (RelativeLayout) findViewById(R.id.consultas_humanmessage_relativelayout);
+            ImageView AIiconImageView = (ImageView) findViewById(R.id.consultas_aiicon_imageview);
+            ImageView humaniconImageView = (ImageView) findViewById(R.id.consultas_humanicon_imageview);
+
+            AImessageLayout.setVisibility(View.VISIBLE);
+            humanmessageLayout.setVisibility(View.VISIBLE);
+            AIiconImageView.setVisibility(View.VISIBLE);
+            humaniconImageView.setVisibility(View.VISIBLE);
+
+            //La animación SlideInUp también se ve muy bien
+
+            YoYo.with(Techniques.FadeInUp)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(AImessageLayout);
+
+            YoYo.with(Techniques.FadeInUp)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(humanmessageLayout);
+
+            YoYo.with(Techniques.FadeInUp)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(AIiconImageView);
+
+            YoYo.with(Techniques.FadeInUp)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(humaniconImageView);
+
+        } else {
+            messageTabEditText.clearFocus();
         }
     }
 }
