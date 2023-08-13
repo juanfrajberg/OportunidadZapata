@@ -1,6 +1,5 @@
 package com.juanfrajberg.oportunidadzapata;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -289,6 +289,19 @@ public class ConsultasActivity extends AppCompatActivity {
             messageTabEditText.clearFocus();
             messageTabEditText.setText(null);
 
+            //Se desliza el ScrollView automáticamente hasta abajo para ver el último mensaje
+            Handler waitUntilMessagesLoad = new Handler();
+            waitUntilMessagesLoad.postDelayed(new Runnable() {
+                public void run() {
+                    ScrollView messagesScrollView = (ScrollView) findViewById(R.id.consultas_messagesscrollview_scrollview);
+                    messagesScrollView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            messagesScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                        }
+                    });
+                }
+            }, 500);
         } else {
             //Pierde el focus de todas formas
             messageTabEditText.clearFocus();
