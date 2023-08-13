@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/consultas_humanmessage_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/homeconsultas_roundedmessageborder_background"
+        android:backgroundTint="#A0BFFF"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/consultas_humanmessage_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/nunito_regular"
+            android:text="¿Cómo puedo publicar una solicitud para mi emprendimiento?"
+            android:textAlignment="center"
+            android:textColor="#707070"
+            android:textSize="@dimen/_12ssp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/consultas_humanicon_imageview"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/consultas_humanicon_imageview"/>
+
+    <RelativeLayout
+        android:id="@+id/consultas_aimessage_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homeconsultas_roundedmessageborder_background"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/consultas_aimessage_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/nunito_regular"
+            android:textAlignment="center"
+            android:textColor="#707070"
+            android:textSize="@dimen/_11ssp" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerInParent="true"
+            android:elevation="1dp"
+            android:scaleX="7"
+            android:scaleY="7"
+            android:src="@drawable/consultas_loadingdots_gif" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/consultas_aiicon_imageview"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/consultas_aiicon_imageview"
+        android:layout_marginTop="@dimen/_3sdp">
+    </ImageView>
+
+</LinearLayout>

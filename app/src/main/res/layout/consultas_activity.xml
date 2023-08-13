@@ -45,6 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consultas_aielements_constraintlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -54,9 +55,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_extrabold"
                 android:textSize="@dimen/_30ssp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_12sdp"
                 android:text="@string/consultas_title_text" />
 
             <RelativeLayout
@@ -161,90 +162,30 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/consultas_aimessage_relativelayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/homeconsultas_roundedmessageborder_background"
-                app:layout_constraintBottom_toBottomOf="@id/consultas_aiicon_imageview"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:padding="@dimen/_10sdp"
-                >
-
-                <TextView
-                    android:id="@+id/consultas_aimessage_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/nunito_regular"
-                    android:textAlignment="center"
-                    android:textColor="#707070"
-                    android:textSize="@dimen/_11ssp" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_centerInParent="true"
-                    android:elevation="1dp"
-                    android:scaleX="7"
-                    android:scaleY="7"
-                    android:src="@drawable/consultas_loadingdots_gif" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/consultas_humanmessage_relativelayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/homeconsultas_roundedmessageborder_background"
-                android:backgroundTint="#A0BFFF"
-                app:layout_constraintBottom_toBottomOf="@id/consultas_humanicon_imageview"
-                android:layout_marginBottom="@dimen/_16sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:padding="@dimen/_10sdp"
-                >
-
-                <TextView
-                    android:id="@+id/consultas_humanmessage_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/nunito_regular"
-                    android:text="¿Cómo puedo publicar una solicitud para mi emprendimiento?"
-                    android:textAlignment="center"
-                    android:textColor="#707070"
-                    android:textSize="@dimen/_12ssp" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/consultas_aiicon_imageview"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/consultas_aiicon_imageview"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                app:layout_constraintTop_toBottomOf="@id/consultas_humanicon_imageview"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <ImageView
-                android:id="@+id/consultas_humanicon_imageview"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/consultas_humanicon_imageview"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_50sdp"
-                app:layout_constraintTop_toBottomOf="@id/consultas_thirditem_relativelayout"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/consultas_messagesscrollview_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:scrollbars="none"
+        android:layout_marginStart="@dimen/_19sdp"
+        android:layout_marginEnd="@dimen/_19sdp"
+        app:layout_constraintTop_toBottomOf="@id/consultas_title_textview"
+        app:layout_constraintBottom_toTopOf="@id/consultas_messagetab_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/consultas_messageslayout_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
 
     </ScrollView>
 
@@ -278,17 +219,16 @@
         android:textColor="#3C3C3C"
         android:textColorHint="#B4B4B4"
         android:textSize="@dimen/_13ssp"
-        app:layout_constraintEnd_toStartOf="@id/consultas_message_imageview"
+        app:layout_constraintEnd_toStartOf="@id/consultas_sendmessage_imageview"
         app:layout_constraintStart_toStartOf="@+id/consultas_messagetab_view"
         app:layout_constraintTop_toBottomOf="@+id/consultas_messagetab_view"
         android:imeOptions="actionDone"
         tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
-        android:id="@+id/consultas_message_imageview"
+        android:id="@+id/consultas_sendmessage_imageview"
         android:layout_width="@dimen/_26sdp"
         android:layout_height="@dimen/_26sdp"
-        android:onClick="onSendClick"
         android:adjustViewBounds="true"
         android:contentDescription="search_icon"
         app:layout_constraintBottom_toBottomOf="@+id/consultas_messagetab_edittext"
