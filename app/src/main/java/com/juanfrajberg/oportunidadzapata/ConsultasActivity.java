@@ -271,8 +271,10 @@ public class ConsultasActivity extends AppCompatActivity {
             AIElementsLayout.addView(messagesToAdd);
 
             //Se le asigna el texto que escribimos
-            TextView humanMessage = (TextView) messagesToAdd.findViewById(R.id.consultas_humanmessage_textview);
-            humanMessage.setText(messageTabEditText.getText().toString());
+            Typewriter humanMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_humanmessage_textview);
+            humanMessage.setText("");
+            humanMessage.setCharacterDelay(50);
+            humanMessage.animateText(messageTabEditText.getText().toString());
 
             //Si es la primera vez hablando con la AI, el marginTop será de 0, sino queda un espacio feo en la parte superior
             if (firstTimeTalkingWithAI) {
