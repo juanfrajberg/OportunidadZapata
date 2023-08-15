@@ -7,9 +7,10 @@
 
     <RelativeLayout
         android:id="@+id/consultas_humanmessage_relativelayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
+        android:layout_gravity="right"
         android:background="@drawable/homeconsultas_roundedmessageborder_background"
         android:backgroundTint="#A0BFFF"
         android:padding="@dimen/_10sdp">
@@ -40,7 +41,7 @@
 
     <RelativeLayout
         android:id="@+id/consultas_aimessage_relativelayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/homeconsultas_roundedmessageborder_background"
         android:padding="@dimen/_10sdp">
@@ -56,8 +57,8 @@
             android:textSize="@dimen/_11ssp" />
 
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_16sdp"
             android:layout_centerInParent="true"
             android:elevation="1dp"
             android:scaleX="7"
