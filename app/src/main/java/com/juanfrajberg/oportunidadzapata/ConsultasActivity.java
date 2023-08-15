@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -89,6 +91,10 @@ public class ConsultasActivity extends AppCompatActivity {
                 sendMessage(view);
             }
         });
+
+        //Antes de que se envíen mensajes no debe aparecer el ScrollView porque tapa los otros elementos y no se los puede clickear
+        ScrollView messagesScrollView = (ScrollView) findViewById(R.id.consultas_messagesscrollview_scrollview);
+        messagesScrollView.setVisibility(View.GONE);
     }
 
     @Override
@@ -261,7 +267,7 @@ public class ConsultasActivity extends AppCompatActivity {
 
             //Se crea (infla) el layout con los mensajes del usuario y el bot
             LinearLayout AIElementsLayout = (LinearLayout) findViewById(R.id.consultas_messageslayout_linearlayout);
-            View messagesToAdd = getLayoutInflater().inflate(R.layout.message_layout, AIElementsLayout, false);
+            View messagesToAdd = getLayoutInflater().inflate(R.layout.messages_layout, AIElementsLayout, false);
             AIElementsLayout.addView(messagesToAdd);
 
             //Se le asigna el texto que escribimos
@@ -270,8 +276,13 @@ public class ConsultasActivity extends AppCompatActivity {
 
             //Si es la primera vez hablando con la AI, el marginTop será de 0, sino queda un espacio feo en la parte superior
             if (firstTimeTalkingWithAI) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                //Se muestra el ScrollView que había sido ocultado para que no tape otros elementos y se pueda hacer clic
+                ScrollView messagesScrollView = (ScrollView) findViewById(R.id.consultas_messagesscrollview_scrollview);
+                messagesScrollView.setVisibility(View.VISIBLE);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(0, 0, 0, 0); //Todos los márgnes en 0
+                params.gravity = Gravity.RIGHT; //Para que el mensaje aparezca a la derecha
                 RelativeLayout firstHumanMessage = (RelativeLayout) messagesToAdd.findViewById(R.id.consultas_humanmessage_relativelayout);
                 firstHumanMessage.setLayoutParams(params);
 
@@ -284,6 +295,9 @@ public class ConsultasActivity extends AppCompatActivity {
                     .duration(500)
                     .repeat(0)
                     .playOn(messagesToAdd);
+
+            //Responder mensaje
+            answerMessage(messageTabEditText.getText().toString());
 
             //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
             messageTabEditText.clearFocus();
@@ -306,5 +320,11 @@ public class ConsultasActivity extends AppCompatActivity {
             //Pierde el focus de todas formas
             messageTabEditText.clearFocus();
         }
+    }
+
+    //Función para responder los mensajes enviados por el usuario
+    public void answerMessage(String message) {
+        message = message.toLowerCase(); //Convertir el mensaje en minúscula para que el reconocimiento sea más simple
+        if (message.contains("hola")) Toast.makeText(getApplicationContext(), "¡Hola!", Toast.LENGTH_SHORT).show();
     }
 }
