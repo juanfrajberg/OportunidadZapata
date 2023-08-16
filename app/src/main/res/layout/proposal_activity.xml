@@ -105,7 +105,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/proposal_insidescroll_constraintlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:clickable="true">
 
             <TextView
                 android:id="@+id/proposal_nombrecompleto_textview"

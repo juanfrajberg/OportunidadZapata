@@ -35,6 +35,7 @@ public class Typewriter extends TextView {
             }
             else {
                 hasFinished = true;
+                ConsultasActivity.scrollToBottom();
             }
         }
     };
