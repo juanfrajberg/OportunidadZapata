@@ -157,121 +157,150 @@
             android:focusableInTouchMode="true"
             android:clickable="true">
 
-            <TextView
-                android:id="@+id/home_requisitos_text"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:id="@+id/home_buttonsscroll_horizontalscrollview"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:elevation="10dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="Requisitos"
-                android:textColor="#254B98"
-                android:textSize="@dimen/_11ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/home_requisitos_button"
-                app:layout_constraintEnd_toEndOf="@+id/home_requisitos_button"
-                app:layout_constraintStart_toStartOf="@+id/home_requisitos_button"
-                android:layout_marginBottom="@dimen/_7sdp"/>
-
-            <ImageView
-                android:id="@+id/home_requisitos_imageview"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_54sdp"
-                android:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/home_requisitos_button"
-                app:layout_constraintEnd_toEndOf="@+id/home_requisitos_button"
-                app:layout_constraintStart_toStartOf="@+id/home_requisitos_button"
-                app:layout_constraintTop_toTopOf="@+id/home_requisitos_button"
-                app:layout_constraintVertical_bias="0.368"
-                app:srcCompat="@drawable/home_requisitos_image" />
-
-            <Button
-                android:id="@+id/home_requisitos_button"
-                android:layout_width="@dimen/_89sdp"
-                android:layout_height="@dimen/_89sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/homeproposal_roundedbuttons_background"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                app:backgroundTint="@color/buttons"
+                android:scrollbars="none"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="SpeakableTextPresentCheck" />
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <Button
-                android:id="@+id/home_nosotros_button"
-                android:layout_width="@dimen/_89sdp"
-                android:layout_height="@dimen/_89sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/homeproposal_roundedbuttons_background"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                app:backgroundTint="@color/buttons"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="SpeakableTextPresentCheck" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/home_pasosaseguir_button"
-                android:layout_width="@dimen/_89sdp"
-                android:layout_height="@dimen/_89sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/homeproposal_roundedbuttons_background"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                app:backgroundTint="@color/buttons"
-                app:layout_constraintEnd_toStartOf="@+id/home_nosotros_button"
-                app:layout_constraintHorizontal_bias="0.48"
-                app:layout_constraintStart_toEndOf="@+id/home_requisitos_button"
-                tools:ignore="SpeakableTextPresentCheck" />
+                    <TextView
+                        android:id="@+id/home_requisitos_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="Requisitos"
+                        android:textColor="#254B98"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_requisitos_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_requisitos_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_requisitos_button"
+                        android:layout_marginBottom="@dimen/_7sdp"/>
 
-            <TextView
-                android:id="@+id/home_pasosaseguir_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="10dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="Pasos a seguir"
-                android:textColor="#254B98"
-                android:textSize="@dimen/_11ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/home_pasosaseguir_button"
-                app:layout_constraintEnd_toEndOf="@+id/home_pasosaseguir_button"
-                app:layout_constraintStart_toStartOf="@+id/home_pasosaseguir_button"
-                android:layout_marginBottom="@dimen/_7sdp" />
+                    <ImageView
+                        android:id="@+id/home_requisitos_imageview"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_54sdp"
+                        android:elevation="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_requisitos_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_requisitos_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_requisitos_button"
+                        app:layout_constraintTop_toTopOf="@+id/home_requisitos_button"
+                        app:layout_constraintVertical_bias="0.368"
+                        app:srcCompat="@drawable/home_requisitos_image" />
 
-            <ImageView
-                android:id="@+id/home_pasosaseguir_imageview"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_54sdp"
-                android:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/home_pasosaseguir_button"
-                app:layout_constraintEnd_toEndOf="@+id/home_pasosaseguir_button"
-                app:layout_constraintStart_toStartOf="@+id/home_pasosaseguir_button"
-                app:layout_constraintTop_toTopOf="@+id/home_pasosaseguir_button"
-                app:layout_constraintVertical_bias="0.368"
-                app:srcCompat="@drawable/home_pasosaseguir_image" />
+                    <Button
+                        android:id="@+id/home_requisitos_button"
+                        android:layout_width="@dimen/_89sdp"
+                        android:layout_height="@dimen/_89sdp"
+                        android:background="@drawable/homeproposal_roundedbuttons_background"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/buttons"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="SpeakableTextPresentCheck" />
 
-            <TextView
-                android:id="@+id/home_nosotros_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="10dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="Nosotros"
-                android:textColor="#254B98"
-                android:textSize="@dimen/_11ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/home_nosotros_button"
-                app:layout_constraintEnd_toEndOf="@+id/home_nosotros_button"
-                app:layout_constraintStart_toStartOf="@+id/home_nosotros_button"
-                android:layout_marginBottom="@dimen/_7sdp" />
+                    <Button
+                        android:id="@+id/home_pasosaseguir_button"
+                        android:layout_width="@dimen/_89sdp"
+                        android:layout_height="@dimen/_89sdp"
+                        android:layout_margin="@dimen/_6sdp"
+                        android:background="@drawable/homeproposal_roundedbuttons_background"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/buttons"
+                        app:layout_constraintEnd_toStartOf="@+id/home_nosotros_button"
+                        app:layout_constraintHorizontal_bias="0.48"
+                        app:layout_constraintStart_toEndOf="@+id/home_requisitos_button"
+                        tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageView
-                android:id="@+id/home_nosotros_pasosaseguir"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_54sdp"
-                android:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/home_nosotros_button"
-                app:layout_constraintEnd_toEndOf="@+id/home_nosotros_button"
-                app:layout_constraintStart_toStartOf="@+id/home_nosotros_button"
-                app:layout_constraintTop_toTopOf="@+id/home_nosotros_button"
-                app:layout_constraintVertical_bias="0.368"
-                app:srcCompat="@drawable/home_nosotros_image" />
+                    <Button
+                        android:id="@+id/home_nosotros_button"
+                        android:layout_width="@dimen/_89sdp"
+                        android:layout_height="@dimen/_89sdp"
+                        android:layout_margin="@dimen/_6sdp"
+                        android:background="@drawable/homeproposal_roundedbuttons_background"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/buttons"
+                        app:layout_constraintEnd_toEndOf="@id/home_apoyanos_button"
+                        app:layout_constraintStart_toStartOf="@id/home_pasosaseguir_button"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <Button
+                        android:id="@+id/home_apoyanos_button"
+                        android:layout_width="@dimen/_89sdp"
+                        android:layout_height="@dimen/_89sdp"
+                        android:background="@drawable/homeproposal_roundedbuttons_background"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/buttons"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:id="@+id/home_pasosaseguir_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="Pasos a seguir"
+                        android:textColor="#254B98"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_pasosaseguir_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_pasosaseguir_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_pasosaseguir_button"
+                        android:layout_marginBottom="@dimen/_7sdp" />
+
+                    <ImageView
+                        android:id="@+id/home_pasosaseguir_imageview"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_54sdp"
+                        android:elevation="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_pasosaseguir_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_pasosaseguir_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_pasosaseguir_button"
+                        app:layout_constraintTop_toTopOf="@+id/home_pasosaseguir_button"
+                        app:layout_constraintVertical_bias="0.368"
+                        app:srcCompat="@drawable/home_pasosaseguir_image" />
+
+                    <TextView
+                        android:id="@+id/home_nosotros_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="Nosotros"
+                        android:textColor="#254B98"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_nosotros_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_nosotros_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_nosotros_button"
+                        android:layout_marginBottom="@dimen/_7sdp" />
+
+                    <ImageView
+                        android:id="@+id/home_nosotros_pasosaseguir"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_54sdp"
+                        android:elevation="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_nosotros_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_nosotros_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_nosotros_button"
+                        app:layout_constraintTop_toTopOf="@+id/home_nosotros_button"
+                        app:layout_constraintVertical_bias="0.368"
+                        app:srcCompat="@drawable/home_nosotros_image" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </HorizontalScrollView>
 
             <ImageView
                 android:id="@+id/home_school_imageview"
@@ -280,7 +309,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.48"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_pasosaseguir_button"
+                app:layout_constraintTop_toBottomOf="@+id/home_buttonsscroll_horizontalscrollview"
                 app:layout_constraintVertical_bias="0.06"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"
