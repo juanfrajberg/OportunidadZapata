@@ -253,8 +253,11 @@ public class HomeActivity extends AppCompatActivity {
         AIrelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, ConsultasActivity.class));
+                Intent openConsultasActivity = new Intent(HomeActivity.this, ConsultasActivity.class);
+                openConsultasActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(openConsultasActivity);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out); //Animación
+                //startActivity(new Intent(HomeActivity.this, ConsultasActivity.class));
 
                 //Animación del elemento
                 YoYo.with(Techniques.Pulse)
@@ -267,8 +270,11 @@ public class HomeActivity extends AppCompatActivity {
         AIview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, ConsultasActivity.class));
+                Intent openConsultasActivity = new Intent(HomeActivity.this, ConsultasActivity.class);
+                openConsultasActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(openConsultasActivity);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out); //Animación
+                //startActivity(new Intent(HomeActivity.this, ConsultasActivity.class));
 
                 //Animación del elemento (acá animo el layout, es decir el mensaje, porque queda mejor)
                 YoYo.with(Techniques.Pulse)
@@ -281,8 +287,11 @@ public class HomeActivity extends AppCompatActivity {
         AIGIF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, ConsultasActivity.class));
+                Intent openConsultasActivity = new Intent(HomeActivity.this, ConsultasActivity.class);
+                openConsultasActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(openConsultasActivity);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out); //Animación
+                //startActivity(new Intent(HomeActivity.this, ConsultasActivity.class));
 
                 //Animación del elemento (acá animo el layout, es decir el mensaje, porque queda mejor)
                 YoYo.with(Techniques.Pulse)

@@ -24,12 +24,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+
+import java.util.Random;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class ConsultasActivity extends AppCompatActivity {
 
@@ -44,6 +47,18 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Para que no se adjunte un marginTop en el primer mensaje y se vea mal
     boolean firstTimeTalkingWithAI = true;
+
+    //Para poder acceder desde la función de sendMessage y answerMessage
+    View messagesToAdd;
+
+    //Variable interna para saber si se está reproduciendo la animación de "pensar" y se puede enviar o no un mensaje
+    boolean canSendMessage = true;
+
+    //Para crear una respuesta aleatoria con el chat de AI
+    int randomAnswer;
+
+    //Para guardar el número de la última respuesta y que no se repita
+    int lastAnswer;
 
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
@@ -68,7 +83,8 @@ public class ConsultasActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                //finish(); //No lo uso para que guarde el estado de la actividad
+                startActivity(new Intent(ConsultasActivity.this, HomeActivity.class));
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -77,9 +93,13 @@ public class ConsultasActivity extends AppCompatActivity {
         messageTabEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (actionId == EditorInfo.IME_ACTION_DONE && Typewriter.hasFinished() && canSendMessage) {
+                    messageTabEditText.clearFocus();
                     View view = getCurrentFocus();
                     sendMessage(view);
+                }
+                else {
+                    messageTabEditText.clearFocus();
                 }
                 return false;
             }
@@ -88,7 +108,7 @@ public class ConsultasActivity extends AppCompatActivity {
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessage(view);
+                if (Typewriter.hasFinished() && canSendMessage) sendMessage(view);
             }
         });
 
@@ -99,7 +119,8 @@ public class ConsultasActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        //finish(); //No lo uso para que guarde el estado de la actividad
+        startActivity(new Intent(ConsultasActivity.this, HomeActivity.class));
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
@@ -218,6 +239,8 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Función para enviar mensajes y recibir respuesta de AI (todavía no configurada)
     public void sendMessage(View view) {
+        canSendMessage = false;
+
         //Si el EditText no está vacío se ejecuta
         if (!TextUtils.isEmpty((messageTabEditText.getText()))) {
             //Animación del botón
@@ -267,14 +290,12 @@ public class ConsultasActivity extends AppCompatActivity {
 
             //Se crea (infla) el layout con los mensajes del usuario y el bot
             LinearLayout AIElementsLayout = (LinearLayout) findViewById(R.id.consultas_messageslayout_linearlayout);
-            View messagesToAdd = getLayoutInflater().inflate(R.layout.messages_layout, AIElementsLayout, false);
+            messagesToAdd = getLayoutInflater().inflate(R.layout.messages_layout, AIElementsLayout, false);
             AIElementsLayout.addView(messagesToAdd);
 
             //Se le asigna el texto que escribimos
-            Typewriter humanMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_humanmessage_textview);
-            humanMessage.setText("");
-            humanMessage.setCharacterDelay(50);
-            humanMessage.animateText(messageTabEditText.getText().toString());
+            TextView humanMessage = (TextView) messagesToAdd.findViewById(R.id.consultas_humanmessage_textview);
+            humanMessage.setText(messageTabEditText.getText().toString());
 
             //Si es la primera vez hablando con la AI, el marginTop será de 0, sino queda un espacio feo en la parte superior
             if (firstTimeTalkingWithAI) {
@@ -328,7 +349,67 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Función para responder los mensajes enviados por el usuario
     public void answerMessage(String message) {
+        final int min = 1500;
+        final int max = 4500;
+        //Genera un número aleatorio con el mínimo y el máximo inclusive
+        final int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
+
+        GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+        Handler thinkingTime = new Handler();
+        thinkingTime.postDelayed(new Runnable() {
+            public void run() {
+                YoYo.with(Techniques.Tada)
+                        .duration(400)
+                        .repeat(0)
+                        .playOn(answerAIGif);
+                Handler hideGIF = new Handler();
+                hideGIF.postDelayed(new Runnable() {
+                    public void run() {
+                        canSendMessage = true;
+                        answerAIGif.setVisibility(View.GONE);
+
+                        //Genera respuestas aleatorias hasta que no se repita con la anterior
+                        generateRandomAnswer();
+                        while (lastAnswer == randomAnswer) {
+                            generateRandomAnswer();
+                        }
+                        lastAnswer = randomAnswer;
+
+                        String firstAnswer = "¡Hola! Soy el Bot de Oportunidad Zapata, la aplicación ideal para la búsqueda y oferta de trabajo. 💼 Fui programado para asistirte en el proceso de crear tu currículum, y puedo resolver cualquier duda que tengas al respecto. 😃";
+                        String secondAnswer = "¡Saludos! Soy el Chatbot de Oportunidad Zapata, la plataforma perfecta para encontrar y ofrecer empleos. 🌟 Estoy aquí para guiarte en la creación de tu currículum y puedo responder a todas tus preguntas sobre el tema. 📚";
+                        String thirdAnswer = "¡Hola! Me llamo Bot de Oportunidad Zapata y estoy aquí para ayudarte en tu búsqueda y oferta de empleo. 🌼 Mi función es asistirte en la elaboración de tu currículum y puedo resolver cualquier consulta que tengas sobre este proceso. 📋";
+                        String finalAnswer = "";
+                        switch (randomAnswer) {
+                            case 1:
+                                finalAnswer = firstAnswer;
+                                break;
+                            case 2:
+                                finalAnswer = secondAnswer;
+                                break;
+                            case 3:
+                                finalAnswer = thirdAnswer;
+                                break;
+                        }
+
+                        //Lo hace con el efecto Typewriter para que se vea mejor
+                        Typewriter AIMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_aimessage_textview);
+                        AIMessage.setText("");
+                        AIMessage.setCharacterDelay(50);
+                        AIMessage.animateText(finalAnswer);
+                    }
+                }, 400); //El tiempo aleatorio que se demora en reproducir la animación de salida
+            }
+        }, randomWaitingTime); //El tiempo aleatorio que se demora en "pensar"
+
         message = message.toLowerCase(); //Convertir el mensaje en minúscula para que el reconocimiento sea más simple
-        if (message.contains("hola")) Toast.makeText(getApplicationContext(), "¡Hola!", Toast.LENGTH_SHORT).show();
+        //if (message.contains("hola")) Toast.makeText(getApplicationContext(), "¡Hola!", Toast.LENGTH_SHORT).show(); //Para comprender mensajes en un futuro
+    }
+
+    public void generateRandomAnswer() {
+        //El bot responde con un mensaje de forma aleatoria
+        final int min = 1;
+        final int max = 3;
+        //Genera un número aleatorio con el mínimo y el máximo inclusive
+        randomAnswer = new Random().nextInt((max - min) + 1) + min;
     }
 }
