@@ -1,5 +1,6 @@
 package com.juanfrajberg.oportunidadzapata;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -350,6 +351,18 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviar un correo a Oportunidad Zapata."));
             }
         });
+
+        //Esconder el teclado cuando cambia el focus
+        //Hacerlo de esta forma es lo más óptimo porque permite que me desplace por el ScrollView
+        searchTabEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
     }
 
     //Función que se ejecuta al hacer clic en el texto "oportunidadzapata@gmail.com"
@@ -372,24 +385,6 @@ public class HomeActivity extends AppCompatActivity {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
             startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviar un correo."));
         }
-    }
-
-    //Función para perder el focus cuando se hace clic fuera del elemento
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event);
     }
 
     //Función para que cuando el usuario vuelva atrás, vuelva a la pantalla de Start y no a alguna

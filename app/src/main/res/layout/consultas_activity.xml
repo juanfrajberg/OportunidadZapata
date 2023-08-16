@@ -47,7 +47,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/consultas_aielements_constraintlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:clickable="true">
 
             <TextView
                 android:id="@+id/consultas_subtitle_textview"
@@ -184,6 +186,8 @@
             android:id="@+id/consultas_messageslayout_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
             android:orientation="vertical">
         </LinearLayout>
 

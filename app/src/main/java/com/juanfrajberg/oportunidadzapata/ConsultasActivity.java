@@ -1,11 +1,11 @@
 package com.juanfrajberg.oportunidadzapata;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -44,6 +43,9 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Botón para enviar mensaje
     static ImageView sendMessageButton;
+
+    //ScrollView de los mensajes
+    static ScrollView messagesScrollView;
 
     //Para que no se adjunte un marginTop en el primer mensaje y se vea mal
     boolean firstTimeTalkingWithAI = true;
@@ -79,6 +81,8 @@ public class ConsultasActivity extends AppCompatActivity {
 
         sendMessageButton = findViewById(R.id.consultas_sendmessage_imageview);
 
+        messagesScrollView = findViewById(R.id.consultas_messagesscrollview_scrollview);
+
         //Configurar que se vuelva atrás al hacer clic en la flecha
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +101,7 @@ public class ConsultasActivity extends AppCompatActivity {
                     messageTabEditText.clearFocus();
                     View view = getCurrentFocus();
                     sendMessage(view);
-                }
-                else {
+                } else {
                     messageTabEditText.clearFocus();
                 }
                 return false;
@@ -115,6 +118,18 @@ public class ConsultasActivity extends AppCompatActivity {
         //Antes de que se envíen mensajes no debe aparecer el ScrollView porque tapa los otros elementos y no se los puede clickear
         ScrollView messagesScrollView = (ScrollView) findViewById(R.id.consultas_messagesscrollview_scrollview);
         messagesScrollView.setVisibility(View.GONE);
+
+        //Esconder el teclado cuando cambia el focus
+        //Hacerlo de esta forma es lo más óptimo porque permite que me desplace por el ScrollView
+        messageTabEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
     }
 
     @Override
@@ -122,24 +137,6 @@ public class ConsultasActivity extends AppCompatActivity {
         //finish(); //No lo uso para que guarde el estado de la actividad
         startActivity(new Intent(ConsultasActivity.this, HomeActivity.class));
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-    }
-
-    //Función para perder el focus cuando se hace clic fuera del elemento
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event);
     }
 
     //Todo este código es para implementar el cartel de la conectividad
@@ -226,6 +223,7 @@ public class ConsultasActivity extends AppCompatActivity {
         backArrow.setClickable(state);
         messageTabEditText.setClickable(state);
         sendMessageButton.setClickable(state);
+        messagesScrollView.setClickable(state);
     }
 
     //Función que se llama desde el XML de este layout para animar los cuadros de más información sobre la AI
@@ -327,20 +325,6 @@ public class ConsultasActivity extends AppCompatActivity {
             //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
             messageTabEditText.clearFocus();
             messageTabEditText.setText(null);
-
-            //Se desliza el ScrollView automáticamente hasta abajo para ver el último mensaje
-            Handler waitUntilMessagesLoad = new Handler();
-            waitUntilMessagesLoad.postDelayed(new Runnable() {
-                public void run() {
-                    ScrollView messagesScrollView = (ScrollView) findViewById(R.id.consultas_messagesscrollview_scrollview);
-                    messagesScrollView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            messagesScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                        }
-                    });
-                }
-            }, 500);
         } else {
             //Pierde el focus de todas formas
             messageTabEditText.clearFocus();
@@ -394,7 +378,7 @@ public class ConsultasActivity extends AppCompatActivity {
                         //Lo hace con el efecto Typewriter para que se vea mejor
                         Typewriter AIMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_aimessage_textview);
                         AIMessage.setText("");
-                        AIMessage.setCharacterDelay(50);
+                        AIMessage.setCharacterDelay(35);
                         AIMessage.animateText(finalAnswer);
                     }
                 }, 400); //El tiempo aleatorio que se demora en reproducir la animación de salida
@@ -411,5 +395,12 @@ public class ConsultasActivity extends AppCompatActivity {
         final int max = 3;
         //Genera un número aleatorio con el mínimo y el máximo inclusive
         randomAnswer = new Random().nextInt((max - min) + 1) + min;
+    }
+
+    //Función para deslizar hasta abajo cuando la respuesta termina de ser generada
+    public static void scrollToBottom() {
+        //Se desliza el ScrollView automáticamente hasta abajo para ver el último mensaje
+        //Si uso un fullScroll, como antes, se pierde el focus
+        messagesScrollView.smoothScrollTo(0, messagesScrollView.getBottom());
     }
 }
