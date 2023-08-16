@@ -11,6 +11,7 @@ public class Typewriter extends TextView {
     private CharSequence mText;
     private int mIndex;
     private long mDelay = 150; // in ms
+    private static boolean hasFinished = true;
 
     public Typewriter(Context context) {
         super(context);
@@ -30,6 +31,10 @@ public class Typewriter extends TextView {
 
             if (mIndex <= mText.length()) {
                 mHandler.postDelayed(characterAdder, mDelay);
+                hasFinished = false;
+            }
+            else {
+                hasFinished = true;
             }
         }
     };
@@ -45,5 +50,9 @@ public class Typewriter extends TextView {
 
     public void setCharacterDelay(long m) {
         mDelay = m;
+    }
+
+    public static boolean hasFinished() {
+        return hasFinished;
     }
 }
