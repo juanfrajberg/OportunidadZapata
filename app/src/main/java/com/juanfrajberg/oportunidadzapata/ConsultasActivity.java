@@ -282,11 +282,13 @@ public class ConsultasActivity extends AppCompatActivity {
                 ScrollView messagesScrollView = (ScrollView) findViewById(R.id.consultas_messagesscrollview_scrollview);
                 messagesScrollView.setVisibility(View.VISIBLE);
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 0, 0, 0); //Todos los márgnes en 0
-                params.gravity = Gravity.RIGHT; //Para que el mensaje aparezca a la derecha
                 RelativeLayout firstHumanMessage = (RelativeLayout) messagesToAdd.findViewById(R.id.consultas_humanmessage_relativelayout);
-                firstHumanMessage.setLayoutParams(params);
+                LinearLayout.LayoutParams oldParams = (LinearLayout.LayoutParams) firstHumanMessage.getLayoutParams();
+                LinearLayout.LayoutParams newParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                newParams.topMargin = 0; //Para que no haya espacio arriba
+                newParams.gravity = Gravity.RIGHT; //Para que el mensaje aparezca a la derecha
+                newParams.leftMargin = oldParams.leftMargin; //Consigo el marginLeft de los parámetros viejos, en los nuevos vale 0
+                firstHumanMessage.setLayoutParams(newParams);
 
                 //El valor de la variable se asigna a falso para que no se vuelva a ejecutar
                 firstTimeTalkingWithAI = false;
