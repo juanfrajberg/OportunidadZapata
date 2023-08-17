@@ -5,7 +5,7 @@ A job board created by Martín Zapata, for the community 💼🤝
 An application for Android mobile devices that acts as a job board, with a simple and easy-to-understand design, and a usefulness and potential that exceeds the limits.
 
 <p align="center">
-  <img src="https://github.com/juanfrajberg/OportunidadZapata/assets/76226647/da775ae0-f103-4131-a310-dbdd80fa029a" />
+  <img src=https://github.com/juanfrajberg/OportunidadZapata/assets/76226647/7295cf18-d22a-492a-bf2d-7e7a066aba25"/>
 </p>
 
 ## Made with 🛠
