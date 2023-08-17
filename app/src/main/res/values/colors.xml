@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="buttons">#D1CECE</color>
+    <color name="scrollbar">#B4B4B4</color>
 </resources>
