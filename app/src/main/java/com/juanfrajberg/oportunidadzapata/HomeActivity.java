@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -14,12 +13,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     static Button requisitosButton; //Botón de requisitos
     static Button pasosaseguirButton; //Botón de pasos a seguir
     static Button nosotrosButton; //Botón de nosotros
+    static Button apoyanosButton; //Botón de nosotros
 
     //Botones de las distintas pestañas
     static ImageView contactButton; //Botón de contacto
@@ -71,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
     BottomSheetDialog requisitosDialog;
     BottomSheetDialog pasosaseguirDialog;
     BottomSheetDialog nosotrosDialog;
+    BottomSheetDialog apoyanosDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
         requisitosButton = findViewById(R.id.home_requisitos_button);
         pasosaseguirButton = findViewById(R.id.home_pasosaseguir_button);
         nosotrosButton = findViewById(R.id.home_nosotros_button);
+        apoyanosButton = findViewById(R.id.home_apoyanos_button);
 
         contactButton = findViewById(R.id.home_contact_imageview);
         proposalButton = findViewById(R.id.home_proposal_imageview);
@@ -121,6 +123,10 @@ public class HomeActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(requisitosButton);
+
+                //Se centra el ScrollView en ese elemento
+                HorizontalScrollView buttonsScrollView = (HorizontalScrollView) findViewById(R.id.home_buttonsscroll_horizontalscrollview);
+                buttonsScrollView.smoothScrollTo(requisitosButton.getLeft(), 0);
             }
         });
 
@@ -139,6 +145,10 @@ public class HomeActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(pasosaseguirButton);
+
+                //Se centra el ScrollView en ese elemento
+                HorizontalScrollView buttonsScrollView = (HorizontalScrollView) findViewById(R.id.home_buttonsscroll_horizontalscrollview);
+                buttonsScrollView.smoothScrollTo(pasosaseguirButton.getLeft(), 0);
             }
         });
 
@@ -157,6 +167,31 @@ public class HomeActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(nosotrosButton);
+
+                //Se centra el ScrollView en ese elemento
+                HorizontalScrollView buttonsScrollView = (HorizontalScrollView) findViewById(R.id.home_buttonsscroll_horizontalscrollview);
+                buttonsScrollView.smoothScrollTo(nosotrosButton.getLeft(), 0);
+            }
+        });
+
+        apoyanosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Mostrar su respectivo Bottom Sheet Dialog
+                View v = getLayoutInflater().inflate(R.layout.home_bottomsheet_apoyanos, null);
+                apoyanosDialog = new BottomSheetDialog(HomeActivity.this, R.style.BottomSheetDialog); // Style here
+                apoyanosDialog.setContentView(v);
+                apoyanosDialog.show();
+
+                //Animación del elemento
+                YoYo.with(Techniques.Pulse)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(apoyanosButton);
+
+                //Se centra el ScrollView en ese elemento
+                HorizontalScrollView buttonsScrollView = (HorizontalScrollView) findViewById(R.id.home_buttonsscroll_horizontalscrollview);
+                buttonsScrollView.smoothScrollTo(apoyanosButton.getLeft(), 0);
             }
         });
 
@@ -449,6 +484,7 @@ public class HomeActivity extends AppCompatActivity {
                     if (requisitosDialog != null) requisitosDialog.dismiss();
                     if (pasosaseguirDialog != null) pasosaseguirDialog.dismiss();
                     if (nosotrosDialog != null) nosotrosDialog.dismiss();
+                    if (apoyanosDialog != null) apoyanosDialog.dismiss();
 
                     i = new Intent(HomeActivity.this, WiFiActivity.class);
                     i.putExtra("State", "ON");
@@ -489,6 +525,7 @@ public class HomeActivity extends AppCompatActivity {
         requisitosButton.setClickable(state);
         pasosaseguirButton.setClickable(state);
         nosotrosButton.setClickable(state);
+        apoyanosButton.setClickable(state);
         contactButton.setClickable(state);
         proposalButton.setClickable(state);
         searchTabEditText.setClickable(state);

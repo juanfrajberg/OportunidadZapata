@@ -199,8 +199,8 @@
 
                     <Button
                         android:id="@+id/home_requisitos_button"
-                        android:layout_width="@dimen/_89sdp"
-                        android:layout_height="@dimen/_89sdp"
+                        android:layout_width="@dimen/_91sdp"
+                        android:layout_height="@dimen/_91sdp"
                         android:background="@drawable/homeproposal_roundedbuttons_background"
                         android:textAlignment="center"
                         android:textAllCaps="false"
@@ -210,8 +210,8 @@
 
                     <Button
                         android:id="@+id/home_pasosaseguir_button"
-                        android:layout_width="@dimen/_89sdp"
-                        android:layout_height="@dimen/_89sdp"
+                        android:layout_width="@dimen/_91sdp"
+                        android:layout_height="@dimen/_91sdp"
                         android:layout_margin="@dimen/_6sdp"
                         android:background="@drawable/homeproposal_roundedbuttons_background"
                         android:textAlignment="center"
@@ -224,8 +224,8 @@
 
                     <Button
                         android:id="@+id/home_nosotros_button"
-                        android:layout_width="@dimen/_89sdp"
-                        android:layout_height="@dimen/_89sdp"
+                        android:layout_width="@dimen/_91sdp"
+                        android:layout_height="@dimen/_91sdp"
                         android:layout_margin="@dimen/_6sdp"
                         android:background="@drawable/homeproposal_roundedbuttons_background"
                         android:textAlignment="center"
@@ -237,8 +237,8 @@
 
                     <Button
                         android:id="@+id/home_apoyanos_button"
-                        android:layout_width="@dimen/_89sdp"
-                        android:layout_height="@dimen/_89sdp"
+                        android:layout_width="@dimen/_91sdp"
+                        android:layout_height="@dimen/_91sdp"
                         android:background="@drawable/homeproposal_roundedbuttons_background"
                         android:textAlignment="center"
                         android:textAllCaps="false"
@@ -287,7 +287,7 @@
                         android:layout_marginBottom="@dimen/_7sdp" />
 
                     <ImageView
-                        android:id="@+id/home_nosotros_pasosaseguir"
+                        android:id="@+id/home_nosotros_imageview"
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="@dimen/_54sdp"
                         android:elevation="10dp"
@@ -297,6 +297,32 @@
                         app:layout_constraintTop_toTopOf="@+id/home_nosotros_button"
                         app:layout_constraintVertical_bias="0.368"
                         app:srcCompat="@drawable/home_nosotros_image" />
+
+                    <TextView
+                        android:id="@+id/home_apoyanos_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="Apoyanos"
+                        android:textColor="#254B98"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_apoyanos_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_apoyanos_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_apoyanos_button"
+                        android:layout_marginBottom="@dimen/_7sdp" />
+
+                    <ImageView
+                        android:id="@+id/home_apoyanos_imageview"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_54sdp"
+                        android:elevation="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/home_apoyanos_button"
+                        app:layout_constraintEnd_toEndOf="@+id/home_apoyanos_button"
+                        app:layout_constraintStart_toStartOf="@+id/home_apoyanos_button"
+                        app:layout_constraintTop_toTopOf="@+id/home_apoyanos_button"
+                        app:layout_constraintVertical_bias="0.368"
+                        app:srcCompat="@drawable/home_apoyanos_image" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
