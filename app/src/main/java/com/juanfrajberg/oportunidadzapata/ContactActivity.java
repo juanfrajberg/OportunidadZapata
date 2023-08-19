@@ -548,8 +548,7 @@ public class ContactActivity extends AppCompatActivity {
         infoDialog.show();
 
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.92); //Un 92% de la pantalla para la anchura
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.85); //Un 85% de la pantalla para la altura
-        infoDialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT); //ViewGroup.LayoutParams.MATCH_PARENT (para ajustar con WRAP_CONTENT)
+        infoDialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT); //El alto se ajusta al contenido del Dialog
         infoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
