@@ -15,8 +15,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -548,7 +548,7 @@ public class ContactActivity extends AppCompatActivity {
         infoDialog.show();
 
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.92); //Un 92% de la pantalla para la anchura
-        infoDialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT); //El alto se ajusta al contenido del Dialog
+        infoDialog.getWindow().setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT); //El alto se ajusta al contenido del Dialog
         infoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 

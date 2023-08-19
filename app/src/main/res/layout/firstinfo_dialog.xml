@@ -58,7 +58,7 @@
         android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/info_extraspace_view"
         app:layout_constraintTop_toBottomOf="@+id/info_alumnoquelorecomienda_textview">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -164,15 +164,16 @@
                 app:layout_constraintStart_toEndOf="@+id/info_whatsappicon_imageview"
                 app:layout_constraintTop_toTopOf="@+id/info_whatsappicon_imageview" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_11sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/info_whatsappicon_imageview" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/info_extraspace_view"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
