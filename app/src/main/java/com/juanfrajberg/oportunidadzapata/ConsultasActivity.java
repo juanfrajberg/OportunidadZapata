@@ -333,6 +333,9 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Función para responder los mensajes enviados por el usuario
     public void answerMessage(String message) {
+        //Para que se entienda que no se pueden enviar mensajes mientras escribe el bot
+        sendMessageButton.animate().alpha(0.35f).setDuration(600);
+
         final int min = 1500;
         final int max = 4500;
         //Genera un número aleatorio con el mínimo y el máximo inclusive
@@ -402,5 +405,8 @@ public class ConsultasActivity extends AppCompatActivity {
         //Se desliza el ScrollView automáticamente hasta abajo para ver el último mensaje
         //Si uso un fullScroll, como antes, se pierde el focus
         messagesScrollView.smoothScrollTo(0, messagesScrollView.getBottom());
+
+        //Se desactiva el fondo más oscuro para indicar que ya se puede escribir
+        sendMessageButton.animate().alpha(1).setDuration(600);
     }
 }

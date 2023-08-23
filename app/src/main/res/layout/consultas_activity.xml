@@ -17,62 +17,62 @@
         android:textSize="@dimen/_25ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/consultas_arrow_imageview"
-        app:layout_constraintTop_toTopOf="@id/consultas_arrow_imageview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/consultas_arrow_imageview" />
 
     <ImageView
         android:id="@+id/consultas_arrow_imageview"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
         android:layout_marginStart="@dimen/_19sdp"
-        android:src="@drawable/blogconsultas_leftarrow_imageview"
         android:layout_marginTop="@dimen/_14sdp"
+        android:src="@drawable/blogconsultas_leftarrow_imageview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_19sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_19sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:scrollbars="none"
-        android:layout_marginStart="@dimen/_19sdp"
-        android:layout_marginEnd="@dimen/_19sdp"
-        app:layout_constraintTop_toBottomOf="@id/consultas_title_textview"
         app:layout_constraintBottom_toTopOf="@id/consultas_messagetab_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/consultas_title_textview">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/consultas_aielements_constraintlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusableInTouchMode="true"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/consultas_subtitle_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_extrabold"
+                android:text="@string/consultas_title_text"
                 android:textSize="@dimen/_30ssp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/consultas_title_text" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <RelativeLayout
                 android:id="@+id/consultas_firstitem_relativelayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="animateMoreInfoLayouts"
-                app:layout_constraintTop_toBottomOf="@id/consultas_subtitle_textview"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/consultas_roundedcornersview_background"
+                android:onClick="animateMoreInfoLayouts"
                 android:padding="@dimen/_12sdp"
-                android:background="@drawable/consultas_roundedcornersview_background" >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/consultas_subtitle_textview">
 
                 <ImageView
                     android:id="@+id/consultas_firstitem_imageview"
@@ -100,13 +100,13 @@
                 android:id="@+id/consultas_seconditem_relativelayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="animateMoreInfoLayouts"
-                app:layout_constraintTop_toBottomOf="@id/consultas_firstitem_relativelayout"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/consultas_roundedcornersview_background"
+                android:onClick="animateMoreInfoLayouts"
                 android:padding="@dimen/_12sdp"
-                android:background="@drawable/consultas_roundedcornersview_background" >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/consultas_firstitem_relativelayout">
 
                 <ImageView
                     android:id="@+id/consultas_seconditem_imageview"
@@ -134,13 +134,13 @@
                 android:id="@+id/consultas_thirditem_relativelayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="animateMoreInfoLayouts"
-                app:layout_constraintTop_toBottomOf="@id/consultas_seconditem_relativelayout"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/consultas_roundedcornersview_background"
+                android:onClick="animateMoreInfoLayouts"
                 android:padding="@dimen/_12sdp"
-                android:background="@drawable/consultas_roundedcornersview_background" >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/consultas_seconditem_relativelayout">
 
                 <ImageView
                     android:id="@+id/consultas_thirditem_imageview"
@@ -172,25 +172,24 @@
         android:id="@+id/consultas_messagesscrollview_scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:scrollbarSize="@dimen/_2sdp"
         android:scrollbarThumbVertical="@drawable/consultas_scrollbar_background"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_14sdp"
-        android:layout_marginEnd="@dimen/_14sdp"
-        app:layout_constraintTop_toBottomOf="@id/consultas_title_textview"
         app:layout_constraintBottom_toTopOf="@id/consultas_messagetab_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/consultas_title_textview">
 
         <LinearLayout
             android:id="@+id/consultas_messageslayout_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusableInTouchMode="true"
             android:clickable="true"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"></LinearLayout>
 
     </ScrollView>
 
@@ -202,32 +201,32 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         android:background="@drawable/homeconsultas_roundedsearchtab_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/consultas_messagetab_edittext"
         android:layout_width="0dp"
         android:layout_height="@dimen/_32sdp"
-        app:layout_constraintTop_toTopOf="@id/consultas_messagetab_view"
-        app:layout_constraintBottom_toBottomOf="@id/consultas_messagetab_view"
-        android:includeFontPadding="false"
-        android:layout_marginEnd="@dimen/_9sdp"
         android:layout_marginStart="@dimen/_9sdp"
+        android:layout_marginEnd="@dimen/_9sdp"
         android:background="#00FFFFFF"
         android:backgroundTint="#E9EDF1"
         android:ems="10"
         android:fontFamily="@font/nunito_bold"
         android:hint="Escribe tu duda o consulta"
+        android:imeOptions="actionDone"
+        android:includeFontPadding="false"
         android:inputType="textCapSentences"
         android:textColor="#3C3C3C"
         android:textColorHint="#B4B4B4"
         android:textSize="@dimen/_13ssp"
+        app:layout_constraintBottom_toBottomOf="@id/consultas_messagetab_view"
         app:layout_constraintEnd_toStartOf="@id/consultas_sendmessage_imageview"
         app:layout_constraintStart_toStartOf="@+id/consultas_messagetab_view"
         app:layout_constraintTop_toBottomOf="@+id/consultas_messagetab_view"
-        android:imeOptions="actionDone"
+        app:layout_constraintTop_toTopOf="@id/consultas_messagetab_view"
         tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
@@ -235,7 +234,7 @@
         android:layout_width="@dimen/_26sdp"
         android:layout_height="@dimen/_26sdp"
         android:adjustViewBounds="true"
-        android:contentDescription="search_icon"
+        android:alpha="1"
         app:layout_constraintBottom_toBottomOf="@+id/consultas_messagetab_edittext"
         app:layout_constraintEnd_toEndOf="@+id/consultas_messagetab_view"
         app:layout_constraintHorizontal_bias="0.977"
