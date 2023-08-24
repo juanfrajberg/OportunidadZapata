@@ -496,6 +496,15 @@
                 app:srcCompat="@drawable/contact_whatsapp_image"
                 android:onClick="openWhatsApp"/>
 
+            <LinearLayout
+                android:id="@+id/contact_inflatedproposals_linearlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contact_thirdexamplewhatsapp_imageview">
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

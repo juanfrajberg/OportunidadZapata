@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -453,6 +454,11 @@ public class ContactActivity extends AppCompatActivity {
                         .playOn(proposalButton);
             }
         });
+
+        //Se crea (infla) el layout con las propuestas
+        LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+        View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
+        inflatedProposals.addView(proposalToAdd);
     }
 
     //Función para abrir el Dialog con más información de la persona seleccionada
