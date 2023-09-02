@@ -44,4 +44,5 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.4@aar' //Implementación para poder usar animaciones en los elementos del layout
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0' //Implementación para usar el CAPTCHA al enviar una solicitud
     implementation 'com.squareup.picasso:picasso:2.8' //Implementación para poder ver imágenes desde una URL
+    implementation "com.squareup.okhttp3:okhttp:4.10.0" //Implementación para usar ChatGPT con OpenAI
 }

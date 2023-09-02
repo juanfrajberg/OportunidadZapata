@@ -23,14 +23,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Random;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import pl.droidsonroids.gif.GifImageView;
 
 public class ConsultasActivity extends AppCompatActivity {
@@ -64,6 +76,12 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
+
+    //Variables para poder conectarse con OpenAI
+    public static final MediaType JSON
+            = MediaType.get("application/json; charset=utf-8");
+
+    OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -355,41 +373,17 @@ public class ConsultasActivity extends AppCompatActivity {
                         canSendMessage = true;
                         answerAIGif.setVisibility(View.GONE);
 
-                        //Genera respuestas aleatorias hasta que no se repita con la anterior
-                        generateRandomAnswer();
-                        while (lastAnswer == randomAnswer) {
-                            generateRandomAnswer();
-                        }
-                        lastAnswer = randomAnswer;
-
-                        String firstAnswer = "¡Hola! Soy el Bot de Oportunidad Zapata, la aplicación ideal para la búsqueda y oferta de trabajo. 💼 Fui programado para asistirte en el proceso de crear tu currículum, y puedo resolver cualquier duda que tengas al respecto. 😃";
-                        String secondAnswer = "¡Saludos! Soy el Chatbot de Oportunidad Zapata, la plataforma perfecta para encontrar y ofrecer empleos. 🌟 Estoy aquí para guiarte en la creación de tu currículum y puedo responder a todas tus preguntas sobre el tema. 📚";
-                        String thirdAnswer = "¡Hola! Me llamo Bot de Oportunidad Zapata y estoy aquí para ayudarte en tu búsqueda y oferta de empleo. 🌼 Mi función es asistirte en la elaboración de tu currículum y puedo resolver cualquier consulta que tengas sobre este proceso. 📋";
-                        String finalAnswer = "";
-                        switch (randomAnswer) {
-                            case 1:
-                                finalAnswer = firstAnswer;
-                                break;
-                            case 2:
-                                finalAnswer = secondAnswer;
-                                break;
-                            case 3:
-                                finalAnswer = thirdAnswer;
-                                break;
-                        }
-
-                        //Lo hace con el efecto Typewriter para que se vea mejor
-                        Typewriter AIMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_aimessage_textview);
-                        AIMessage.setText("");
-                        AIMessage.setCharacterDelay(35);
-                        AIMessage.animateText(finalAnswer);
+                        writeAnswer("");
                     }
                 }, 400); //El tiempo aleatorio que se demora en reproducir la animación de salida
             }
         }, randomWaitingTime); //El tiempo aleatorio que se demora en "pensar"
 
-        message = message.toLowerCase(); //Convertir el mensaje en minúscula para que el reconocimiento sea más simple
+        //message = message.toLowerCase(); //Convertir el mensaje en minúscula para que el reconocimiento sea más simple
         //if (message.contains("hola")) Toast.makeText(getApplicationContext(), "¡Hola!", Toast.LENGTH_SHORT).show(); //Para comprender mensajes en un futuro
+
+        //Se llama a la función para que el bot de OpenAI responda
+        callAPI(message);
     }
 
     public void generateRandomAnswer() {
@@ -408,5 +402,89 @@ public class ConsultasActivity extends AppCompatActivity {
 
         //Se desactiva el fondo más oscuro para indicar que ya se puede escribir
         sendMessageButton.animate().alpha(1).setDuration(600);
+    }
+
+    //Función para chater con el bot de OpenAI
+    public void callAPI(String prompt) {
+        //Se guardan los datos que se enviarán en un JSON
+        JSONObject dataToPass = new JSONObject();
+
+        try {
+            dataToPass.put("model", "text-davinci-003");
+            dataToPass.put("prompt", prompt);
+            dataToPass.put("max_tokens", 4000);
+            dataToPass.put("temperature", 0);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "No se pudo conectar con OpenAI.", Toast.LENGTH_SHORT).show();
+        }
+
+        RequestBody body = RequestBody.create(dataToPass.toString(), JSON);
+        Request request = new Request.Builder()
+                .url("https://api.openai.com/v1/completions")
+                .header("Authorization", "Bearer OPENAI_KEY")
+                .post(body)
+                .build();
+
+        //Se intenta conectar con OpenAI y conseguir una respuesta
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Toast.makeText(getApplicationContext(), "No se pudo conectar con OpenAI.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONArray jsonArray = jsonObject.getJSONArray("choices");
+                        String result = jsonArray.getJSONObject(0).getString("text");
+                        String answer = result.trim();
+                        writeAnswer(answer);
+
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "No se pudo conectar con OpenAI.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+    //Función para escribir la respuesta dada por OpenAI
+    public void writeAnswer(String answer) {
+        //Genera respuestas aleatorias hasta que no se repita con la anterior
+        generateRandomAnswer();
+        while (lastAnswer == randomAnswer) {
+            generateRandomAnswer();
+        }
+        lastAnswer = randomAnswer;
+
+        //Conjunto de respuestas predeterminadas por si no funciona el servicio
+        String firstAnswer = "¡Hola! Soy el Bot de Oportunidad Zapata, la aplicación ideal para la búsqueda y oferta de trabajo. 💼 Fui programado para asistirte en el proceso de crear tu currículum, y puedo resolver cualquier duda que tengas al respecto. 😃";
+        String secondAnswer = "¡Saludos! Soy el Chatbot de Oportunidad Zapata, la plataforma perfecta para encontrar y ofrecer empleos. 🌟 Estoy aquí para guiarte en la creación de tu currículum y puedo responder a todas tus preguntas sobre el tema. 📚";
+        String thirdAnswer = "¡Hola! Me llamo Bot de Oportunidad Zapata y estoy aquí para ayudarte en tu búsqueda y oferta de empleo. 🌼 Mi función es asistirte en la elaboración de tu currículum y puedo resolver cualquier consulta que tengas sobre este proceso. 📋";
+        String finalAnswer = "";
+        switch (randomAnswer) {
+            case 1:
+                finalAnswer = firstAnswer;
+                break;
+            case 2:
+                finalAnswer = secondAnswer;
+                break;
+            case 3:
+                finalAnswer = thirdAnswer;
+                break;
+        }
+
+        //Usar la respuesta dada por la AI si sale bien y no recibimos un texto vacío
+        if (!answer.equals("")) {
+            finalAnswer = answer;
+        }
+
+        //Se usa el efecto Typewriter para que se vea mejor
+        Typewriter AIMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_aimessage_textview);
+        AIMessage.setText("");
+        AIMessage.setCharacterDelay(35);
+        AIMessage.animateText(finalAnswer);
     }
 }
