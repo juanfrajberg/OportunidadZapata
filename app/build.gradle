@@ -45,4 +45,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0' //Implementación para usar el CAPTCHA al enviar una solicitud
     implementation 'com.squareup.picasso:picasso:2.8' //Implementación para poder ver imágenes desde una URL
     implementation "com.squareup.okhttp3:okhttp:4.10.0" //Implementación para usar ChatGPT con OpenAI
+    implementation 'androidx.annotation:annotation:1.1.0' //Para poder usar @NonNull
 }

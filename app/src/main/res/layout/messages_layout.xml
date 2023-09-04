@@ -58,7 +58,9 @@
             android:fontFamily="@font/nunito_regular"
             android:textAlignment="center"
             android:textColor="#707070"
-            android:textSize="@dimen/_11ssp" />
+            android:textSize="@dimen/_11ssp"
+            android:textIsSelectable="true"
+            />
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/consultas_aithinkinggif_gifimageview"
