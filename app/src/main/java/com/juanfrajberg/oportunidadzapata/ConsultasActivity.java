@@ -11,7 +11,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,13 +26,27 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Locale;
 import java.util.Random;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import pl.droidsonroids.gif.GifImageView;
 
 public class ConsultasActivity extends AppCompatActivity {
@@ -64,6 +80,18 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
+
+    //Variables para poder conectarse con OpenAI
+    public static final MediaType JSON
+            = MediaType.get("application/json; charset=utf-8");
+
+    OkHttpClient client = new OkHttpClient();
+
+    //Variable para usar texto a voz
+    TextToSpeech textToSpeech;
+
+    //String que guarda la respuesta que se dará por parte del bot
+    String finalAnswer = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -336,60 +364,14 @@ public class ConsultasActivity extends AppCompatActivity {
         //Para que se entienda que no se pueden enviar mensajes mientras escribe el bot
         sendMessageButton.animate().alpha(0.35f).setDuration(600);
 
+        //Genera un número aleatorio con el mínimo y el máximo inclusive
+        //Se tendría que usar únicamente en caso de que no haya conexión a Internet
         final int min = 1500;
         final int max = 4500;
-        //Genera un número aleatorio con el mínimo y el máximo inclusive
         final int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
 
-        GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
-        Handler thinkingTime = new Handler();
-        thinkingTime.postDelayed(new Runnable() {
-            public void run() {
-                YoYo.with(Techniques.Tada)
-                        .duration(400)
-                        .repeat(0)
-                        .playOn(answerAIGif);
-                Handler hideGIF = new Handler();
-                hideGIF.postDelayed(new Runnable() {
-                    public void run() {
-                        canSendMessage = true;
-                        answerAIGif.setVisibility(View.GONE);
-
-                        //Genera respuestas aleatorias hasta que no se repita con la anterior
-                        generateRandomAnswer();
-                        while (lastAnswer == randomAnswer) {
-                            generateRandomAnswer();
-                        }
-                        lastAnswer = randomAnswer;
-
-                        String firstAnswer = "¡Hola! Soy el Bot de Oportunidad Zapata, la aplicación ideal para la búsqueda y oferta de trabajo. 💼 Fui programado para asistirte en el proceso de crear tu currículum, y puedo resolver cualquier duda que tengas al respecto. 😃";
-                        String secondAnswer = "¡Saludos! Soy el Chatbot de Oportunidad Zapata, la plataforma perfecta para encontrar y ofrecer empleos. 🌟 Estoy aquí para guiarte en la creación de tu currículum y puedo responder a todas tus preguntas sobre el tema. 📚";
-                        String thirdAnswer = "¡Hola! Me llamo Bot de Oportunidad Zapata y estoy aquí para ayudarte en tu búsqueda y oferta de empleo. 🌼 Mi función es asistirte en la elaboración de tu currículum y puedo resolver cualquier consulta que tengas sobre este proceso. 📋";
-                        String finalAnswer = "";
-                        switch (randomAnswer) {
-                            case 1:
-                                finalAnswer = firstAnswer;
-                                break;
-                            case 2:
-                                finalAnswer = secondAnswer;
-                                break;
-                            case 3:
-                                finalAnswer = thirdAnswer;
-                                break;
-                        }
-
-                        //Lo hace con el efecto Typewriter para que se vea mejor
-                        Typewriter AIMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_aimessage_textview);
-                        AIMessage.setText("");
-                        AIMessage.setCharacterDelay(35);
-                        AIMessage.animateText(finalAnswer);
-                    }
-                }, 400); //El tiempo aleatorio que se demora en reproducir la animación de salida
-            }
-        }, randomWaitingTime); //El tiempo aleatorio que se demora en "pensar"
-
-        message = message.toLowerCase(); //Convertir el mensaje en minúscula para que el reconocimiento sea más simple
-        //if (message.contains("hola")) Toast.makeText(getApplicationContext(), "¡Hola!", Toast.LENGTH_SHORT).show(); //Para comprender mensajes en un futuro
+        //Se llama a la función para que el bot de OpenAI responda
+        callAPI(message);
     }
 
     public void generateRandomAnswer() {
@@ -408,5 +390,137 @@ public class ConsultasActivity extends AppCompatActivity {
 
         //Se desactiva el fondo más oscuro para indicar que ya se puede escribir
         sendMessageButton.animate().alpha(1).setDuration(600);
+    }
+
+    //Función para chater con el bot de OpenAI
+    public void callAPI(String prompt) {
+        //Se guardan los datos que se enviarán en un JSON
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("model", "text-davinci-003");
+            jsonBody.put("prompt", prompt);
+            jsonBody.put("max_tokens", 4000);
+            jsonBody.put("temperature", 0);
+        } catch (Exception e) {
+            writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
+            //e.printStackTrace();
+        }
+
+        //Se intenta conectar con OpenAI y conseguir una respuesta
+        RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
+        Request request = new Request.Builder()
+                .url("https://api.openai.com/v1/completions")
+                .header("Authorization", "Bearer OPENAI_KEY")
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                //Se muestra la animación de pensar
+                GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+                YoYo.with(Techniques.Tada)
+                        .duration(400)
+                        .repeat(0)
+                        .playOn(answerAIGif);
+                Handler hideGIF = new Handler();
+                hideGIF.postDelayed(new Runnable() {
+                    public void run() {
+                        canSendMessage = true;
+                        answerAIGif.setVisibility(View.GONE);
+                    }
+                }, 400); //El tiempo que tarda la animación de desaparecer
+                writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
+            }
+
+            //Se recibe la respuesta de OpenAI
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response.body().string());
+                        JSONArray jsonArray = jsonObject.getJSONArray("choices");
+                        String result = jsonArray.getJSONObject(0).getString("text");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Se muestra la animación de pensar
+                                GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+                                YoYo.with(Techniques.Tada)
+                                        .duration(400)
+                                        .repeat(0)
+                                        .playOn(answerAIGif);
+                                Handler hideGIF = new Handler();
+                                hideGIF.postDelayed(new Runnable() {
+                                    public void run() {
+                                        canSendMessage = true;
+                                        answerAIGif.setVisibility(View.GONE);
+                                        writeAnswer(result.trim()); //Para eliminar espacios en blanco iniciales y finales
+                                    }
+                                }, 400); //El tiempo que tarda la animación de desaparecer
+                            }
+                        });
+                    } catch (JSONException e) {
+                        writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
+                        //e.printStackTrace();
+                    }
+                } else {
+                    writeAnswer("No se pudo conectar con OpenAI porque " + response.body().string());
+                }
+            }
+        });
+    }
+
+    //Función para escribir la respuesta dada por OpenAI
+    public void writeAnswer(String answer) {
+        //Genera respuestas aleatorias hasta que no se repita con la anterior
+        generateRandomAnswer();
+        while (lastAnswer == randomAnswer) {
+            generateRandomAnswer();
+        }
+        lastAnswer = randomAnswer;
+
+        //Conjunto de respuestas predeterminadas por si no funciona el servicio
+        String firstAnswer = "¡Hola! Soy el Bot de Oportunidad Zapata, la aplicación ideal para la búsqueda y oferta de trabajo. 💼 Fui programado para asistirte en el proceso de crear tu currículum, y puedo resolver cualquier duda que tengas al respecto. 😃";
+        String secondAnswer = "¡Saludos! Soy el Chatbot de Oportunidad Zapata, la plataforma perfecta para encontrar y ofrecer empleos. 🌟 Estoy aquí para guiarte en la creación de tu currículum y puedo responder a todas tus preguntas sobre el tema. 📚";
+        String thirdAnswer = "¡Hola! Me llamo Bot de Oportunidad Zapata y estoy aquí para ayudarte en tu búsqueda y oferta de empleo. 🌼 Mi función es asistirte en la elaboración de tu currículum y puedo resolver cualquier consulta que tengas sobre este proceso. 📋";
+        finalAnswer = "";
+        switch (randomAnswer) {
+            case 1:
+                finalAnswer = firstAnswer;
+                break;
+            case 2:
+                finalAnswer = secondAnswer;
+                break;
+            case 3:
+                finalAnswer = thirdAnswer;
+                break;
+        }
+
+        //Usar la respuesta dada por la AI si sale bien y no recibimos un texto vacío
+        if (!answer.equals("")) {
+            finalAnswer = answer;
+        }
+
+        //Se usa el efecto Typewriter para que se vea mejor
+        Typewriter AIMessage = (Typewriter) messagesToAdd.findViewById(R.id.consultas_aimessage_textview);
+        AIMessage.setText("");
+        AIMessage.setCharacterDelay(35);
+        AIMessage.animateText(finalAnswer);
+
+        //Dictar la respuesta dada por la AI
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    //Para que el lenguaje del TTS sea español (Argentina)
+                    Locale locSpanish = new Locale("spa", "ARG");
+                    textToSpeech.setLanguage(locSpanish);
+                    textToSpeech.speak(finalAnswer, TextToSpeech.QUEUE_ADD, null);
+                }
+            }
+        });
+
     }
 }

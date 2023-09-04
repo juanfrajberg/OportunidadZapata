@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- android:layout_marginStart="@dimen/_18sdp" -->
+    <!-- android:layout_marginEnd="@dimen/_20sdp" -->
+    <!-- android:layout_gravity="center" -->
+
+    <TextView
+        android:id="@+id/proposal_time_textview"
+        app:layout_constraintBottom_toTopOf="@+id/contact_view_relativelayout"
+        app:layout_constraintStart_toStartOf="@+id/contact_view_relativelayout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Fecha."
+        android:textColor="#B4B4B4"
+        android:textSize="@dimen/_11ssp" />
+
+    <RelativeLayout
+        android:id="@+id/contact_view_relativelayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/proposal_time_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:background="@drawable/contactblog_roundedview_background"
+        android:elevation="5dp">
+
+        <TextView
+            android:id="@+id/contact_titlerl_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/nunito_extrabold"
+            android:text="Trabajo."
+            android:textColor="#000000"
+            android:textSize="@dimen/_14ssp" />
+
+        <TextView
+            android:id="@+id/contact_subtitlerl_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contact_titlerl_textview"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:fontFamily="@font/nunito_regular"
+            android:text="Nombre."
+            android:textColor="#B4B4B4"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/contact_descriptionrl_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contact_subtitlerl_textview"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_11sdp"
+            android:text="@string/contact_proposalexampleleer_text"
+            android:textColor="#000000"
+            android:textSize="@dimen/_11ssp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/contact_phone_imageview"
+        app:layout_constraintStart_toStartOf="@+id/contact_view_relativelayout"
+        app:layout_constraintTop_toBottomOf="@+id/contact_view_relativelayout"
+        app:srcCompat="@drawable/contact_phone_image"
+        android:layout_width="@dimen/_38sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:onClick="openPhone" />
+
+    <ImageView
+        android:id="@+id/contact_whatsapp_imageview"
+        app:layout_constraintStart_toEndOf="@+id/contact_phone_imageview"
+        app:layout_constraintTop_toTopOf="@+id/contact_phone_imageview"
+        app:srcCompat="@drawable/contact_whatsapp_image"
+        android:layout_width="@dimen/_38sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:layout_marginStart="@dimen/_7sdp"
+        android:onClick="openWhatsApp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
