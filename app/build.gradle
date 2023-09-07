@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' //Para ocultar claves de APIs
 }
 
 android {
@@ -27,6 +28,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace 'com.juanfrajberg.oportunidadzapata'
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

@@ -222,6 +222,7 @@
         android:textColor="#3C3C3C"
         android:textColorHint="#B4B4B4"
         android:textSize="@dimen/_13ssp"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="@id/consultas_messagetab_view"
         app:layout_constraintEnd_toStartOf="@id/consultas_sendmessage_imageview"
         app:layout_constraintStart_toStartOf="@+id/consultas_messagetab_view"

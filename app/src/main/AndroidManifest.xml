@@ -83,6 +83,5 @@
         </activity>
         
         <receiver android:name=".NotificationBroadcast"></receiver>
-
     </application>
 </manifest>
