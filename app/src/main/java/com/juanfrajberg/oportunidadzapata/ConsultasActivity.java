@@ -139,7 +139,10 @@ public class ConsultasActivity extends AppCompatActivity {
         sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Typewriter.hasFinished() && canSendMessage) sendMessage(view);
+                if (Typewriter.hasFinished() && canSendMessage) {
+                    sendMessage(view);
+                    scrollToBottom();
+                }
             }
         });
 
@@ -398,7 +401,7 @@ public class ConsultasActivity extends AppCompatActivity {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("model", "text-davinci-003");
-            jsonBody.put("prompt", prompt);
+            jsonBody.put("prompt", "Ayudas a la gente a crear curriculums dentro de una aplicación que funciona como bolsa de trabajo llamada Oportunidad Zapata. Se te pide ayuda con esto: " + prompt + ". Responde la consulta de forma corta y concreta.");
             jsonBody.put("max_tokens", 4000);
             jsonBody.put("temperature", 0);
         } catch (Exception e) {
@@ -406,18 +409,23 @@ public class ConsultasActivity extends AppCompatActivity {
             //e.printStackTrace();
         }
 
+        Request request = null;
         //Se intenta conectar con OpenAI y conseguir una respuesta
-        RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
-        Request request = new Request.Builder()
-                .url("https://api.openai.com/v1/completions")
-                .header("Authorization", "Bearer OPENAI_KEY")
-                .post(body)
-                .build();
+        try {
+            RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
+            request = new Request.Builder()
+                    .url("https://api.openai.com/v1/completions")
+                    .header("Authorization", "Bearer " + BuildConfig.apiKey)
+                    .post(body)
+                    .build();
+        } catch (Exception e) {
+            Log.e("OZ", "Error at line 427. " + e);
+        }
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                //Se muestra la animación de pensar
+                //Se esconde la animación de pensar
                 GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
                 YoYo.with(Techniques.Tada)
                         .duration(400)
@@ -445,7 +453,7 @@ public class ConsultasActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                //Se muestra la animación de pensar
+                                //Se esconde la animación de pensar
                                 GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
                                 YoYo.with(Techniques.Tada)
                                         .duration(400)
@@ -466,7 +474,31 @@ public class ConsultasActivity extends AppCompatActivity {
                         //e.printStackTrace();
                     }
                 } else {
-                    writeAnswer("No se pudo conectar con OpenAI porque " + response.body().string());
+                    try {
+                        writeAnswer("No se pudo conectar con OpenAI porque " + response.body().string());
+                    } catch (Exception e) {
+                        Log.e("OZ", "Error at line 485. " + e);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Se esconde la animación de pensar
+                                GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+                                YoYo.with(Techniques.Tada)
+                                        .duration(400)
+                                        .repeat(0)
+                                        .playOn(answerAIGif);
+                                Handler hideGIF = new Handler();
+                                hideGIF.postDelayed(new Runnable() {
+                                    public void run() {
+                                        canSendMessage = true;
+                                        answerAIGif.setVisibility(View.GONE);
+                                        writeAnswer(""); //Para eliminar espacios en blanco iniciales y finales
+                                    }
+                                }, 400); //El tiempo que tarda la animación de desaparecer
+                            }
+                        });
+                    }
                 }
             }
         });
