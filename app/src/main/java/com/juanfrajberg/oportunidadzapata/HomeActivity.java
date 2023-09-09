@@ -215,7 +215,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Iniciar la pestaña de propuestas
-                startActivity(new Intent(HomeActivity.this, ProposalActivity.class));
+                startActivity(new Intent(HomeActivity.this, SendProposalActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
 
                 //Animación del botón

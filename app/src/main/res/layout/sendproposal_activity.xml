@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:background="@color/white"
-    tools:context=".ProposalActivity">
+    tools:context=".SendProposalActivity">
 
     <ImageView
         android:id="@+id/proposal_proposal_imageview"

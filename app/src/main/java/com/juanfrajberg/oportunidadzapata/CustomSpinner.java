@@ -61,7 +61,7 @@ public class CustomSpinner extends androidx.appcompat.widget.AppCompatSpinner {
      */
     public void performClosedEvent() {
         mOpenInitiated = false;
-        ProposalActivity.makeArrowUpRubroLaboralLookUp(); //Para que la flecha apunte hacia arriba, como antes
+        SendProposalActivity.makeArrowUpRubroLaboralLookUp(); //Para que la flecha apunte hacia arriba, como antes
         if (mListener != null) {
             mListener.onSpinnerClosed(this);
         }

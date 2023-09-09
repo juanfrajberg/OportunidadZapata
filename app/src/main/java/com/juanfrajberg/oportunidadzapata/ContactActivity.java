@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,12 +23,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.TextStyle;
+import java.util.Locale;
+import java.util.Random;
 
 public class ContactActivity extends AppCompatActivity {
 
@@ -444,7 +460,7 @@ public class ContactActivity extends AppCompatActivity {
         proposalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ContactActivity.this, ProposalActivity.class));
+                startActivity(new Intent(ContactActivity.this, SendProposalActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
 
                 //Animación del botón
@@ -455,10 +471,44 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        //Se crea (infla) el layout con las propuestas
-        LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-        View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
-        inflatedProposals.addView(proposalToAdd);
+        //Se accede a la información guardada en la base de datos
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                inflatedProposals.removeAllViews();
+
+                //Para saber la cantidad de hijos (largo de la lista)
+                int size = (int) snapshot.getChildrenCount();
+
+                //Se crean los Strings que guardarán los datos
+                String time = "";
+                String job  = "";
+                String name  = "";
+                String description  = "";
+                String phone = "";
+                String student = "";
+
+                for (int i=1; i<size+1; i++) {
+                    time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
+                    job = snapshot.child(String.valueOf(i)).child("job").getValue(String.class);
+                    name = snapshot.child(String.valueOf(i)).child("fullname").getValue(String.class);
+                    //Todavía no hay una descripción de cada trabajador en la base de datos (arreglar en un futuro)
+                    description = snapshot.child(String.valueOf(i)).child("mail").getValue(String.class);
+                    phone = String.valueOf(snapshot.child(String.valueOf(i)).child("phone").getValue(Long.class));
+                    student = snapshot.child(String.valueOf(i)).child("student").getValue(String.class);
+
+                    createProposals(time, job, name, student);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "¡No se pudo acceder a las demás propuestas, revisá tu conexión!", Toast.LENGTH_LONG);
+            }
+        });
     }
 
     //Función para abrir el Dialog con más información de la persona seleccionada
@@ -729,5 +779,43 @@ public class ContactActivity extends AppCompatActivity {
 
         //Abrimos Instagram con el perfil del Dialog
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
+    }
+
+    private void createProposals(String time, String job, String name, String student) {
+        //Se crea (infla) el layout con las propuestas
+        LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+        View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
+        inflatedProposals.addView(proposalToAdd);
+
+        //Para convertir el formato de la variable "time" a texto
+        time = time.substring(0, 10);
+        time = time.replace("-", "");
+        Log.d("OZ", time);
+        String timeYear = time.substring(0, 4);
+        String timeMonth = time.substring(4, 6);
+        timeMonth = timeMonth.replaceFirst("^0+(?!$)", "");
+        Log.d("OZ", timeMonth);
+        String timeDay = time.substring(6, 8);
+        timeDay = timeDay.replaceFirst("^0+(?!$)", "");
+        Log.d("OZ", timeDay);
+
+        //Para el mes se deben usar las siguientes líneas de código
+        DateTimeFormatter fmt = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("MMMM").toFormatter(new Locale("es", "ES"));
+        timeMonth = Month.of(Integer.parseInt(timeMonth)).getDisplayName(TextStyle.FULL_STANDALONE, new Locale("es", "ES"));
+        timeMonth = timeMonth.substring(0,1).toUpperCase() + timeMonth.substring(1).toLowerCase();
+
+        //Se les asigna el valor a los TextView
+        TextView dateProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_time_textview);
+        dateProposal.setText(timeDay + " de " + timeMonth + " del " + timeYear);
+
+        TextView jobProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_titlerl_textview);
+        jobProposal.setText(job);
+
+        TextView nameProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_subtitlerl_textview);
+        nameProposal.setText(name);
+
+        TextView descriptionProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
+        final int randomYears = new Random().nextInt(15) + 2;
+        descriptionProposal.setText(Html.fromHtml("Me desempeño como " + job.toLowerCase() + " hace más de " + randomYears + " años. Fui recomendado/a por " + student + ". " + "<font color='#3876F6'><u>Leer más.</u></font>"));
     }
 }

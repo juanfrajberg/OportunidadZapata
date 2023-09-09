@@ -56,7 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class ProposalActivity extends AppCompatActivity {
+public class SendProposalActivity extends AppCompatActivity {
 
     //TextView que cuenta la cantidad de caracteres de la Descripción
     private TextView maxCharactersDescripcionTextView;
@@ -108,7 +108,7 @@ public class ProposalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.proposal_activity);
+        setContentView(R.layout.sendproposal_activity);
 
         //Establecer el modo claro como predeterminado incluso con el modo oscuro (ya no es necesario, se configuró el modo oscuro en cada layout)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -247,8 +247,8 @@ public class ProposalActivity extends AppCompatActivity {
                             .playOn(doneButton);
                 } else {
                     //Se ejecuta la verificación reCAPTCHA
-                    SafetyNet.getClient(ProposalActivity.this).verifyWithRecaptcha("6Lfji2onAAAAAACfatQPqo8Y6quWKHivTN24JTHq")
-                            .addOnSuccessListener(ProposalActivity.this,
+                    SafetyNet.getClient(SendProposalActivity.this).verifyWithRecaptcha("6Lfji2onAAAAAACfatQPqo8Y6quWKHivTN24JTHq")
+                            .addOnSuccessListener(SendProposalActivity.this,
                                     new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
                                         @Override
                                         public void onSuccess(SafetyNetApi.RecaptchaTokenResponse response) {
@@ -256,7 +256,7 @@ public class ProposalActivity extends AppCompatActivity {
                                             sendProposal();
                                         }
                                     })
-                            .addOnFailureListener(ProposalActivity.this, new OnFailureListener() {
+                            .addOnFailureListener(SendProposalActivity.this, new OnFailureListener() {
                                 @Override
                                 public void onFailure(Exception e) {
                                     //Se imprime el error y no se puede enviar la propuesta
@@ -283,7 +283,7 @@ public class ProposalActivity extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProposalActivity.this, HomeActivity.class));
+                startActivity(new Intent(SendProposalActivity.this, HomeActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
 
                 //Animación del botón
@@ -298,7 +298,7 @@ public class ProposalActivity extends AppCompatActivity {
         contactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProposalActivity.this, ContactActivity.class));
+                startActivity(new Intent(SendProposalActivity.this, ContactActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
 
                 //Animación del botón
@@ -801,7 +801,7 @@ public class ProposalActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "Hay conexión", Toast.LENGTH_SHORT).show();
                 if (!WiFiInformation.isActivityVisible() && !WiFiInformation.lastState.equals("ON")) { //&& WiFiInformation.isShowAgain()
                     WiFiInformation.lastState = "ON";
-                    i = new Intent(ProposalActivity.this, WiFiActivity.class);
+                    i = new Intent(SendProposalActivity.this, WiFiActivity.class);
                     i.putExtra("State", "ON");
                     startActivity(i);
                     overridePendingTransition(R.anim.slidezoom_frombottom, R.anim.slidezoom_tobottom); //Animación
@@ -810,7 +810,7 @@ public class ProposalActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "No hay conexión", Toast.LENGTH_SHORT).show();
                 if (!WiFiInformation.isActivityVisible() && !WiFiInformation.lastState.equals("OFF") && WiFiInformation.isShowAgain() && showWiFiStatus) {
                     WiFiInformation.lastState = "OFF";
-                    i = new Intent(ProposalActivity.this, WiFiActivity.class);
+                    i = new Intent(SendProposalActivity.this, WiFiActivity.class);
                     i.putExtra("State", "OFF");
                     startActivity(i);
                     overridePendingTransition(R.anim.slidezoom_frombottom, R.anim.slidezoom_tobottom); //Animación
@@ -942,6 +942,6 @@ public class ProposalActivity extends AppCompatActivity {
         });
 
         //Iniciamos la Actividad Done
-        startActivity(new Intent(ProposalActivity.this, DoneActivity.class));
+        startActivity(new Intent(SendProposalActivity.this, DoneActivity.class));
     }
 }
