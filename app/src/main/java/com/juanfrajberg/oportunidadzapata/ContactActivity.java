@@ -816,6 +816,6 @@ public class ContactActivity extends AppCompatActivity {
 
         TextView descriptionProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
         final int randomYears = new Random().nextInt(15) + 2;
-        descriptionProposal.setText(Html.fromHtml("Me desempeño como " + job.toLowerCase() + " hace más de " + randomYears + " años. Fui recomendado por " + student + ". " + "<font color='#3876F6'><u>Leer más.</u></font>"));
+        descriptionProposal.setText(Html.fromHtml("Me desempeño como " + job.toLowerCase() + " hace más de " + randomYears + " años. Fui recomendado/a por " + student + ". " + "<font color='#3876F6'><u>Leer más.</u></font>"));
     }
 }
