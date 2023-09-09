@@ -25,7 +25,8 @@ public class WiFiInformation extends Application {
                 try {BlogActivity.setElementsLayoutClickeable(false);} catch (Exception e) {}
                 try {ConsultasActivity.setElementsLayoutClickeable(false);} catch (Exception e) {}
                 try {ContactActivity.setElementsLayoutClickeable(false);} catch (Exception e) {}
-                try {ProposalActivity.setElementsLayoutClickeable(false);} catch (Exception e) {}
+                try {
+                    SendProposalActivity.setElementsLayoutClickeable(false);} catch (Exception e) {}
                 try {PostActivity.setElementsLayoutClickeable(false);} catch (Exception e) {}
                 activityVisible = true;
             }
@@ -41,7 +42,8 @@ public class WiFiInformation extends Application {
                 try {BlogActivity.setElementsLayoutClickeable(true);} catch (Exception e) {}
                 try {ConsultasActivity.setElementsLayoutClickeable(true);} catch (Exception e) {}
                 try {ContactActivity.setElementsLayoutClickeable(true);} catch (Exception e) {}
-                try {ProposalActivity.setElementsLayoutClickeable(true);} catch (Exception e) {}
+                try {
+                    SendProposalActivity.setElementsLayoutClickeable(true);} catch (Exception e) {}
                 try {PostActivity.setElementsLayoutClickeable(true);} catch (Exception e) {}
                 activityVisible = false;
             }

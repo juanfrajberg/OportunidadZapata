@@ -54,7 +54,7 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ProposalActivity"
+            android:name=".SendProposalActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false"
             android:screenOrientation="portrait"/>

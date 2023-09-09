@@ -444,7 +444,7 @@ public class ContactActivity extends AppCompatActivity {
         proposalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ContactActivity.this, ProposalActivity.class));
+                startActivity(new Intent(ContactActivity.this, SendProposalActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
 
                 //Animación del botón
