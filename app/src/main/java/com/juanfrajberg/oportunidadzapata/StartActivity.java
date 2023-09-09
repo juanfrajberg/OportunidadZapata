@@ -12,7 +12,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,11 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -49,6 +48,10 @@ public class StartActivity extends AppCompatActivity {
 
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
+
+    //Valores finales de la versión y nombre de la aplicación
+    public final String finalAppName = "Oportunidad Zapata";
+    public final String finalAppVersion = "1.0.0";
 
     //Acá se detecta si hay que mostrar o no la aplicación
     @Override
@@ -170,23 +173,23 @@ public class StartActivity extends AppCompatActivity {
 
         //Detectar si es la última versión de la aplicación
         DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0").child("lastversion").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/application/1");
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("OZ", "Error getting data.", task.getException());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String appName = snapshot.child("appName").getValue(String.class);
+                String lastVersion = snapshot.child("lastVersion").getValue(String.class);
+                if (appName.equals(finalAppName) && lastVersion.equals(finalAppVersion)) {
+                    Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Log.d("OZ", String.valueOf(task.getResult().getValue()));
-                    String lastVersion = String.valueOf(task.getResult().getValue());
-                    if (lastVersion == "1.0.0") {
-                        Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_LONG).show();
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_LONG).show();
             }
         });
     }
