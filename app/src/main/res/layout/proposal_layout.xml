@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/proposal_time_textview"
-        app:layout_constraintBottom_toTopOf="@+id/contact_view_relativelayout"
-        app:layout_constraintStart_toStartOf="@+id/contact_view_relativelayout"
+        app:layout_constraintBottom_toTopOf="@+id/proposal_view_relativelayout"
+        app:layout_constraintStart_toStartOf="@+id/proposal_view_relativelayout"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,21 +23,23 @@
         android:textSize="@dimen/_11ssp" />
 
     <RelativeLayout
-        android:id="@+id/contact_view_relativelayout"
+        android:id="@+id/proposal_view_relativelayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/proposal_time_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginRight="@dimen/_7sdp"
         android:background="@drawable/contactblog_roundedview_background"
         android:elevation="5dp">
 
         <TextView
-            android:id="@+id/contact_titlerl_textview"
+            android:id="@+id/proposal_titlerl_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/nunito_extrabold"
             android:text="Trabajo."
@@ -45,10 +47,10 @@
             android:textSize="@dimen/_14ssp" />
 
         <TextView
-            android:id="@+id/contact_subtitlerl_textview"
+            android:id="@+id/proposal_subtitlerl_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/contact_titlerl_textview"
+            android:layout_below="@id/proposal_titlerl_textview"
             android:layout_marginStart="@dimen/_13sdp"
             android:fontFamily="@font/nunito_regular"
             android:text="Nombre."
@@ -56,10 +58,10 @@
             android:textSize="@dimen/_12ssp" />
 
         <TextView
-            android:id="@+id/contact_descriptionrl_textview"
+            android:id="@+id/proposal_descriptionrl_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/contact_subtitlerl_textview"
+            android:layout_below="@id/proposal_subtitlerl_textview"
             android:layout_marginStart="@dimen/_13sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_16sdp"
@@ -71,9 +73,9 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/contact_phone_imageview"
-        app:layout_constraintStart_toStartOf="@+id/contact_view_relativelayout"
-        app:layout_constraintTop_toBottomOf="@+id/contact_view_relativelayout"
+        android:id="@+id/proposal_phone_imageview"
+        app:layout_constraintStart_toStartOf="@+id/proposal_view_relativelayout"
+        app:layout_constraintTop_toBottomOf="@+id/proposal_view_relativelayout"
         app:srcCompat="@drawable/contact_phone_image"
         android:layout_width="@dimen/_38sdp"
         android:layout_height="@dimen/_38sdp"
@@ -81,9 +83,9 @@
         android:onClick="openPhone" />
 
     <ImageView
-        android:id="@+id/contact_whatsapp_imageview"
-        app:layout_constraintStart_toEndOf="@+id/contact_phone_imageview"
-        app:layout_constraintTop_toTopOf="@+id/contact_phone_imageview"
+        android:id="@+id/proposal_whatsapp_imageview"
+        app:layout_constraintStart_toEndOf="@+id/proposal_phone_imageview"
+        app:layout_constraintTop_toTopOf="@+id/proposal_phone_imageview"
         app:srcCompat="@drawable/contact_whatsapp_image"
         android:layout_width="@dimen/_38sdp"
         android:layout_height="@dimen/_38sdp"
