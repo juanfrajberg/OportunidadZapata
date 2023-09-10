@@ -301,6 +301,103 @@ function importSheet() {
   base.setData("", dataToImport);
 }
 
+-> FirebaseToExcelApplication.gs
+//GitHub
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/535a878109aba694ced1bba7758eaf0530a5211b/excelCode.gs
+
+//Vídeo de Firebase to Excel
+//https://www.youtube.com/watch?v=dOwZ5gzl9wI
+
+//Se actualiza cada minuto
+//Ejecutar la función "getAllDataApplication"
+
+//JSON code
+//https://github.com/anish-gyawali/Ionic-firebase-excel/blob/1645e424909122dd8a7e75b69697ca81e5e0b1a3/appscript.json"
+
+function getAllDataApplication() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  var sheet = spreadsheet[2]; //Puedo cambiar esto para usar solamente la primer hoja, buenísimo para un futuro
+
+  var firebaseUrl = "https://oportunidad-zapata-default-rtdb.firebaseio.com/1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/application";
+
+  var base = FirebaseApp.getDatabaseByUrl(firebaseUrl);
+
+  var dataSet = [base.getData()];
+
+  //Añadir una columna en limpio para que el código de abajo no de error
+  var rowLast = sheet.getLastRow();
+  sheet.insertRowAfter(rowLast);
+
+  //Elimina toda la tabla y la actualiza completamente
+  sheet.deleteRows(2, sheet.getLastRow()); //sheet.getMaxRows()
+
+  // Las siguientes líneas dependen de la estructura de tu data (comentario original)
+  var rows = [],
+    data;
+
+/*
+  var column3 = sheet.getRange(2, 2, sheet.getLastRow());
+  column3.setNumberFormat("@");
+*/
+
+  for (i = 0; i < dataSet.length; i++) {
+    data = dataSet[i];
+    for (j = 1; j < dataSet[i].length; j++) {
+      //Verificar el tipo de dato en Firebase y actualizarlo de forma acorde
+      //Por ejemplo, mis tipos de dato son id, name, phone, etc.
+      rows.push([data[j].id, data[j].appName, data[j].lastVersion]); //"Empujo" los datos al Excel
+    }
+  }
+
+  //Para subir los valores de la base de datos al Sheets
+  dataRange = sheet.getRange(2, 1, rows.length, 3); //Fila inicial, columna inicial, fila final, columna final
+  dataRange.setValues(rows);
+  //Logger.log(rows.length); Imprimir la cantidad de filas
+
+  //Cambiar el color de las columnas
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheets()[2];
+
+  //Información importante ¡!
+  /*
+  getRange(filaInicial,columaInicial,numeroDeFilas)
+  getRange(filaInicial,columaInicial,numeroDeFilas,numeroDeColumnas)
+  */
+
+  var column1part1 = sheet.getRange("A1");
+  column1part1.setBackgroundRGB(221, 126, 107);
+  column1part1.setFontWeight("bold");
+  column1part1.setHorizontalAlignment("center");
+
+  var column1part2 = sheet.getRange("A2");
+  column1part2.setBackgroundRGB(230, 184, 175);
+  column1part2.setFontWeight("normal");
+  column1part2.setHorizontalAlignment("center");
+
+  var column2part1 = sheet.getRange("B1");
+  column2part1.setBackgroundRGB(234, 153, 153);
+  column2part1.setFontWeight("bold");
+  column2part1.setHorizontalAlignment("center");
+
+  var column2part2 = sheet.getRange("B2");
+  column2part2.setBackgroundRGB(244, 204, 204);
+  column2part2.setFontWeight("normal");
+  column2part2.setHorizontalAlignment("center");
+
+  var column3part1 = sheet.getRange("C1");
+  column3part1.setBackgroundRGB(249, 203, 153);
+  column3part1.setFontWeight("bold");
+  column3part1.setHorizontalAlignment("center");
+
+  var column3part2 = sheet.getRange("C2");
+  column3part2.setBackgroundRGB(252, 229, 205);
+  column3part2.setFontWeight("normal");
+  column3part2.setHorizontalAlignment("center");
+
+//Eliminar la última columna que se genera de más
+  sheet.deleteRow(sheet.getLastRow() + 1);
+}
+
 -> appsscript.json
 {
   "timeZone": "America/Los_Angeles",
