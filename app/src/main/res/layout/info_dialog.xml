@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/info_title_textview"
         android:fontFamily="@font/nunito_bold"
         android:textColor="#B4B4B4"
-        android:text="Recomendado por alumno/a"
+        android:text="Recomendado/a por alumno/a de 1° 1°"
         android:textAlignment="center"
         android:textSize="@dimen/_11ssp"
         android:layout_marginEnd="@dimen/_8sdp"

@@ -406,7 +406,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(1);
+                openInfo(1, "", "", "", "", "", "");
             }
         });
 
@@ -422,7 +422,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(2);
+                openInfo(2, "", "", "", "", "", "");
             }
         });
 
@@ -438,7 +438,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(3);
+                openInfo(3, "", "", "", "", "", "");
             }
         });
 
@@ -513,7 +513,7 @@ public class ContactActivity extends AppCompatActivity {
 
     //Función para abrir el Dialog con más información de la persona seleccionada
     //En un futuro hay que añadir parámetros para que apenas abra tenga el nombre, mail y demás datos
-    private void openInfo(int numberInfo) {
+    private void openInfo(int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear) {
         infoDialog = new Dialog(ContactActivity.this);
         infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         infoDialog.getWindow().getAttributes().windowAnimations = R.style.InfoDialogAnimation;
@@ -523,6 +523,14 @@ public class ContactActivity extends AppCompatActivity {
         switch (numberInfo) { //No hay un caso default porque realmente no es necesario
             case 0: //Se abre un Dialog con información de una persona real, no de ejemplo
                 infoDialog.setContentView(R.layout.info_dialog);
+                TextView jobTextView = (TextView) infoDialog.findViewById(R.id.info_job_textview);
+                jobTextView.setText(job);
+                TextView nameTextView = (TextView) infoDialog.findViewById(R.id.info_personname_textview);
+                nameTextView.setText(name);
+                TextView studentTextView = (TextView) infoDialog.findViewById(R.id.info_alumnoquelorecomienda_textview);
+                studentTextView.setText("Recomendado/a por " + student + "de 1° 1°");
+                TextView dateTextView = (TextView) infoDialog.findViewById(R.id.info_time_textview);
+                dateTextView.setText("Publicado el " + timeDay + "/" + timeMonth + "/" + timeYear);
                 break;
             case 1:
                 infoDialog.setContentView(R.layout.firstinfo_dialog);
@@ -797,6 +805,7 @@ public class ContactActivity extends AppCompatActivity {
         String timeYear = time.substring(0, 4);
         String timeMonth = time.substring(4, 6);
         timeMonth = timeMonth.replaceFirst("^0+(?!$)", "");
+        String timeMonthInNumbers = timeMonth;
         Log.d("OZ", timeMonth);
         String timeDay = time.substring(6, 8);
         timeDay = timeDay.replaceFirst("^0+(?!$)", "");
@@ -823,10 +832,11 @@ public class ContactActivity extends AppCompatActivity {
 
         //Abrir el Dialog de más información
         RelativeLayout proposalLayout = proposalToAdd.findViewById(R.id.proposal_view_relativelayout);
+        String finalTimeDay = timeDay;
         proposalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInfo(0);
+                openInfo(0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear);
             }
         });
     }
