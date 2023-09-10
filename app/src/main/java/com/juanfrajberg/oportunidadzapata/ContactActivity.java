@@ -406,7 +406,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(1, "", "", "", "", "", "", "", "");
+                openInfo(0, 1,"", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -422,7 +422,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(2, "", "", "", "", "", "", "", "");
+                openInfo(0, 2,"", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -438,7 +438,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(3, "", "", "", "", "", "", "", "");
+                openInfo(0, 3, "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -506,7 +506,7 @@ public class ContactActivity extends AppCompatActivity {
                     course = snapshot.child(String.valueOf(i)).child("course").getValue(String.class);
                     division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
 
-                    createProposals(name, phone, time, email, job, student, course, division);
+                    createProposals(i, name, phone, time, email, job, student, course, division);
                 }
             }
 
@@ -519,7 +519,7 @@ public class ContactActivity extends AppCompatActivity {
 
     //Función para abrir el Dialog con más información de la persona seleccionada
     //En un futuro hay que añadir parámetros para que apenas abra tenga el nombre, mail y demás datos
-    private void openInfo(int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone) {
+    private void openInfo(int id, int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone, String course, String division) {
         infoDialog = new Dialog(ContactActivity.this);
         infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         infoDialog.getWindow().getAttributes().windowAnimations = R.style.InfoDialogAnimation;
@@ -534,13 +534,29 @@ public class ContactActivity extends AppCompatActivity {
                 TextView nameTextView = (TextView) infoDialog.findViewById(R.id.info_personname_textview);
                 nameTextView.setText(name);
                 TextView studentTextView = (TextView) infoDialog.findViewById(R.id.info_alumnoquelorecomienda_textview);
-                studentTextView.setText("Recomendado/a por " + student + " de 1° 1°");
+                studentTextView.setText("Recomendado/a por " + student + " de " + course.substring(0,1) + "° " + division.substring(0,1) + "°");
                 TextView dateTextView = (TextView) infoDialog.findViewById(R.id.info_time_textview);
                 dateTextView.setText("Publicado el " + timeDay + "/" + timeMonth + "/" + timeYear);
                 TextView mailTextView = (TextView) infoDialog.findViewById(R.id.info_personmail_textview);
                 mailTextView.setText(email);
                 TextView phoneTextView = (TextView) infoDialog.findViewById(R.id.info_whatsappnumber_textview);
-                phoneTextView.setText("+54 9 " + phone);
+                phoneTextView.setText("+54 9 " + phone.substring(0,3) + " " + phone.substring(3,6) + "-" + phone.substring(6,phone.length()));
+                TextView descriptionTextView = (TextView) infoDialog.findViewById(R.id.info_description_textview);
+                //int randomDescription = new Random().nextInt(3 - 1 + 1) + 1;
+                LinearLayout cardsLayout = findViewById(R.id.contact_inflatedproposals_linearlayout);
+                int randomDescription = id % 3;
+                //Log.d("OZ", "ID -> " + id + "\nDescription -> " + randomDescription);
+                switch (randomDescription) {
+                    case 0:
+                        descriptionTextView.setText("En mi trabajo como " + job.toLowerCase() + ", mi enfoque principal es cumplir con metas y objetivos. Utilizo mis habilidades y conocimientos para aportar valor en mi área. Trabajo en equipo y adopto la tecnología para optimizar procesos. Siempre estoy abierto a aprender y crecer, sin importar el tipo de trabajo que desempeñe.");
+                        break;
+                    case 1:
+                        descriptionTextView.setText("Mi puesto como " + job.toLowerCase() + " se centra en alcanzar metas y lograr resultados efectivos. Empleo mis habilidades y experiencia para contribuir al éxito en mi campo laboral. Colaboro con colegas y aprovecho la tecnología para mejorar procesos. Siempre estoy dispuesto a aprender y crecer, sin importar el contexto laboral en el que me encuentre.");
+                        break;
+                    case 2:
+                        descriptionTextView.setText("En mi profesión (" + job.toLowerCase() + "), me dedico a resolver problemas y lograr resultados efectivos. Utilizo mis habilidades y experiencia para contribuir al éxito en mi campo. Colaboro con equipos y aprovecho la tecnología para mejorar procesos. Siempre estoy dispuesto a aprender y crecer en cualquier entorno laboral en el que me encuentre.");
+                        break;
+                }
                 break;
             case 1:
                 infoDialog.setContentView(R.layout.firstinfo_dialog);
@@ -802,7 +818,7 @@ public class ContactActivity extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
     }
 
-    private void createProposals(String name, String phone, String time, String email, String job, String student, String course, String division) {
+    private void createProposals(int id, String name, String phone, String time, String email, String job, String student, String course, String division) {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
@@ -846,7 +862,7 @@ public class ContactActivity extends AppCompatActivity {
         proposalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInfo(0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone);
+                openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division);
             }
         });
 
