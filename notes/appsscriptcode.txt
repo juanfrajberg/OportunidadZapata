@@ -4,6 +4,7 @@
 # Lastly, there has to be two activators: one called getAllData(), executed every minute
 # And another one with the name importSheet(), executed with every change in the spreadsheet
 # UPDATE: now you will need to have a third one for getAllDataBlog(), and get AllData transforms into getAllDataWorkers()
+# And another one for application information, similar as the one for the Blog
 
 -> FirebaseToExcelBlog.gs
 //GitHub

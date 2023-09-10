@@ -406,7 +406,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(1, "", "", "", "", "", "");
+                openInfo(1, "", "", "", "", "", "", "", "");
             }
         });
 
@@ -422,7 +422,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(2, "", "", "", "", "", "");
+                openInfo(2, "", "", "", "", "", "", "", "");
             }
         });
 
@@ -438,7 +438,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(3, "", "", "", "", "", "");
+                openInfo(3, "", "", "", "", "", "", "", "");
             }
         });
 
@@ -484,23 +484,29 @@ public class ContactActivity extends AppCompatActivity {
                 int size = (int) snapshot.getChildrenCount();
 
                 //Se crean los Strings que guardarán los datos
-                String time = "";
-                String job  = "";
                 String name  = "";
-                String description  = "";
                 String phone = "";
+                String time = "";
+                String email = "";
+                String job  = "";
+                String description  = "";
                 String student = "";
+                String course = "";
+                String division = "";
 
                 for (int i=1; i<size+1; i++) {
-                    time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
-                    job = snapshot.child(String.valueOf(i)).child("job").getValue(String.class);
                     name = snapshot.child(String.valueOf(i)).child("fullname").getValue(String.class);
-                    //Todavía no hay una descripción de cada trabajador en la base de datos (arreglar en un futuro)
-                    description = snapshot.child(String.valueOf(i)).child("mail").getValue(String.class);
                     phone = String.valueOf(snapshot.child(String.valueOf(i)).child("phone").getValue(Long.class));
+                    time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
+                    email = snapshot.child(String.valueOf(i)).child("email").getValue(String.class);
+                    job = snapshot.child(String.valueOf(i)).child("job").getValue(String.class);
+                    //Todavía no hay una descripción de cada trabajador en la base de datos (arreglar en un futuro)
+                    //description = snapshot.child(String.valueOf(i)).child("description").getValue(String.class);
                     student = snapshot.child(String.valueOf(i)).child("student").getValue(String.class);
+                    course = snapshot.child(String.valueOf(i)).child("course").getValue(String.class);
+                    division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
 
-                    createProposals(time, job, name, student);
+                    createProposals(name, phone, time, email, job, student, course, division);
                 }
             }
 
@@ -513,7 +519,7 @@ public class ContactActivity extends AppCompatActivity {
 
     //Función para abrir el Dialog con más información de la persona seleccionada
     //En un futuro hay que añadir parámetros para que apenas abra tenga el nombre, mail y demás datos
-    private void openInfo(int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear) {
+    private void openInfo(int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone) {
         infoDialog = new Dialog(ContactActivity.this);
         infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         infoDialog.getWindow().getAttributes().windowAnimations = R.style.InfoDialogAnimation;
@@ -528,9 +534,13 @@ public class ContactActivity extends AppCompatActivity {
                 TextView nameTextView = (TextView) infoDialog.findViewById(R.id.info_personname_textview);
                 nameTextView.setText(name);
                 TextView studentTextView = (TextView) infoDialog.findViewById(R.id.info_alumnoquelorecomienda_textview);
-                studentTextView.setText("Recomendado/a por " + student + "de 1° 1°");
+                studentTextView.setText("Recomendado/a por " + student + " de 1° 1°");
                 TextView dateTextView = (TextView) infoDialog.findViewById(R.id.info_time_textview);
                 dateTextView.setText("Publicado el " + timeDay + "/" + timeMonth + "/" + timeYear);
+                TextView mailTextView = (TextView) infoDialog.findViewById(R.id.info_personmail_textview);
+                mailTextView.setText(email);
+                TextView phoneTextView = (TextView) infoDialog.findViewById(R.id.info_whatsappnumber_textview);
+                phoneTextView.setText("+54 9 " + phone);
                 break;
             case 1:
                 infoDialog.setContentView(R.layout.firstinfo_dialog);
@@ -792,7 +802,7 @@ public class ContactActivity extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
     }
 
-    private void createProposals(String time, String job, String name, String student) {
+    private void createProposals(String name, String phone, String time, String email, String job, String student, String course, String division) {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
@@ -836,7 +846,42 @@ public class ContactActivity extends AppCompatActivity {
         proposalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInfo(0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear);
+                openInfo(0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone);
+            }
+        });
+
+        ImageView phoneButton = (ImageView) proposalToAdd.findViewById(R.id.proposal_phone_imageview);
+        phoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Animación del botón
+                YoYo.with(Techniques.Bounce)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(phoneButton);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phone));
+                startActivity(intent);
+            }
+        });
+
+        ImageView whatsAppButton = (ImageView) proposalToAdd.findViewById(R.id.proposal_whatsapp_imageview);
+        whatsAppButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Animación del botón
+                YoYo.with(Techniques.Bounce)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(whatsAppButton);
+
+                //Obtenemos el número de WhatsApp tal cual está escrito en el Dialog
+
+                //Quitamos los espacios en blanco y el guión del número de teléfono
+                String WhatsAppPhone = phone;
+
+                //Abrimos el chat con el número del Dialog
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=+" + WhatsAppPhone + "&text=Hola%2C%20buenas%20tardes!%20Me%20contacto%20cone%20usted%20porque%20me%20interesan%20los%20servicios%20que%20ofrece%20en%20Oportunidad%20Zapata%20😁")));
             }
         });
     }

@@ -79,8 +79,7 @@
         app:srcCompat="@drawable/contact_phone_image"
         android:layout_width="@dimen/_38sdp"
         android:layout_height="@dimen/_38sdp"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:onClick="openPhone" />
+        android:layout_marginTop="@dimen/_7sdp" />
 
     <ImageView
         android:id="@+id/proposal_whatsapp_imageview"
@@ -89,7 +88,6 @@
         app:srcCompat="@drawable/contact_whatsapp_image"
         android:layout_width="@dimen/_38sdp"
         android:layout_height="@dimen/_38sdp"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:onClick="openWhatsApp" />
+        android:layout_marginStart="@dimen/_7sdp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
