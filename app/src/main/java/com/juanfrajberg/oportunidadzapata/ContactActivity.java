@@ -521,6 +521,9 @@ public class ContactActivity extends AppCompatActivity {
 
         //Switch para saber qué información mostrar
         switch (numberInfo) { //No hay un caso default porque realmente no es necesario
+            case 0: //Se abre un Dialog con información de una persona real, no de ejemplo
+                infoDialog.setContentView(R.layout.info_dialog);
+                break;
             case 1:
                 infoDialog.setContentView(R.layout.firstinfo_dialog);
                 break;
@@ -817,5 +820,14 @@ public class ContactActivity extends AppCompatActivity {
         TextView descriptionProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
         final int randomYears = new Random().nextInt(15) + 2;
         descriptionProposal.setText(Html.fromHtml("Me desempeño como " + job.toLowerCase() + " hace más de " + randomYears + " años. Fui recomendado/a por " + student + ". " + "<font color='#3876F6'><u>Leer más.</u></font>"));
+
+        //Abrir el Dialog de más información
+        RelativeLayout proposalLayout = proposalToAdd.findViewById(R.id.proposal_view_relativelayout);
+        proposalLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInfo(0);
+            }
+        });
     }
 }
