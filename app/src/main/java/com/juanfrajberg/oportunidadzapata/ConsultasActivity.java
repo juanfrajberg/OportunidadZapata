@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,9 +116,25 @@ public class ConsultasActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //finish(); //No lo uso para que guarde el estado de la actividad
-                startActivity(new Intent(ConsultasActivity.this, HomeActivity.class));
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                if (isInMultiWindowMode()) {
+                    // finish(); //No lo uso para que guarde el estado de la actividad
+
+                    //De cualquier otra forma no se guarda el estado de la actividad
+                    //Animación del botón
+                    YoYo.with(Techniques.Shake)
+                            .duration(300)
+                            .repeat(0)
+                            .playOn(view);
+                    Toast.makeText(getApplicationContext(), "¡No se puede usar este botón en el modo de pantalla dividida!",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    //Para que se guarde el estado y los mensajes
+                    Intent openHomeAgain = new Intent(ConsultasActivity.this, HomeActivity.class);
+                    openHomeAgain.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(openHomeAgain);
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
 
@@ -264,6 +281,9 @@ public class ConsultasActivity extends AppCompatActivity {
                 .duration(450)
                 .repeat(0)
                 .playOn(view);
+
+        //Después borrar, es solamente como prueba
+        view.setVisibility(View.GONE);
     }
 
     //Función para enviar mensajes y recibir respuesta de AI (todavía no configurada)
