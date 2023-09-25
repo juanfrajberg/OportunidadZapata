@@ -267,6 +267,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/contact_reminder_imageview"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/contact_stars_imageview"
+                android:layout_marginTop="@dimen/_3sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/blog_description_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/contact_reminder_imageview"
+                app:layout_constraintTop_toTopOf="@+id/contact_reminder_imageview"
+                android:background="@drawable/blog_roundedcornersview_background"
+                android:padding="@dimen/_7sdp">
+
+                <TextView
+                    android:id="@+id/blog_subtitle_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/contact_reminder_text"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/contact_firstexampleview_relativelayout"
                 android:layout_width="0dp"
@@ -278,6 +313,29 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:layout_marginRight="@dimen/_7sdp"
                 android:elevation="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/contact_firstexampleclarification_relativelayout"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/contact_roundedcornersexampleview_background"
+                    android:gravity="center"
+                    android:layout_alignTop="@id/contact_firstexampletitlerl_textview"
+                    android:layout_alignBottom="@id/contact_firstexampletitlerl_textview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/_8sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_11ssp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textColor="#707070"
+                        android:text="Ejemplo"
+                        android:includeFontPadding="false">
+                    </TextView>
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/contact_firstexampletitlerl_textview"
@@ -346,6 +404,8 @@
                 android:fontFamily="@font/nunito_regular"
                 android:text="14 de Mayo de 2023"
                 android:textColor="#B4B4B4"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:layout_constraintTop_toBottomOf="@id/blog_description_relativelayout"
                 app:layout_constraintBottom_toTopOf="@+id/contact_firstexampleview_relativelayout"
                 app:layout_constraintStart_toStartOf="@+id/contact_firstexampleview_relativelayout" />
 
@@ -360,6 +420,29 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:layout_marginRight="@dimen/_7sdp"
                 android:elevation="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/contact_secondexampleclarification_relativelayout"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/contact_roundedcornersexampleview_background"
+                    android:gravity="center"
+                    android:layout_alignTop="@id/contact_secondexampletitlerl_textview"
+                    android:layout_alignBottom="@id/contact_secondexampletitlerl_textview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/_8sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_11ssp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textColor="#707070"
+                        android:text="Ejemplo"
+                        android:includeFontPadding="false">
+                    </TextView>
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/contact_secondexampletitlerl_textview"
@@ -444,6 +527,29 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:layout_marginRight="@dimen/_7sdp"
                 android:elevation="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/contact_thirdexampleclarification_relativelayout"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/contact_roundedcornersexampleview_background"
+                    android:gravity="center"
+                    android:layout_alignTop="@id/contact_thirdexampletitlerl_textview"
+                    android:layout_alignBottom="@id/contact_thirdexampletitlerl_textview"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/_8sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_11ssp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textColor="#707070"
+                        android:text="Ejemplo"
+                        android:includeFontPadding="false">
+                    </TextView>
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/contact_thirdexampletitlerl_textview"

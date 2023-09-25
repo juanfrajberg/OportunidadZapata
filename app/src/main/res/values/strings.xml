@@ -129,6 +129,7 @@
 
     <string name="home_shareappmessage_text">Te recomiendo que descargues Oportunidad Zapata, una excelente aplicación que actúa como bolsa de trabajo. 😁👔\nPuedes instalarla desde este enlace: https://www.mediafire.com/file/gzsn8cyincsi8zo/Oportunidad_Zapata.apk/file\n¡Espero que te guste! 🙌
     </string>
+    <string name="contact_reminder_text">¡Importante! Vas a observar en la esquina superior derecha de algunas propuestas un cartel de "ejemplo". Esto quiere decir que éstas no son solicitudes de empleadores reales, sino que fueron escritas a modo de ilustración para que puedas observar cómo deberías escribir tu propuesta de trabajo para publicar.</string>
 
     <string-array name="cursos_array">
         <item>Curso</item>
