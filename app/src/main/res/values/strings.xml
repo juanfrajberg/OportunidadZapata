@@ -12,7 +12,8 @@
     <string name="everydaynotificacion_text">¡No te olvides de ver las nuevas propuestas que se han añadido y enviar tu currículum para
         que otras personas puedan conocerte! 😁💼</string>
 
-    <string name="newproposalnotificacion_text">¡Se ha añadido una nueva propuesta! Haz clic aquí para echarle un vistazo. 😉🔨</string>
+    <string name="newproposalnotificacion_single_text">¡Se ha añadido una nueva propuesta! Haz clic aquí para echarle un vistazo. 😉🔨</string>
+    <string name="newproposalnotificacion_many_text">¡Se han añadido nuevas propuestas! Haz clic aquí para echarles un vistazo. 😉🔨</string>
 
     <string name="requisitos_text">¡Hola! Si estás interesado en publicar una propuesta en la bolsa de trabajo, necesitas tener en cuenta que existen algunos
         requisitos que debes cumplir;
