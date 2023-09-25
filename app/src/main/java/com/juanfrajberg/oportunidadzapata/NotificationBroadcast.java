@@ -21,9 +21,9 @@ public class NotificationBroadcast extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int reqCode = 1;
         //Este intent lo que hace es abrir la actividad a la que se nos llevará al hacer clic en la notificación
-        Intent intent1 = new Intent(context, StartActivity.class);
+        Intent intentToOpenActivity = new Intent(context, StartActivity.class);
         try {
-            NotificationBroadcast.showNotification(context, "Oportunidad Zapata", context.getResources().getString(R.string.notificacion_text), intent1, reqCode);
+            NotificationBroadcast.showNotification(context, "Oportunidad Zapata", context.getResources().getString(R.string.everydaynotificacion_text), intentToOpenActivity, reqCode);
         } catch (Exception e) { //Por si algo funciona mal en versionas distintas de Android, por el momento en mis dispositivos todo perfecto
             Toast.makeText(context, "No se pudo enviar la notificación.", Toast.LENGTH_SHORT).show();
         }

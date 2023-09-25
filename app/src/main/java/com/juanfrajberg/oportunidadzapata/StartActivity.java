@@ -53,6 +53,8 @@ public class StartActivity extends AppCompatActivity {
     public final String finalAppName = "Oportunidad Zapata";
     public final String finalAppVersion = "1.0.0";
 
+    public static boolean firstRun;
+
     //Acá se detecta si hay que mostrar o no la aplicación
     @Override
     protected void onResume() {
@@ -102,7 +104,7 @@ public class StartActivity extends AppCompatActivity {
 
         //Código para detectar si es la primera vez que se ejecuta la aplicación
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean firstRun = preferences.getBoolean("firstRun", true);
+        firstRun = preferences.getBoolean("firstRun", true);
 
         if (firstRun) {
             //Toast de prueba para indicar que es la primera vez corriendo la aplicación
@@ -179,17 +181,18 @@ public class StartActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String appName = snapshot.child("appName").getValue(String.class);
                 String lastVersion = snapshot.child("lastVersion").getValue(String.class);
-                if (appName.equals(finalAppName) && lastVersion.equals(finalAppVersion)) {
-                    Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_LONG).show();
+                if (!appName.equals(finalAppName) && !lastVersion.equals(finalAppVersion)) {
+                    if (appName.equals(finalAppName) && lastVersion.equals(finalAppVersion)) {
+                        Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No se pudo verificar si estás usando la última versión de la aplicación.", Toast.LENGTH_LONG).show();
             }
         });
     }

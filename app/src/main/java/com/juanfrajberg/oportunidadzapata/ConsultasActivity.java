@@ -115,8 +115,12 @@ public class ConsultasActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if (isInMultiWindowMode()) {} //Función útil para el futuro, pero hay muchos errores
                 //finish(); //No lo uso para que guarde el estado de la actividad
-                startActivity(new Intent(ConsultasActivity.this, HomeActivity.class));
+
+                //Para guardar el estado y mensajes
+                Intent openHomeAgain = new Intent(ConsultasActivity.this, HomeActivity.class);
+                startActivity(openHomeAgain);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -259,7 +263,7 @@ public class ConsultasActivity extends AppCompatActivity {
 
     //Función que se llama desde el XML de este layout para animar los cuadros de más información sobre la AI
     public void animateMoreInfoLayouts(View view) {
-        //Animación del botón
+        //Animación del elemento
         YoYo.with(Techniques.Wave)
                 .duration(450)
                 .repeat(0)
@@ -401,7 +405,7 @@ public class ConsultasActivity extends AppCompatActivity {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("model", "text-davinci-003");
-            jsonBody.put("prompt", "Ayudas a la gente a crear curriculums dentro de una aplicación que funciona como bolsa de trabajo llamada Oportunidad Zapata. Se te pide ayuda con esto: " + prompt + ". Responde la consulta de forma corta y concreta.");
+            jsonBody.put("prompt", prompt); //"Ayudas a la gente a crear curriculums dentro de una aplicación que funciona como bolsa de trabajo llamada Oportunidad Zapata. Se te pide ayuda con esto: " + prompt + ". Responde la consulta de forma corta y concreta."
             jsonBody.put("max_tokens", 4000);
             jsonBody.put("temperature", 0);
         } catch (Exception e) {

@@ -14,10 +14,12 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".OportunidadZapata"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OportunidadZapata">
         <activity
+            android:resizeableActivity="true"
             android:name=".WiFiActivity"
             android:exported="false"
             android:theme="@style/WiFiDialogTheme"
@@ -25,42 +27,51 @@
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"/>
         <activity
+            android:resizeableActivity="true"
             android:name=".ConsultasActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:fitsSystemWindows="true"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
+            android:persistableMode="persistAcrossReboots"
+            android:persistent="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
+            android:resizeableActivity="true"
             android:name=".PostActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:resizeableActivity="true"
             android:name=".BlogActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:resizeableActivity="true"
             android:name=".DoneActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:resizeableActivity="true"
             android:name=".ContactActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:resizeableActivity="true"
             android:name=".SendProposalActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:resizeableActivity="true"
             android:name=".HomeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
@@ -85,4 +96,6 @@
         
         <receiver android:name=".NotificationBroadcast"></receiver>
     </application>
+
+    <meta-data android:name="android.allow_multiple_resumed_activities" android:value="true" />
 </manifest>
