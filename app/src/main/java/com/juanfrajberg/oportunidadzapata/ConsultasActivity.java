@@ -405,7 +405,7 @@ public class ConsultasActivity extends AppCompatActivity {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("model", "text-davinci-003");
-            jsonBody.put("prompt", "Ayudas a la gente a crear curriculums dentro de una aplicación que funciona como bolsa de trabajo llamada Oportunidad Zapata. Se te pide ayuda con esto: " + prompt + ". Responde la consulta de forma corta y concreta.");
+            jsonBody.put("prompt", prompt); //"Ayudas a la gente a crear curriculums dentro de una aplicación que funciona como bolsa de trabajo llamada Oportunidad Zapata. Se te pide ayuda con esto: " + prompt + ". Responde la consulta de forma corta y concreta."
             jsonBody.put("max_tokens", 4000);
             jsonBody.put("temperature", 0);
         } catch (Exception e) {
