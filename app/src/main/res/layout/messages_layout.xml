@@ -25,7 +25,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/nunito_regular"
             android:text="¿Cómo puedo publicar una solicitud para mi emprendimiento?"
-            android:textAlignment="center"
+            android:textAlignment="textEnd"
             android:textColor="#707070"
             android:textSize="@dimen/_12ssp" />
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/nunito_regular"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textColor="#707070"
             android:textSize="@dimen/_11ssp"
             android:textIsSelectable="true"

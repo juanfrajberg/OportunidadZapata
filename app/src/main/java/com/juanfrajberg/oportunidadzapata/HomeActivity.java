@@ -426,7 +426,7 @@ public class HomeActivity extends AppCompatActivity {
     //otra actividad. También para que haya una animación
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(HomeActivity.this, StartActivity.class));
+        startActivity(new Intent(HomeActivity.this, StartActivity.class).putExtra("alreadyShowedToastVersion", true));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
