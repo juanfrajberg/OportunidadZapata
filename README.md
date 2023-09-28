@@ -29,7 +29,10 @@ public void bestApplicationEver() {
 - [Juan Frajberg]
 
 ## Download the app 📱
-- [MediaFire link]
+- [MediaFire download link]
+
+## Privacy Policy 🔐
+- [Oportunidad Zapata's Privacy Policy]
 
 ## Contact me 👋
 - [Instagram]
@@ -39,6 +42,7 @@ public void bestApplicationEver() {
 
 [//]: # (URLs used in this document)
 [Juan Frajberg]: <https://github.com/juanfrajberg>
-[MediaFire link]: <https://www.mediafire.com/file/gzsn8cyincsi8zo/Oportunidad_Zapata.apk/file>
+[MediaFire download link]: <https://www.mediafire.com/file/gzsn8cyincsi8zo/Oportunidad_Zapata.apk/file>
 [Instagram]: <https://instagram.com/juanfrajberg>
 [Twitter]: <https://twitter.com/juanfrajberg>
+[Oportunidad Zapata's Privacy Policy]: <https://www.app-privacy-policy.com/live.php?token=sGoYZc8mXE2ePRBENBjsm6HsOolzCtkn>
