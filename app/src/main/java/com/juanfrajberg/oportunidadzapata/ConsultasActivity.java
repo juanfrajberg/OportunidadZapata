@@ -375,10 +375,40 @@ public class ConsultasActivity extends AppCompatActivity {
         //Se tendría que usar únicamente en caso de que no haya conexión a Internet
         final int min = 1500;
         final int max = 4500;
-        final int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
+        int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
 
-        //Se llama a la función para que el bot de OpenAI responda
-        callAPI(message);
+        //Se llama a la función para que el bot de OpenAI responda verificando que haya conexión a Internet
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        boolean connected = (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED);
+
+        if (connected) {
+            callAPI(message);
+        }
+        else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //Se esconde la animación de pensar
+                    GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+                    Handler hideGIF = new Handler();
+                    hideGIF.postDelayed(new Runnable() {
+                        public void run() {
+                            canSendMessage = true;
+                            answerAIGif.setVisibility(View.GONE);
+                            //Genera un número aleatorio con el mínimo y el máximo inclusive
+                            //Se tendría que usar únicamente en caso de que no haya conexión a Internet
+                            final int min = 800;
+                            final int max = 1200;
+                            int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
+
+                            writeAnswer("No se puede conectar con la inteligencia artifical de Oportunidad Zapata porque no hay conexión a Internet. 😢");
+                        }
+                    }, randomWaitingTime); //El tiempo que tarda la animación de desaparecer
+                }
+            });
+        }
     }
 
     public void generateRandomAnswer() {
@@ -409,8 +439,29 @@ public class ConsultasActivity extends AppCompatActivity {
             jsonBody.put("max_tokens", 4000);
             jsonBody.put("temperature", 0);
         } catch (Exception e) {
-            writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
             //e.printStackTrace();
+            //Genera un número aleatorio con el mínimo y el máximo inclusive
+            //Se tendría que usar únicamente en caso de que no haya conexión a Internet
+            final int min = 800;
+            final int max = 1200;
+            int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //Se esconde la animación de pensar
+                    GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+                    Handler hideGIF = new Handler();
+                    hideGIF.postDelayed(new Runnable() {
+                        public void run() {
+                            canSendMessage = true;
+                            answerAIGif.setVisibility(View.GONE);
+
+                            writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
+                        }
+                    }, randomWaitingTime); //El tiempo que tarda la animación de desaparecer
+                }
+            });
         }
 
         Request request = null;
@@ -427,22 +478,22 @@ public class ConsultasActivity extends AppCompatActivity {
         }
 
         client.newCall(request).enqueue(new Callback() {
+            //Genera un número aleatorio con el mínimo y el máximo inclusive
+            //Se tendría que usar únicamente en caso de que no haya conexión a Internet
+            final int min = 800;
+            final int max = 1200;
+            final int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 //Se esconde la animación de pensar
                 GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
-                YoYo.with(Techniques.Tada)
-                        .duration(400)
-                        .repeat(0)
-                        .playOn(answerAIGif);
                 Handler hideGIF = new Handler();
                 hideGIF.postDelayed(new Runnable() {
                     public void run() {
                         canSendMessage = true;
                         answerAIGif.setVisibility(View.GONE);
                     }
-                }, 400); //El tiempo que tarda la animación de desaparecer
-                writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
+                }, randomWaitingTime); //El tiempo que tarda la animación de desaparecer
             }
 
             //Se recibe la respuesta de OpenAI
@@ -451,6 +502,12 @@ public class ConsultasActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     JSONObject jsonObject = null;
                     try {
+                        //Genera un número aleatorio con el mínimo y el máximo inclusive
+                        //Se tendría que usar únicamente en caso de que no haya conexión a Internet
+                        final int min = 800;
+                        final int max = 1200;
+                        int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
+
                         jsonObject = new JSONObject(response.body().string());
                         JSONArray jsonArray = jsonObject.getJSONArray("choices");
                         String result = jsonArray.getJSONObject(0).getString("text");
@@ -459,10 +516,6 @@ public class ConsultasActivity extends AppCompatActivity {
                             public void run() {
                                 //Se esconde la animación de pensar
                                 GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
-                                YoYo.with(Techniques.Tada)
-                                        .duration(400)
-                                        .repeat(0)
-                                        .playOn(answerAIGif);
                                 Handler hideGIF = new Handler();
                                 hideGIF.postDelayed(new Runnable() {
                                     public void run() {
@@ -470,16 +523,51 @@ public class ConsultasActivity extends AppCompatActivity {
                                         answerAIGif.setVisibility(View.GONE);
                                         writeAnswer(result.trim()); //Para eliminar espacios en blanco iniciales y finales
                                     }
-                                }, 400); //El tiempo que tarda la animación de desaparecer
+                                }, randomWaitingTime); //El tiempo que tarda la animación de desaparecer
                             }
                         });
                     } catch (JSONException e) {
-                        writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Se esconde la animación de pensar
+                                GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+                                Handler hideGIF = new Handler();
+                                hideGIF.postDelayed(new Runnable() {
+                                    public void run() {
+                                        canSendMessage = true;
+                                        answerAIGif.setVisibility(View.GONE);
+                                        writeAnswer("No se pudo conectar con OpenAI porque " + e.getMessage());
+                                    }
+                                }, 400); //El tiempo que tarda la animación de desaparecer
+                            }
+                        });
                         //e.printStackTrace();
                     }
                 } else {
                     try {
-                        writeAnswer("No se pudo conectar con OpenAI porque " + response.body().string());
+                        //Genera un número aleatorio con el mínimo y el máximo inclusive
+                        //Se tendría que usar únicamente en caso de que no haya conexión a Internet
+                        final int min = 800;
+                        final int max = 1200;
+                        int randomWaitingTime = new Random().nextInt((max - min) + 1) + min;
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Se esconde la animación de pensar
+                                GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
+                                Handler hideGIF = new Handler();
+                                hideGIF.postDelayed(new Runnable() {
+                                    public void run() {
+                                        canSendMessage = true;
+                                        answerAIGif.setVisibility(View.GONE);
+                                        writeAnswer("No se pudo conectar con OpenAI porque " + response.body().toString());
+                                    }
+                                }, randomWaitingTime); //El tiempo que tarda la animación de desaparecer
+                            }
+                        });
+
                     } catch (Exception e) {
                         Log.e("OZ", "Error at line 485. " + e);
 
@@ -488,10 +576,6 @@ public class ConsultasActivity extends AppCompatActivity {
                             public void run() {
                                 //Se esconde la animación de pensar
                                 GifImageView answerAIGif = (GifImageView) messagesToAdd.findViewById(R.id.consultas_aithinkinggif_gifimageview);
-                                YoYo.with(Techniques.Tada)
-                                        .duration(400)
-                                        .repeat(0)
-                                        .playOn(answerAIGif);
                                 Handler hideGIF = new Handler();
                                 hideGIF.postDelayed(new Runnable() {
                                     public void run() {

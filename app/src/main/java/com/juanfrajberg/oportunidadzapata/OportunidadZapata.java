@@ -47,7 +47,7 @@ public class OportunidadZapata extends Application {
                     editor.putInt("proposalsNumber", numberProposals);
                     editor.apply();
 
-                    if (numberProposals != Integer.parseInt(proposalNumbers)) {
+                    if (numberProposals != Integer.parseInt(proposalNumbers) && !proposalNumbers.equals("0")) {
                         if (numberProposals > (Integer.parseInt(proposalNumbers) + 1)) {
                             sendNewProposalNotification(2);
                         }

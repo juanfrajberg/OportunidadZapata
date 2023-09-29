@@ -55,6 +55,13 @@ public class StartActivity extends AppCompatActivity {
 
     public static boolean firstRun;
 
+    //Para saber si ya se mostró el Toast que informa sobre el estado de la aplicación
+    public boolean alreadyShowedToastVersion = false;
+
+    //Para saber cuál fue el último mensaje sobre la versión mostrado
+    private static String messageVersion = "null";
+    private static String lastMessageVersion = "nullLast";
+
     //Acá se detecta si hay que mostrar o no la aplicación
     @Override
     protected void onResume() {
@@ -92,6 +99,9 @@ public class StartActivity extends AppCompatActivity {
         //Código básico para que se muestre la interfaz
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
+
+        Intent intent = getIntent();
+        alreadyShowedToastVersion = intent.getBooleanExtra("alreadyShowedToastVersion", false);
 
         //Establecer el modo claro como predeterminado incluso con el modo oscuro (ya no es necesario, se configuró el modo oscuro en cada layout)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -179,20 +189,38 @@ public class StartActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String appName = snapshot.child("appName").getValue(String.class);
-                String lastVersion = snapshot.child("lastVersion").getValue(String.class);
-                if (!appName.equals(finalAppName) && !lastVersion.equals(finalAppVersion)) {
-                    if (appName.equals(finalAppName) && lastVersion.equals(finalAppVersion)) {
-                        Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_LONG).show();
+                try {
+                    String appNameFirebase = snapshot.child("appName").getValue(String.class);
+                    String lastVersionFirebase = snapshot.child("lastVersion").getValue(String.class);
+
+                    //Verificar si se está usando la última versión de la aplicación y coincide el nombre
+                    if (appNameFirebase.equals(finalAppName) && lastVersionFirebase.equals(finalAppVersion)) {
+                        messageVersion = "Updated";
+                        if (!lastMessageVersion.equals(messageVersion)) {
+                            Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_LONG).show();
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_LONG).show();
+                        messageVersion = "Not updated";
+                        if (!lastMessageVersion.equals(messageVersion)) {
+                            Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la aplicación, esta no es la última versión!", Toast.LENGTH_LONG).show();
+                        }
                     }
+                    lastMessageVersion = messageVersion;
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "No se pudo verificar si estás usando la última versión de la aplicación.", Toast.LENGTH_LONG).show();
+
+                    messageVersion = "Error";
+                    lastMessageVersion = messageVersion;
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "No se pudo verificar si estás usando la última versión de la aplicación.", Toast.LENGTH_LONG).show();
+
+                messageVersion = "Error";
+                lastMessageVersion = messageVersion;
             }
         });
     }

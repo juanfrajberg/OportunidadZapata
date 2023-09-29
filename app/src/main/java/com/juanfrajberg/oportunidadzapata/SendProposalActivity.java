@@ -31,12 +31,12 @@ import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -75,7 +75,7 @@ public class SendProposalActivity extends AppCompatActivity {
     static private ImageView arrowUpRubroLaboralImageView;
 
     //ScrollView general del formulario
-    static private ScrollView layoutScrollView;
+    static private NestedScrollView layoutScrollView;
 
     //Spinners de la actividad
     static Spinner rubroLaboralSpinner; //Rubro laboral
