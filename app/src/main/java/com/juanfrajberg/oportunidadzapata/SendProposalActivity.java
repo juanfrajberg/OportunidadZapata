@@ -16,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -253,14 +254,37 @@ public class SendProposalActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(SafetyNetApi.RecaptchaTokenResponse response) {
                                             //La comunicación con reCAPTCHA fue exitosa y se envía la propuesta
+                                            //Animación del botón
+                                            YoYo.with(Techniques.Pulse)
+                                                    .duration(450)
+                                                    .repeat(0)
+                                                    .playOn(doneButton);
+
                                             sendProposal();
                                         }
                                     })
                             .addOnFailureListener(SendProposalActivity.this, new OnFailureListener() {
                                 @Override
-                                public void onFailure(Exception e) {
+                                public void onFailure(Exception error) {
                                     //Se imprime el error y no se puede enviar la propuesta
-                                    Toast.makeText(getApplicationContext(), "No se pudo realizar la verificación reCAPTCHA.", Toast.LENGTH_SHORT).show();
+                                    Log.e("OZ", "reCAPTCHA. " + error);
+                                    if (error.toString().contains("SafetyNet.API is not available on this device.")) {
+                                        //Animación del botón
+                                        YoYo.with(Techniques.Pulse)
+                                                .duration(450)
+                                                .repeat(0)
+                                                .playOn(doneButton);
+
+                                        sendProposal();
+                                    }
+                                    else {
+                                        Toast.makeText(getApplicationContext(), "No se pudo realizar la verificación reCAPTCHA.", Toast.LENGTH_SHORT).show();
+                                        //Animación de sacudir para dar más feedback
+                                        YoYo.with(Techniques.Shake)
+                                                .duration(700)
+                                                .repeat(0)
+                                                .playOn(doneButton);
+                                    }
                                 }
                             });
                 }
@@ -865,7 +889,13 @@ public class SendProposalActivity extends AppCompatActivity {
         SharedPreferences.Editor dataPersonRegistered = preferences.edit();
 
         dataPersonRegistered.putString("fullname", nombreCompletoEditText.getText().toString());
-        dataPersonRegistered.putLong("phoneDB", Long.parseLong(numeroTelefonoEditText.getText().toString()));
+
+        //Toda esta parte es para que el celular se guarde como 2611234567, sin importar cómo se haya introducido
+        String phoneDB  = numeroTelefonoEditText.getText().toString();
+        phoneDB = phoneDB.replace("-", "");
+        phoneDB = phoneDB.replace(" ", "");
+        phoneDB = phoneDB.substring(phoneDB.length() - 10);
+        dataPersonRegistered.putLong("phoneDB", Long.parseLong(phoneDB));
 
         //Data Format es para elegir el formato en el que se guardará la hora
         //Tipos de Data Format
@@ -929,6 +959,7 @@ public class SendProposalActivity extends AppCompatActivity {
                             preferences.getString("student", "null"),
                             preferences.getString("course", "null"),
                             preferences.getString("division", "null"),
+                            preferences.getString("description", "null"),
                             Integer.parseInt(lastID));
 
                     //Se almacena en nuestra Realtime Database

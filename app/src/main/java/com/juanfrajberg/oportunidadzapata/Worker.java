@@ -12,6 +12,7 @@ public class Worker {
     private String course;
     private String division;
     private int id;
+    private String description;
 
     public String getFullname() {
         return fullname;
@@ -77,6 +78,14 @@ public class Worker {
         this.division = division;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }
@@ -85,7 +94,7 @@ public class Worker {
         this.id = id;
     }
 
-    public Worker(String fullname, long phone, String time, String email, String job, String student, String course, String division, int id) {
+    public Worker(String fullname, long phone, String time, String email, String job, String student, String course, String division, String description, int id) {
         this.fullname = fullname;
         this.phone = phone;
         this.time = time;
@@ -95,5 +104,6 @@ public class Worker {
         this.course = course;
         this.division = division;
         this.id = id;
+        this.description = description;
     }
 }
