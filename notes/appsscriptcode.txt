@@ -141,12 +141,12 @@ function getAllDataWorkers() {
     for (j = 1; j < dataSet[i].length; j++) {
       //Verificar el tipo de dato en Firebase y actualizarlo de forma acorde
       //Por ejemplo, mis tipos de dato son id, name, phone, etc.
-      rows.push([data[j].id, data[j].fullname, data[j].phone, data[j].time, data[j].email, data[j].job, data[j].student, data[j].course, data[j].division]); //"Empujo" los datos al Excel
+      rows.push([data[j].id, data[j].fullname, data[j].phone, data[j].time, data[j].email, data[j].job, data[j].student, data[j].course, data[j].division, data[j].description]); //"Empujo" los datos al Excel
     }
   }
 
   //Para subir los valores de la base de datos al Sheets
-  dataRange = sheet.getRange(2, 1, rows.length, 9); //Fila inicial, columna inicial, fila final, columna final
+  dataRange = sheet.getRange(2, 1, rows.length, 10); //Fila inicial, columna inicial, fila final, columna final
   dataRange.setValues(rows);
   //Logger.log(rows.length); Imprimir la cantidad de filas
 
@@ -198,6 +198,11 @@ function getAllDataWorkers() {
   column9.setBackgroundRGB(244, 204, 204);
   column9.setFontWeight("normal");
   column9.setHorizontalAlignment("center");
+
+  var column10 = sheet.getRange(2, 10, sheet.getLastRow());
+  column10.setBackgroundRGB(162, 196, 201);
+  column10.setFontWeight("normal");
+  column10.setHorizontalAlignment("center");
 
 //Eliminar la última columna que se genera de más
   sheet.deleteRow(sheet.getLastRow() + 1);

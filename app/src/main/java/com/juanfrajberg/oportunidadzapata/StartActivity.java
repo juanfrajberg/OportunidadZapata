@@ -58,6 +58,10 @@ public class StartActivity extends AppCompatActivity {
     //Para saber si ya se mostró el Toast que informa sobre el estado de la aplicación
     public boolean alreadyShowedToastVersion = false;
 
+    //Para saber cuál fue el último mensaje sobre la versión mostrado
+    private static String messageVersion = "null";
+    private static String lastMessageVersion = "nullLast";
+
     //Acá se detecta si hay que mostrar o no la aplicación
     @Override
     protected void onResume() {
@@ -185,23 +189,38 @@ public class StartActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String appName = snapshot.child("appName").getValue(String.class);
-                String lastVersion = snapshot.child("lastVersion").getValue(String.class);
-                if (!alreadyShowedToastVersion) {
-                    if (appName.equals(finalAppName) && lastVersion.equals(finalAppVersion)) {
-                        Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_LONG).show();
-                        alreadyShowedToastVersion = true;
+                try {
+                    String appNameFirebase = snapshot.child("appName").getValue(String.class);
+                    String lastVersionFirebase = snapshot.child("lastVersion").getValue(String.class);
+
+                    //Verificar si se está usando la última versión de la aplicación y coincide el nombre
+                    if (appNameFirebase.equals(finalAppName) && lastVersionFirebase.equals(finalAppVersion)) {
+                        messageVersion = "Updated";
+                        if (!lastMessageVersion.equals(messageVersion)) {
+                            Toast.makeText(getApplicationContext(), "¡Estás usando la última versión de la aplicación!", Toast.LENGTH_LONG).show();
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la app, esta no es la última versión!", Toast.LENGTH_LONG).show();
-                        alreadyShowedToastVersion = true;
+                        messageVersion = "Not updated";
+                        if (!lastMessageVersion.equals(messageVersion)) {
+                            Toast.makeText(getApplicationContext(), "¡No te olvides de actualizar la aplicación, esta no es la última versión!", Toast.LENGTH_LONG).show();
+                        }
                     }
+                    lastMessageVersion = messageVersion;
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "No se pudo verificar si estás usando la última versión de la aplicación.", Toast.LENGTH_LONG).show();
+
+                    messageVersion = "Error";
+                    lastMessageVersion = messageVersion;
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "No se pudo verificar si estás usando la última versión de la aplicación.", Toast.LENGTH_LONG).show();
-                alreadyShowedToastVersion = true;
+
+                messageVersion = "Error";
+                lastMessageVersion = messageVersion;
             }
         });
     }
