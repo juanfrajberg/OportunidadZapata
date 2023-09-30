@@ -115,14 +115,6 @@ public class SendProposalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sendproposal_activity);
 
-        NestedScrollView parentScroll = findViewById(R.id.proposal_scrolllayout_scrollview);
-        parentScroll.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                v.getParent().requestDisallowInterceptTouchEvent(false);
-                return false;
-            }
-        });
-
         //Establecer el modo claro como predeterminado incluso con el modo oscuro (ya no es necesario, se configuró el modo oscuro en cada layout)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
@@ -577,14 +569,6 @@ public class SendProposalActivity extends AppCompatActivity {
             }
         });
 
-        nombreUsuarioEditText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                contactoHorizontalScrollView.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-
         descripcionShortEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -1005,10 +989,12 @@ public class SendProposalActivity extends AppCompatActivity {
         dataPersonRegistered.putString("division", divisionSpinner.getSelectedItem().toString());
         dataPersonRegistered.putString("descriptionShort", descripcionShortEditText.getText().toString());
         dataPersonRegistered.putString("descriptionFormal", descripcionFormalEditText.getText().toString());
+        dataPersonRegistered.putBoolean("showStudent", mostrarNombreAlumno.isChecked());
+        dataPersonRegistered.putString("category", rubroLaboralSpinner.getSelectedItem().toString());
 
         //Verificar si hay algo escrito
         if (!contactoSpinner.getSelectedItem().toString().equals("Tipo") && !TextUtils.isEmpty(nombreUsuarioEditText.getText())) {
-            dataPersonRegistered.putString("contact", contactoSpinner.getSelectedItem().toString());
+            dataPersonRegistered.putString("socialMedia", contactoSpinner.getSelectedItem().toString());
             dataPersonRegistered.putString("username", nombreUsuarioEditText.getText().toString());
         }
 
@@ -1044,6 +1030,10 @@ public class SendProposalActivity extends AppCompatActivity {
                             preferences.getString("division", "null"),
                             preferences.getString("descriptionShort", "null"),
                             preferences.getString("descriptionFormal", "null"),
+                            preferences.getBoolean("showStudent", true),
+                            preferences.getString("category", "null"),
+                            preferences.getString("socialMedia", "null"),
+                            preferences.getString("username", "null"),
                             Integer.parseInt(lastID));
 
                     //Se almacena en nuestra Realtime Database

@@ -15,6 +15,43 @@ public class Worker {
     private String descriptionShort;
     private String descriptionFormal;
 
+    public boolean isShowStudent() {
+        return showStudent;
+    }
+
+    public void setShowStudent(boolean showStudent) {
+        this.showStudent = showStudent;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSocialMedia() {
+        return socialMedia;
+    }
+
+    public void setSocialMedia(String socialMedia) {
+        this.socialMedia = socialMedia;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private boolean showStudent;
+    private String category;
+    private String socialMedia;
+    private String username;
+
     public String getFullname() {
         return fullname;
     }
@@ -103,7 +140,7 @@ public class Worker {
         this.id = id;
     }
 
-    public Worker(String fullname, long phone, String time, String email, String job, String student, String course, String division, String descriptionShort, String descriptionFormal, int id) {
+    public Worker(String fullname, long phone, String time, String email, String job, String student, String course, String division, String descriptionShort, String descriptionFormal, boolean showStudent, String category, String socialMedia, String username, int id) {
         this.fullname = fullname;
         this.phone = phone;
         this.time = time;
@@ -114,6 +151,10 @@ public class Worker {
         this.division = division;
         this.descriptionShort = descriptionShort;
         this.descriptionFormal = descriptionFormal;
+        this.showStudent = showStudent;
+        this.category = category;
+        this.socialMedia = socialMedia;
+        this.username = username;
         this.id = id;
     }
 }

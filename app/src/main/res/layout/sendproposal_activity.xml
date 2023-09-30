@@ -420,7 +420,7 @@
 
                     <View
                         android:id="@+id/proposal_alumno_view"
-                        android:layout_width="@dimen/_195sdp"
+                        android:layout_width="@dimen/_180sdp"
                         android:layout_height="@dimen/_33sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/proposal_view_background"
@@ -687,7 +687,7 @@
 
                     <View
                         android:id="@+id/proposal_contacto_view"
-                        android:layout_width="@dimen/_185sdp"
+                        android:layout_width="@dimen/_170sdp"
                         android:layout_height="@dimen/_33sdp"
                         android:layout_marginLeft="@dimen/_11sdp"
                         android:layout_marginTop="@dimen/_8sdp"
