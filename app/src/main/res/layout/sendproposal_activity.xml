@@ -96,6 +96,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_18sdp"
         android:layout_marginBottom="@dimen/_14sdp"
+        android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/proposal_proposal_imageview"
         app:layout_constraintEnd_toEndOf="parent"
@@ -419,7 +420,7 @@
 
                     <View
                         android:id="@+id/proposal_alumno_view"
-                        android:layout_width="@dimen/_162sdp"
+                        android:layout_width="@dimen/_195sdp"
                         android:layout_height="@dimen/_33sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/proposal_view_background"
@@ -432,6 +433,7 @@
                         android:layout_marginStart="@dimen/_11sdp"
                         android:layout_marginEnd="@dimen/_11sdp"
                         android:background="#00FFFFFF"
+                        android:scrollHorizontally="true"
                         android:ems="10"
                         android:fontFamily="@font/nunito_bold"
                         android:hint="Escriba aquí"
@@ -523,6 +525,8 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_11sdp"
                 android:layout_marginBottom="@dimen/_3sdp"
+                android:scrollbarSize="@dimen/_1sdp"
+                android:scrollbarThumbVertical="@drawable/consultascontactsendproposal_scrollbar_background"
                 android:background="#00FFFFFF"
                 android:ems="10"
                 android:fontFamily="@font/nunito_bold"
@@ -603,6 +607,8 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_11sdp"
                 android:layout_marginBottom="@dimen/_3sdp"
+                android:scrollbarSize="@dimen/_1sdp"
+                android:scrollbarThumbVertical="@drawable/consultascontactsendproposal_scrollbar_background"
                 android:background="#00FFFFFF"
                 android:ems="10"
                 android:fontFamily="@font/nunito_bold"
@@ -681,7 +687,7 @@
 
                     <View
                         android:id="@+id/proposal_contacto_view"
-                        android:layout_width="@dimen/_160sdp"
+                        android:layout_width="@dimen/_185sdp"
                         android:layout_height="@dimen/_33sdp"
                         android:layout_marginLeft="@dimen/_11sdp"
                         android:layout_marginTop="@dimen/_8sdp"

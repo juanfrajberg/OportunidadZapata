@@ -115,6 +115,14 @@ public class SendProposalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sendproposal_activity);
 
+        NestedScrollView parentScroll = findViewById(R.id.proposal_scrolllayout_scrollview);
+        parentScroll.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
+
         //Establecer el modo claro como predeterminado incluso con el modo oscuro (ya no es necesario, se configuró el modo oscuro en cada layout)
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
@@ -580,7 +588,13 @@ public class SendProposalActivity extends AppCompatActivity {
         descripcionShortEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                //Para poder deslizar por encima del EditText
+                if (descripcionShortEditText.hasFocus()) {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                }
+                else {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(false);
+                }
                 return false;
             }
         });
@@ -588,7 +602,13 @@ public class SendProposalActivity extends AppCompatActivity {
         descripcionFormalEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                //Para poder deslizar por encima del EditText
+                if (descripcionFormalEditText.hasFocus()) {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                }
+                else {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(false);
+                }
                 return false;
             }
         });
@@ -596,7 +616,12 @@ public class SendProposalActivity extends AppCompatActivity {
         numeroTelefonoEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                if (numeroTelefonoEditText.hasFocus()) {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                }
+                else {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(false);
+                }
                 return false;
             }
         });

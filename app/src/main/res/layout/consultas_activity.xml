@@ -177,7 +177,7 @@
         android:layout_marginEnd="@dimen/_14sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:scrollbarSize="@dimen/_2sdp"
-        android:scrollbarThumbVertical="@drawable/consultascontact_scrollbar_background"
+        android:scrollbarThumbVertical="@drawable/consultascontactsendproposal_scrollbar_background"
         app:layout_constraintBottom_toTopOf="@id/consultas_messagetab_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
