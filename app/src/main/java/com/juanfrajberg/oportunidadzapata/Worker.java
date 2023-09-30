@@ -12,7 +12,8 @@ public class Worker {
     private String course;
     private String division;
     private int id;
-    private String description;
+    private String descriptionShort;
+    private String descriptionFormal;
 
     public String getFullname() {
         return fullname;
@@ -78,12 +79,20 @@ public class Worker {
         this.division = division;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionShort() {
+        return descriptionShort;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptionShort(String descriptionShort) {
+        this.descriptionShort = descriptionShort;
+    }
+
+    public String getDescriptionFormal() {
+        return descriptionFormal;
+    }
+
+    public void setDescriptionFormal(String descriptionFormal) {
+        this.descriptionFormal = descriptionFormal;
     }
 
     public int getId() {
@@ -94,7 +103,7 @@ public class Worker {
         this.id = id;
     }
 
-    public Worker(String fullname, long phone, String time, String email, String job, String student, String course, String division, String description, int id) {
+    public Worker(String fullname, long phone, String time, String email, String job, String student, String course, String division, String descriptionShort, String descriptionFormal, int id) {
         this.fullname = fullname;
         this.phone = phone;
         this.time = time;
@@ -103,7 +112,8 @@ public class Worker {
         this.student = student;
         this.course = course;
         this.division = division;
+        this.descriptionShort = descriptionShort;
+        this.descriptionFormal = descriptionFormal;
         this.id = id;
-        this.description = description;
     }
 }

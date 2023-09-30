@@ -477,7 +477,7 @@
             </HorizontalScrollView>
 
             <TextView
-                android:id="@+id/proposal_descripciontitle_textview"
+                android:id="@+id/proposal_shortdescripciontitle_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -491,13 +491,93 @@
                 app:layout_constraintTop_toBottomOf="@+id/proposal_checkboxalumno_checkbox" />
 
             <TextView
+                android:id="@+id/proposal_shortdescripcionsubtitle_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_9sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:lineSpacingMultiplier=".7"
+                android:text="Describa, en un texto de no más de 175 caracteres, su trabajo de forma breve y concisa. Este texto es lo primero que verán los otros usuarios al navegar entre las distintas propuestas."
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/proposal_numerotitle_textview"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_shortdescripciontitle_textview" />
+
+            <View
+                android:id="@+id/proposal_shortdescripcion_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/proposal_view_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_shortdescripcionsubtitle_textview" />
+
+            <EditText
+                android:id="@+id/proposal_shortdescripcion_edittext"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_11sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:background="#00FFFFFF"
+                android:ems="10"
+                android:fontFamily="@font/nunito_bold"
+                android:gravity="start"
+                android:hint="Escriba aquí"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxHeight="@dimen/_210sdp"
+                android:overScrollMode="always"
+                android:maxLength="175"
+                android:scrollbars="vertical"
+                android:textColor="#3C3C3C"
+                android:textColorHint="#B4B4B4"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/proposal_shortcounterdescription_textview"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_shortdescripcion_view"
+                app:layout_constraintStart_toStartOf="@+id/proposal_shortdescripcion_view"
+                app:layout_constraintTop_toTopOf="@id/proposal_shortdescripcion_view" />
+
+            <TextView
+                android:id="@+id/proposal_shortcounterdescription_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="0/175"
+                android:textColor="#B4B4B4"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/proposal_shortdescripcion_view"
+                app:layout_constraintEnd_toEndOf="@+id/proposal_shortdescripcion_view" />
+
+            <TextView
+                android:id="@+id/proposal_descripciontitle_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Descripción formal"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proposal_shortdescripcion_view" />
+
+            <TextView
                 android:id="@+id/proposal_descripcionsubtitle_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_9sdp"
                 android:fontFamily="@font/nunito_regular"
                 android:lineSpacingMultiplier=".7"
-                android:text="Describa, en un texto de no más de 450 caracteres, cuáles son sus habilidades/servicios o cualquier tipo información que considere útil para que los usuarios conozcan su propuesta."
+                android:text="En un texto de hasta 1250 caracteres, explique de forma detallada cuáles son sus habilidades / servicios o cualquier tipo de información que considere útil para que los usuarios conozcan en profundidad su propuesta."
                 android:textColor="#B4B4B4"
                 android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"
@@ -508,7 +588,7 @@
             <View
                 android:id="@+id/proposal_descripcion_view"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_220sdp"
+                android:layout_height="@dimen/_250sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:background="@drawable/proposal_view_background"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -532,7 +612,7 @@
                 android:inputType="textCapSentences|textMultiLine"
                 android:maxHeight="@dimen/_210sdp"
                 android:overScrollMode="always"
-                android:maxLength="450"
+                android:maxLength="1250"
                 android:scrollbars="vertical"
                 android:textColor="#3C3C3C"
                 android:textColorHint="#B4B4B4"
@@ -550,7 +630,7 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_7sdp"
                 android:fontFamily="@font/nunito_regular"
-                android:text="0/450"
+                android:text="0/1250"
                 android:textColor="#B4B4B4"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/proposal_descripcion_view"

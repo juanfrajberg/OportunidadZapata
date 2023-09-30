@@ -489,7 +489,8 @@ public class ContactActivity extends AppCompatActivity {
                 String time = "";
                 String email = "";
                 String job  = "";
-                String description  = "";
+                String descriptionShort  = "";
+                String descriptionFormal  = "";
                 String student = "";
                 String course = "";
                 String division = "";
@@ -506,6 +507,8 @@ public class ContactActivity extends AppCompatActivity {
                     student = snapshot.child(String.valueOf(i)).child("student").getValue(String.class);
                     course = snapshot.child(String.valueOf(i)).child("course").getValue(String.class);
                     division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
+                    descriptionShort = snapshot.child(String.valueOf(i)).child("descriptionShort").getValue(String.class);
+                    descriptionFormal = snapshot.child(String.valueOf(i)).child("descriptionFormal").getValue(String.class);
 
                     //Se crean las propuestas con la información dada
                     createProposals(i, name, phone, time, email, job, student, course, division);
