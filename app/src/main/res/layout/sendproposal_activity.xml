@@ -752,7 +752,7 @@
                 android:layout_marginEnd="@dimen/_9sdp"
                 android:fontFamily="@font/nunito_regular"
                 android:lineSpacingMultiplier=".7"
-                android:text="(Opcional) Te recomendamos agregar a tu propuesta imágenes que sean relevantes / ayuden a promocionar tu servicio."
+                android:text="@string/proposal_archivossubtitle_text"
                 android:textColor="#B4B4B4"
                 android:textSize="@dimen/_11ssp"
                 android:textStyle="bold"
