@@ -132,6 +132,9 @@ function getAllDataWorkers() {
   //Elimina toda la tabla y la actualiza completamente
   sheet.deleteRows(2, sheet.getLastRow()); //sheet.getMaxRows()
 
+  var column12 = sheet.getRange(2, 12, sheet.getLastRow());
+  column12.setNumberFormat("@");
+
   // Las siguientes líneas dependen de la estructura de tu data (comentario original)
   var rows = [],
     data;
@@ -141,12 +144,13 @@ function getAllDataWorkers() {
     for (j = 1; j < dataSet[i].length; j++) {
       //Verificar el tipo de dato en Firebase y actualizarlo de forma acorde
       //Por ejemplo, mis tipos de dato son id, name, phone, etc.
-      rows.push([data[j].id, data[j].fullname, data[j].phone, data[j].time, data[j].email, data[j].job, data[j].student, data[j].course, data[j].division, data[j].description]); //"Empujo" los datos al Excel
+      rows.push([data[j].id, data[j].fullname, data[j].phone, data[j].time, data[j].email, data[j].job, data[j].student, data[j].course, data[j].division, data[j].descriptionShort,
+      data[j].descriptionFormal, data[j].showStudent, data[j].category, data[j].socialMedia, data[j].username]); //"Empujo" los datos al Excel
     }
   }
 
   //Para subir los valores de la base de datos al Sheets
-  dataRange = sheet.getRange(2, 1, rows.length, 10); //Fila inicial, columna inicial, fila final, columna final
+  dataRange = sheet.getRange(2, 1, rows.length, 15); //Fila inicial, columna inicial, fila final, columna final
   dataRange.setValues(rows);
   //Logger.log(rows.length); Imprimir la cantidad de filas
 
@@ -203,6 +207,31 @@ function getAllDataWorkers() {
   column10.setBackgroundRGB(162, 196, 201);
   column10.setFontWeight("normal");
   column10.setHorizontalAlignment("center");
+
+  var column11 = sheet.getRange(2, 11, sheet.getLastRow());
+  column11.setBackgroundRGB(162, 196, 201);
+  column11.setFontWeight("normal");
+  column11.setHorizontalAlignment("center");
+
+  var column12 = sheet.getRange(2, 12, sheet.getLastRow());
+  column12.setBackgroundRGB(255, 229, 153);
+  column12.setFontWeight("normal");
+  column12.setHorizontalAlignment("center");
+
+  var column13 = sheet.getRange(2, 13, sheet.getLastRow());
+  column13.setBackgroundRGB(255, 229, 153);
+  column13.setFontWeight("normal");
+  column13.setHorizontalAlignment("center");
+
+  var column14 = sheet.getRange(2, 14, sheet.getLastRow());
+  column14.setBackgroundRGB(182, 215, 168);
+  column14.setFontWeight("normal");
+  column14.setHorizontalAlignment("center");
+
+  var column15 = sheet.getRange(2, 15, sheet.getLastRow());
+  column15.setBackgroundRGB(182, 215, 168);
+  column15.setFontWeight("normal");
+  column15.setHorizontalAlignment("center");
 
 //Eliminar la última columna que se genera de más
   sheet.deleteRow(sheet.getLastRow() + 1);
