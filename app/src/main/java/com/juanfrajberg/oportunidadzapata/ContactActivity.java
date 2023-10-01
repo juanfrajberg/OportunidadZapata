@@ -42,7 +42,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
 import java.util.Locale;
-import java.util.Random;
 
 public class ContactActivity extends AppCompatActivity {
 
@@ -88,6 +87,19 @@ public class ContactActivity extends AppCompatActivity {
 
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
+
+    //Variables para indicar qué opción esta seleccionada
+    boolean selectedSalud = false;
+    boolean selectedTecnologia = false;
+    boolean selectedFinanzas = false;
+    boolean selectedEducacion = false;
+    boolean selectedVentas = false;
+    boolean selectedIngenieria = false;
+    boolean selectedRecursosHumanos = false;
+    boolean selectedServicios = false;
+    boolean selectedAsesoriaLegal = false;
+    boolean selectedArtesYEntretenimiento = false;
+    boolean selectedOtros = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +152,7 @@ public class ContactActivity extends AppCompatActivity {
 
         //"Seleccionar" el ítem, cambiando su tipo de fuente y el de las demás
         //Nota: es un verdadero lío, buscar otra solución en el futuro por favor
+
         salud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,17 +162,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(salud);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedSalud) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedSalud = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedSalud = false;
+                }
             }
         });
 
@@ -172,17 +202,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(tecnologia);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedTecnologia) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedTecnologia = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedTecnologia = false;
+                }
             }
         });
 
@@ -195,17 +242,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(finanzas);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedFinanzas) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedFinanzas = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedFinanzas = false;
+                }
             }
         });
 
@@ -218,17 +282,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(educacion);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedEducacion) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedEducacion = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedEducacion = false;
+                }
             }
         });
 
@@ -241,17 +322,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(ventas);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedVentas) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedVentas = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedVentas = false;
+                }
             }
         });
 
@@ -264,17 +362,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(ingenieria);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedIngenieria) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedIngenieria = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedIngenieria = false;
+                }
             }
         });
 
@@ -287,17 +402,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(recursosHumanos);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedRecursosHumanos) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedRecursosHumanos = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedRecursosHumanos = false;
+                }
             }
         });
 
@@ -310,17 +442,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(servicios);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedServicios) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedServicios = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedServicios = false;
+                }
             }
         });
 
@@ -333,17 +482,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(asesoríaLegal);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedAsesoriaLegal) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedAsesoriaLegal = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedAsesoriaLegal = false;
+                }
             }
         });
 
@@ -356,17 +522,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(artesYEntretenimiento);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                if (!selectedArtesYEntretenimiento) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedArtesYEntretenimiento = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedArtesYEntretenimiento = false;
+                }
             }
         });
 
@@ -379,17 +562,34 @@ public class ContactActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(otros);
 
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                if (!selectedOtros) {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    selectedOtros = true;
+                }
+                else {
+                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    selectedOtros = false;
+                }
             }
         });
 
@@ -406,7 +606,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(0, 1,"", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 1,"", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -422,7 +622,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(0, 2,"", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 2,"", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -438,7 +638,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(0, 3, "", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 3, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -494,6 +694,10 @@ public class ContactActivity extends AppCompatActivity {
                 String student = "";
                 String course = "";
                 String division = "";
+                String showStudent = "";
+                String category = "";
+                String socialMedia = "";
+                String username = "";
 
                 //Se le asigna el valor a estos Strings
                 for (int i=1; i<size+1; i++) {
@@ -509,9 +713,13 @@ public class ContactActivity extends AppCompatActivity {
                     division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
                     descriptionShort = snapshot.child(String.valueOf(i)).child("descriptionShort").getValue(String.class);
                     descriptionFormal = snapshot.child(String.valueOf(i)).child("descriptionFormal").getValue(String.class);
+                    showStudent = snapshot.child(String.valueOf(i)).child("showStudent").getValue(String.class);
+                    category = snapshot.child(String.valueOf(i)).child("category").getValue(String.class);
+                    socialMedia = snapshot.child(String.valueOf(i)).child("socialMedia").getValue(String.class);
+                    username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
 
                     //Se crean las propuestas con la información dada
-                    createProposals(i, name, phone, time, email, job, student, course, division);
+                    createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                 }
             }
 
@@ -524,7 +732,7 @@ public class ContactActivity extends AppCompatActivity {
 
     //Función para abrir el Dialog con más información de la persona seleccionada
     //En un futuro hay que añadir parámetros para que apenas abra tenga el nombre, mail y demás datos
-    private void openInfo(int id, int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone, String course, String division) {
+    private void openInfo(int id, int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone, String course, String division, String description, String showStudent) {
         infoDialog = new Dialog(ContactActivity.this);
         infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         infoDialog.getWindow().getAttributes().windowAnimations = R.style.InfoDialogAnimation;
@@ -539,7 +747,11 @@ public class ContactActivity extends AppCompatActivity {
                 TextView nameTextView = (TextView) infoDialog.findViewById(R.id.info_personname_textview);
                 nameTextView.setText(name);
                 TextView studentTextView = (TextView) infoDialog.findViewById(R.id.info_alumnoquelorecomienda_textview);
-                studentTextView.setText("Recomendado/a por " + student + " de " + course.substring(0,1) + "° " + division.substring(0,1) + "°");
+                if (showStudent.equals("true")) {
+                    studentTextView.setText("Recomendado/a por " + student + " de " + course.substring(0,1) + "° " + division.substring(0,1) + "°");
+                } else {
+                    studentTextView.setText("Prefiere ocultar el nombre del alumno/a que lo/la recomienda");
+                }
                 TextView dateTextView = (TextView) infoDialog.findViewById(R.id.info_time_textview);
                 dateTextView.setText("Publicado el " + timeDay + "/" + timeMonth + "/" + timeYear);
                 TextView mailTextView = (TextView) infoDialog.findViewById(R.id.info_personmail_textview);
@@ -547,8 +759,9 @@ public class ContactActivity extends AppCompatActivity {
                 TextView phoneTextView = (TextView) infoDialog.findViewById(R.id.info_whatsappnumber_textview);
                 phoneTextView.setText("+54 9 " + phone.substring(0,3) + " " + phone.substring(3,6) + "-" + phone.substring(6,phone.length()));
                 TextView descriptionTextView = (TextView) infoDialog.findViewById(R.id.info_description_textview);
+                descriptionTextView.setText(description);
                 //int randomDescription = new Random().nextInt(3 - 1 + 1) + 1;
-                LinearLayout cardsLayout = findViewById(R.id.contact_inflatedproposals_linearlayout);
+                /*
                 int randomDescription = id % 3;
                 //Log.d("OZ", "ID -> " + id + "\nDescription -> " + randomDescription);
                 switch (randomDescription) {
@@ -562,6 +775,8 @@ public class ContactActivity extends AppCompatActivity {
                         descriptionTextView.setText("En mi profesión (" + job.toLowerCase() + "), me dedico a resolver problemas y lograr resultados efectivos. Utilizo mis habilidades y experiencia para contribuir al éxito en mi campo. Colaboro con equipos y aprovecho la tecnología para mejorar procesos. Siempre estoy dispuesto a aprender y crecer en cualquier entorno laboral en el que me encuentre.");
                         break;
                 }
+                break;
+                 */
                 break;
             case 1:
                 infoDialog.setContentView(R.layout.firstinfo_dialog);
@@ -823,7 +1038,7 @@ public class ContactActivity extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
     }
 
-    private void createProposals(int id, String name, String phone, String time, String email, String job, String student, String course, String division) {
+    private void createProposals(int id, String name, String phone, String time, String email, String job, String student, String course, String division, String descriptionShort, String descriptionFormal, String showStudent, String category, String socialMedia, String username) {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
@@ -857,9 +1072,14 @@ public class ContactActivity extends AppCompatActivity {
         TextView nameProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_subtitlerl_textview);
         nameProposal.setText(name);
 
-        TextView descriptionProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
+        TextView descriptionShortProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
+        descriptionShortProposal.setText(Html.fromHtml(descriptionShort + " <font color='#3876F6'><u>Leer más.</u></font>"));
+
+        //Descripción para aquellas propuestas que fueron completadas con el formulario de Google inicial y no cuentan con el dato
+        /*
         final int randomYears = new Random().nextInt(15) + 2;
         descriptionProposal.setText(Html.fromHtml("Me desempeño como " + job.toLowerCase() + " hace más de " + randomYears + " años. Fui recomendado/a por " + student + ". " + "<font color='#3876F6'><u>Leer más.</u></font>"));
+         */
 
         //Abrir el Dialog de más información
         RelativeLayout proposalLayout = proposalToAdd.findViewById(R.id.proposal_view_relativelayout);
@@ -867,7 +1087,8 @@ public class ContactActivity extends AppCompatActivity {
         proposalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division);
+                Log.d("OZ", "" + descriptionFormal);
+                openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division, descriptionFormal, showStudent);
             }
         });
 
