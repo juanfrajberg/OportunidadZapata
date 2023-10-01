@@ -175,6 +175,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedSalud = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Salud");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -189,6 +194,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedSalud = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -215,6 +225,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedTecnologia = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Tecnología");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -229,6 +244,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedTecnologia = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -255,6 +275,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedFinanzas = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Finanzas");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -269,6 +294,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedFinanzas = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -295,6 +325,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedEducacion = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Educación");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -309,6 +344,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedEducacion = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -335,6 +375,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedVentas = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Ventas");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -349,6 +394,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedVentas = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -375,6 +425,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedIngenieria = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Ingeniería");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -389,6 +444,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedIngenieria = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -415,6 +475,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedRecursosHumanos = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Recursos humanos");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -429,6 +494,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedRecursosHumanos = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -455,6 +525,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedServicios = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Servicios");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -469,6 +544,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedServicios = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -495,6 +575,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedAsesoriaLegal = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Asesoría legal");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -509,6 +594,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedAsesoriaLegal = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -535,6 +625,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedArtesYEntretenimiento = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Artes y entretenimiento");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -549,6 +644,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedArtesYEntretenimiento = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -575,6 +675,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
                     selectedOtros = true;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("Otros");
                 }
                 else {
                     salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -589,6 +694,11 @@ public class ContactActivity extends AppCompatActivity {
                     artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     selectedOtros = false;
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+
+                    createAllProposals("All");
                 }
             }
         });
@@ -671,63 +781,7 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        //Se accede a la información guardada en la base de datos
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                inflatedProposals.removeAllViews();
-
-                //Para saber la cantidad de hijos (largo de la lista)
-                int size = (int) snapshot.getChildrenCount();
-
-                //Se crean los Strings que guardarán los datos
-                String name  = "";
-                String phone = "";
-                String time = "";
-                String email = "";
-                String job  = "";
-                String descriptionShort  = "";
-                String descriptionFormal  = "";
-                String student = "";
-                String course = "";
-                String division = "";
-                String showStudent = "";
-                String category = "";
-                String socialMedia = "";
-                String username = "";
-
-                //Se le asigna el valor a estos Strings
-                for (int i=1; i<size+1; i++) {
-                    name = snapshot.child(String.valueOf(i)).child("fullname").getValue(String.class);
-                    phone = String.valueOf(snapshot.child(String.valueOf(i)).child("phone").getValue(Long.class));
-                    time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
-                    email = snapshot.child(String.valueOf(i)).child("email").getValue(String.class);
-                    job = snapshot.child(String.valueOf(i)).child("job").getValue(String.class);
-                    //Todavía no hay una descripción de cada trabajador en la base de datos (arreglar en un futuro)
-                    //description = snapshot.child(String.valueOf(i)).child("description").getValue(String.class);
-                    student = snapshot.child(String.valueOf(i)).child("student").getValue(String.class);
-                    course = snapshot.child(String.valueOf(i)).child("course").getValue(String.class);
-                    division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
-                    descriptionShort = snapshot.child(String.valueOf(i)).child("descriptionShort").getValue(String.class);
-                    descriptionFormal = snapshot.child(String.valueOf(i)).child("descriptionFormal").getValue(String.class);
-                    showStudent = snapshot.child(String.valueOf(i)).child("showStudent").getValue(String.class);
-                    category = snapshot.child(String.valueOf(i)).child("category").getValue(String.class);
-                    socialMedia = snapshot.child(String.valueOf(i)).child("socialMedia").getValue(String.class);
-                    username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
-
-                    //Se crean las propuestas con la información dada
-                    createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "¡No se pudo acceder a las demás propuestas, revisá tu conexión!", Toast.LENGTH_LONG);
-            }
-        });
+        createAllProposals("All");
     }
 
     //Función para abrir el Dialog con más información de la persona seleccionada
@@ -1124,6 +1178,70 @@ public class ContactActivity extends AppCompatActivity {
 
                 //Abrimos el chat con el número del Dialog
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=+" + WhatsAppPhone + "&text=Hola%2C%20buenas%20tardes!%20Me%20contacto%20cone%20usted%20porque%20me%20interesan%20los%20servicios%20que%20ofrece%20en%20Oportunidad%20Zapata%20😁")));
+            }
+        });
+    }
+
+    public void createAllProposals(String categoryFromFunction) {
+        //Se accede a la información guardada en la base de datos
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                inflatedProposals.removeAllViews();
+
+                //Para saber la cantidad de hijos (largo de la lista)
+                int size = (int) snapshot.getChildrenCount();
+
+                //Se crean los Strings que guardarán los datos
+                String name  = "";
+                String phone = "";
+                String time = "";
+                String email = "";
+                String job  = "";
+                String descriptionShort  = "";
+                String descriptionFormal  = "";
+                String student = "";
+                String course = "";
+                String division = "";
+                String showStudent = "";
+                String category = "";
+                String socialMedia = "";
+                String username = "";
+
+                //Se le asigna el valor a estos Strings
+                for (int i=1; i<size+1; i++) {
+                    name = snapshot.child(String.valueOf(i)).child("fullname").getValue(String.class);
+                    phone = String.valueOf(snapshot.child(String.valueOf(i)).child("phone").getValue(Long.class));
+                    time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
+                    email = snapshot.child(String.valueOf(i)).child("email").getValue(String.class);
+                    job = snapshot.child(String.valueOf(i)).child("job").getValue(String.class);
+                    //Todavía no hay una descripción de cada trabajador en la base de datos (arreglar en un futuro)
+                    //description = snapshot.child(String.valueOf(i)).child("description").getValue(String.class);
+                    student = snapshot.child(String.valueOf(i)).child("student").getValue(String.class);
+                    course = snapshot.child(String.valueOf(i)).child("course").getValue(String.class);
+                    division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
+                    descriptionShort = snapshot.child(String.valueOf(i)).child("descriptionShort").getValue(String.class);
+                    descriptionFormal = snapshot.child(String.valueOf(i)).child("descriptionFormal").getValue(String.class);
+                    showStudent = snapshot.child(String.valueOf(i)).child("showStudent").getValue(String.class);
+                    category = snapshot.child(String.valueOf(i)).child("category").getValue(String.class);
+                    socialMedia = snapshot.child(String.valueOf(i)).child("socialMedia").getValue(String.class);
+                    username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
+
+                    //Se crean las propuestas con la información dada
+                    if (category.equals(categoryFromFunction)) {
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                    } else if (categoryFromFunction.equals("All")) {
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "¡No se pudo acceder a las demás propuestas, revisá tu conexión!", Toast.LENGTH_LONG);
             }
         });
     }
