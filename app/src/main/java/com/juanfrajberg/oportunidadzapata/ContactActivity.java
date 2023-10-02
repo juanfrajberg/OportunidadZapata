@@ -41,9 +41,12 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ContactActivity extends AppCompatActivity {
+
+    int eliminatedElements = 0;
 
     //Botones de las distintas pestañas
     static ImageView homeButton; //Botón de Casa
@@ -101,6 +104,13 @@ public class ContactActivity extends AppCompatActivity {
     boolean selectedArtesYEntretenimiento = false;
     boolean selectedOtros = false;
 
+    boolean selectedOptionBoolean = false;
+
+    //String usado para la filtración
+    String selectedOptionString = "";
+
+    private ArrayList<Integer> proposalsIDs = new ArrayList<Integer>();;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
@@ -153,6 +163,9 @@ public class ContactActivity extends AppCompatActivity {
         //"Seleccionar" el ítem, cambiando su tipo de fuente y el de las demás
         //Nota: es un verdadero lío, buscar otra solución en el futuro por favor
 
+        //Hasta la línea 706 hay código comentado
+        //Este código es muy pesado para cualquier celular
+        /*
         salud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -702,6 +715,7 @@ public class ContactActivity extends AppCompatActivity {
                 }
             }
         });
+         */
 
         //Abrir la pestaña de DataActivity
         firstProposal.setOnClickListener(new View.OnClickListener() {
@@ -716,7 +730,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(0, 1,"", "", "", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 1, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -732,7 +746,7 @@ public class ContactActivity extends AppCompatActivity {
                 //startActivity(new Intent(ContactActivity.this, DataActivity.class));
                 //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
                  */
-                openInfo(0, 2,"", "", "", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 2, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -781,7 +795,7 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        createAllProposals("All");
+        createAllProposals("First");
     }
 
     //Función para abrir el Dialog con más información de la persona seleccionada
@@ -802,7 +816,7 @@ public class ContactActivity extends AppCompatActivity {
                 nameTextView.setText(name);
                 TextView studentTextView = (TextView) infoDialog.findViewById(R.id.info_alumnoquelorecomienda_textview);
                 if (showStudent.equals("true")) {
-                    studentTextView.setText("Recomendado/a por " + student + " de " + course.substring(0,1) + "° " + division.substring(0,1) + "°");
+                    studentTextView.setText("Recomendado/a por " + student + " de " + course.substring(0, 1) + "° " + division.substring(0, 1) + "°");
                 } else {
                     studentTextView.setText("Prefiere ocultar el nombre del alumno/a que lo/la recomienda");
                 }
@@ -811,7 +825,7 @@ public class ContactActivity extends AppCompatActivity {
                 TextView mailTextView = (TextView) infoDialog.findViewById(R.id.info_personmail_textview);
                 mailTextView.setText(email);
                 TextView phoneTextView = (TextView) infoDialog.findViewById(R.id.info_whatsappnumber_textview);
-                phoneTextView.setText("+54 9 " + phone.substring(0,3) + " " + phone.substring(3,6) + "-" + phone.substring(6,phone.length()));
+                phoneTextView.setText("+54 9 " + phone.substring(0, 3) + " " + phone.substring(3, 6) + "-" + phone.substring(6, phone.length()));
                 TextView descriptionTextView = (TextView) infoDialog.findViewById(R.id.info_description_textview);
                 descriptionTextView.setText(description);
                 //int randomDescription = new Random().nextInt(3 - 1 + 1) + 1;
@@ -885,7 +899,7 @@ public class ContactActivity extends AppCompatActivity {
 
         //Abrir Instagram al hacer clic en el texto e imagen de Instagram
         //Se ejecuta en un try porque no todos publican su usuario de Instagram, es opcional
-        try{
+        try {
             ImageView instagramImage = (ImageView) infoDialog.findViewById(R.id.info_instagramicon_imageview);
             instagramImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -910,7 +924,8 @@ public class ContactActivity extends AppCompatActivity {
                     openInstagramFromInfoDialog();
                 }
             });
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         infoDialog.show();
 
@@ -1096,25 +1111,28 @@ public class ContactActivity extends AppCompatActivity {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
-        inflatedProposals.addView(proposalToAdd);
+        inflatedProposals.addView(proposalToAdd, id-1);
+
+        //TextView idTextView = (TextView) proposalToAdd.findViewById(R.id.proposal_id_textview);
+        //idTextView.setText(id);
 
         //Para convertir el formato de la variable "time" a texto
         time = time.substring(0, 10);
         time = time.replace("-", "");
-        Log.d("OZ", time);
+        //Log.d("OZ", time);
         String timeYear = time.substring(0, 4);
         String timeMonth = time.substring(4, 6);
         timeMonth = timeMonth.replaceFirst("^0+(?!$)", "");
         String timeMonthInNumbers = timeMonth;
-        Log.d("OZ", timeMonth);
+        //Log.d("OZ", timeMonth);
         String timeDay = time.substring(6, 8);
         timeDay = timeDay.replaceFirst("^0+(?!$)", "");
-        Log.d("OZ", timeDay);
+        //Log.d("OZ", timeDay);
 
         //Para el mes se deben usar las siguientes líneas de código
         DateTimeFormatter fmt = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("MMMM").toFormatter(new Locale("es", "ES"));
         timeMonth = Month.of(Integer.parseInt(timeMonth)).getDisplayName(TextStyle.FULL_STANDALONE, new Locale("es", "ES"));
-        timeMonth = timeMonth.substring(0,1).toUpperCase() + timeMonth.substring(1).toLowerCase();
+        timeMonth = timeMonth.substring(0, 1).toUpperCase() + timeMonth.substring(1).toLowerCase();
 
         //Se les asigna el valor a los TextView
         TextView dateProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_time_textview);
@@ -1141,7 +1159,7 @@ public class ContactActivity extends AppCompatActivity {
         proposalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("OZ", "" + descriptionFormal);
+                //Log.d("OZ", "" + descriptionFormal);
                 openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division, descriptionFormal, showStudent);
             }
         });
@@ -1183,26 +1201,27 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     public void createAllProposals(String categoryFromFunction) {
+        eliminatedElements = 0;
+
         //Se accede a la información guardada en la base de datos
         DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                inflatedProposals.removeAllViews();
 
                 //Para saber la cantidad de hijos (largo de la lista)
                 int size = (int) snapshot.getChildrenCount();
+                Log.d("OZ", "Size -> " + size);
 
                 //Se crean los Strings que guardarán los datos
-                String name  = "";
+                String name = "";
                 String phone = "";
                 String time = "";
                 String email = "";
-                String job  = "";
-                String descriptionShort  = "";
-                String descriptionFormal  = "";
+                String job = "";
+                String descriptionShort = "";
+                String descriptionFormal = "";
                 String student = "";
                 String course = "";
                 String division = "";
@@ -1212,7 +1231,7 @@ public class ContactActivity extends AppCompatActivity {
                 String username = "";
 
                 //Se le asigna el valor a estos Strings
-                for (int i=1; i<size+1; i++) {
+                for (int i = 1; i < size + 1; i++) {
                     name = snapshot.child(String.valueOf(i)).child("fullname").getValue(String.class);
                     phone = String.valueOf(snapshot.child(String.valueOf(i)).child("phone").getValue(Long.class));
                     time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
@@ -1230,11 +1249,29 @@ public class ContactActivity extends AppCompatActivity {
                     socialMedia = snapshot.child(String.valueOf(i)).child("socialMedia").getValue(String.class);
                     username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
 
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+
                     //Se crean las propuestas con la información dada
-                    if (category.equals(categoryFromFunction)) {
+                    if (categoryFromFunction.equals("First")) {
                         createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
                     } else if (categoryFromFunction.equals("All")) {
-                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        if (!proposalsIDs.contains(i)) {
+                            createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                            proposalsIDs.add(i);
+                        }
+                    } else if (!category.equals(categoryFromFunction)) {
+                        Log.d("OZ", "Remove -> " + (i));
+                        try {
+                            eliminatedElements++;
+                            inflatedProposals.removeViewAt(i-eliminatedElements);
+                        } catch (Exception e) {
+                            Log.e("OZ", "" + e);
+                        }
+
+                        //Log.d("OZ", "" + proposalsIDs);
+                        proposalsIDs.remove(Integer.valueOf(i));
+                        Log.d("OZ", "" + proposalsIDs);
                     }
                 }
             }
@@ -1244,5 +1281,45 @@ public class ContactActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "¡No se pudo acceder a las demás propuestas, revisá tu conexión!", Toast.LENGTH_LONG);
             }
         });
+
+        Log.d("OZ", "" + proposalsIDs);
+    }
+
+    public void selectedOption(View optionSelected) {
+        YoYo.with(Techniques.FlipInX)
+                .duration(450)
+                .repeat(0)
+                .playOn(optionSelected);
+
+        LinearLayout optionsLayout = (LinearLayout) findViewById(R.id.contact_optionslayout_linearlayout);
+
+        int numberOptions = optionsLayout.getChildCount();
+        for (int i = 0; i < numberOptions; i++) {
+            TextView option = (TextView) optionsLayout.getChildAt(i);
+            option.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+        }
+
+        if (optionSelected instanceof TextView) {
+            TextView optionSelectedTextView = (TextView) optionSelected;
+
+            if (selectedOptionBoolean == false) {
+                createAllProposals(optionSelectedTextView.getText().toString());
+                optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                selectedOptionString = optionSelectedTextView.getText().toString();
+                selectedOptionBoolean = true;
+            } else {
+                if (selectedOptionString.equals(optionSelectedTextView.getText().toString())) {
+                    optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    createAllProposals("All");
+                }
+                else {
+                    optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    createAllProposals(optionSelectedTextView.getText().toString());
+                }
+                selectedOptionBoolean = false;
+            }
+
+            //Log.d("OZ", "Variable -> " + selectedOptionString + "\nReal -> " + optionSelectedTextView.getText().toString());
+        }
     }
 }

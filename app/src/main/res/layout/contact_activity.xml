@@ -108,6 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/contact_title_textview">
 
         <LinearLayout
+            android:id="@+id/contact_optionslayout_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
@@ -120,6 +121,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Salud"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -132,6 +134,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Tecnología"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -144,6 +147,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Finanzas"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -156,6 +160,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Educación"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -168,6 +173,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Ventas"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -180,6 +186,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Ingeniería"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -192,6 +199,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Recursos humanos"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -204,6 +212,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Servicios"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -216,6 +225,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Asesoría legal"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -228,6 +238,7 @@
                 android:layout_marginRight="@dimen/_8sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Artes y entretenimiento"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />
@@ -240,6 +251,7 @@
                 android:layout_marginRight="@dimen/_16sdp"
                 android:fontFamily="@font/nunito_semibold"
                 android:text="Otros"
+                android:onClick="selectedOption"
                 android:textColor="#000000"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold" />

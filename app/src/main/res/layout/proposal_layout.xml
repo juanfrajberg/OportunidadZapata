@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <!-- android:layout_marginStart="@dimen/_18sdp" -->
     <!-- android:layout_marginEnd="@dimen/_20sdp" -->
@@ -10,37 +10,37 @@
 
     <TextView
         android:id="@+id/proposal_time_textview"
-        app:layout_constraintBottom_toTopOf="@+id/proposal_view_relativelayout"
-        app:layout_constraintStart_toStartOf="@+id/proposal_view_relativelayout"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginStart="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/nunito_regular"
         android:text="Fecha."
         android:textColor="#B4B4B4"
-        android:textSize="@dimen/_11ssp" />
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintBottom_toTopOf="@+id/proposal_view_relativelayout"
+        app:layout_constraintStart_toStartOf="@+id/proposal_view_relativelayout"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/proposal_view_relativelayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/proposal_time_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_3sdp"
         android:layout_marginRight="@dimen/_7sdp"
         android:background="@drawable/contactblog_roundedview_background"
-        android:elevation="5dp">
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/proposal_time_textview">
 
         <TextView
             android:id="@+id/proposal_titlerl_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_13sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:fontFamily="@font/nunito_extrabold"
             android:text="Trabajo."
             android:textColor="#000000"
@@ -74,20 +74,20 @@
 
     <ImageView
         android:id="@+id/proposal_phone_imageview"
-        app:layout_constraintStart_toStartOf="@+id/proposal_view_relativelayout"
-        app:layout_constraintTop_toBottomOf="@+id/proposal_view_relativelayout"
-        app:srcCompat="@drawable/contact_phone_image"
         android:layout_width="@dimen/_38sdp"
         android:layout_height="@dimen/_38sdp"
-        android:layout_marginTop="@dimen/_7sdp" />
+        android:layout_marginTop="@dimen/_7sdp"
+        app:layout_constraintStart_toStartOf="@+id/proposal_view_relativelayout"
+        app:layout_constraintTop_toBottomOf="@+id/proposal_view_relativelayout"
+        app:srcCompat="@drawable/contact_phone_image" />
 
     <ImageView
         android:id="@+id/proposal_whatsapp_imageview"
-        app:layout_constraintStart_toEndOf="@+id/proposal_phone_imageview"
-        app:layout_constraintTop_toTopOf="@+id/proposal_phone_imageview"
-        app:srcCompat="@drawable/contact_whatsapp_image"
         android:layout_width="@dimen/_38sdp"
         android:layout_height="@dimen/_38sdp"
-        android:layout_marginStart="@dimen/_7sdp"/>
+        android:layout_marginStart="@dimen/_7sdp"
+        app:layout_constraintStart_toEndOf="@+id/proposal_phone_imageview"
+        app:layout_constraintTop_toTopOf="@+id/proposal_phone_imageview"
+        app:srcCompat="@drawable/contact_whatsapp_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
