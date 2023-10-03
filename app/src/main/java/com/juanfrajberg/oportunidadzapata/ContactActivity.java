@@ -15,6 +15,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -47,6 +51,8 @@ import java.util.Locale;
 public class ContactActivity extends AppCompatActivity {
 
     int eliminatedElements = 0;
+    String valueToSearch;
+    int elementsFound = 0;
 
     //Botones de las distintas pestañas
     static ImageView homeButton; //Botón de Casa
@@ -796,6 +802,48 @@ public class ContactActivity extends AppCompatActivity {
         });
 
         createAllProposals("First");
+
+            //The key argument here must match that used in the other activity
+
+/*
+            LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+            int childCount = inflatedProposals.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View v = inflatedProposals.getChildAt(i);
+                RelativeLayout relativeLayout = findViewById(R.id.proposal_view_relativelayout);
+                View newView = relativeLayout.getChildAt(i);
+                if (newView instanceof TextView) {
+                    Log.d("OZ", "Here!");
+                    TextView optionSelectedTextView = (TextView) v;
+                    setHighLightedText(optionSelectedTextView, value);
+                }
+            }
+
+ */
+    }
+
+    /**
+     * use this method to highlight a text in TextView
+     *
+     * @param tv              TextView or Edittext or Button (or derived from TextView)
+     * @param textToHighlight Text to highlight
+     */
+    public void setHighLightedText(TextView tv, String textToHighlight) {
+        String tvt = tv.getText().toString().toLowerCase(Locale.ROOT);
+        int ofe = tvt.indexOf(textToHighlight, 0);
+        Spannable wordToSpan = new SpannableString(tv.getText());
+        for (int ofs = 0; ofs < tvt.length() && ofe != -1; ofs = ofe + 1) {
+            ofe = tvt.indexOf(textToHighlight, ofs);
+            if (ofe == -1)
+                break;
+            else {
+                // set color here
+                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tv.setText(wordToSpan, TextView.BufferType.SPANNABLE);
+                elementsFound++;
+            }
+        }
     }
 
     //Función para abrir el Dialog con más información de la persona seleccionada
@@ -1147,6 +1195,14 @@ public class ContactActivity extends AppCompatActivity {
         TextView descriptionShortProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
         descriptionShortProposal.setText(Html.fromHtml(descriptionShort + " <font color='#3876F6'><u>Leer más.</u></font>"));
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            valueToSearch = extras.getString("searchText");
+            setHighLightedText(jobProposal, valueToSearch);
+            setHighLightedText(nameProposal, valueToSearch);
+            setHighLightedText(descriptionShortProposal, valueToSearch);
+        }
+
         //Descripción para aquellas propuestas que fueron completadas con el formulario de Google inicial y no cuentan con el dato
         /*
         final int randomYears = new Random().nextInt(15) + 2;
@@ -1212,7 +1268,7 @@ public class ContactActivity extends AppCompatActivity {
 
                 //Para saber la cantidad de hijos (largo de la lista)
                 int size = (int) snapshot.getChildrenCount();
-                Log.d("OZ", "Size -> " + size);
+                //Log.d("OZ", "Size -> " + size);
 
                 //Se crean los Strings que guardarán los datos
                 String name = "";
@@ -1261,7 +1317,7 @@ public class ContactActivity extends AppCompatActivity {
                             proposalsIDs.add(i);
                         }
                     } else if (!category.equals(categoryFromFunction)) {
-                        Log.d("OZ", "Remove -> " + (i));
+                        //Log.d("OZ", "Remove -> " + (i));
                         try {
                             eliminatedElements++;
                             inflatedProposals.removeViewAt(i-eliminatedElements);
@@ -1271,8 +1327,13 @@ public class ContactActivity extends AppCompatActivity {
 
                         //Log.d("OZ", "" + proposalsIDs);
                         proposalsIDs.remove(Integer.valueOf(i));
-                        Log.d("OZ", "" + proposalsIDs);
+                        //Log.d("OZ", "" + proposalsIDs);
                     }
+                }
+
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    printElements();
                 }
             }
 
@@ -1282,7 +1343,7 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        Log.d("OZ", "" + proposalsIDs);
+        //Log.d("OZ", "" + proposalsIDs);
     }
 
     public void selectedOption(View optionSelected) {
@@ -1320,6 +1381,20 @@ public class ContactActivity extends AppCompatActivity {
             }
 
             //Log.d("OZ", "Variable -> " + selectedOptionString + "\nReal -> " + optionSelectedTextView.getText().toString());
+        }
+    }
+
+    public void printElements() {
+        if (elementsFound != 0) {
+            if (elementsFound == 1) {
+                Toast.makeText(getApplicationContext(), "Se encontró un resultado.", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFound + " resultados.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "No se encontraron resultados.", Toast.LENGTH_SHORT).show();
         }
     }
 }

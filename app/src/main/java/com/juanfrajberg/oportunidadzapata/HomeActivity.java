@@ -12,6 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -30,6 +33,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.util.Locale;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -233,6 +238,12 @@ public class HomeActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
                     searchTabEditText.clearFocus();
+                    String value = searchTabEditText.getText().toString().toLowerCase(Locale.ROOT);
+                    Intent i = new Intent(HomeActivity.this, ContactActivity.class);
+                    i.putExtra("searchText", value);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
+                    //Acá hacer el resto :)
                 }
                 return false;
             }
@@ -398,6 +409,22 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Sistema de búsqueda
+        //TextHighlighter textHighlighter = new TextHighlighter();
+        ImageView homeSearchBtn = (ImageView) findViewById(R.id.home_search_imageview);
+        homeSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchTabEditText.clearFocus();
+                String value = searchTabEditText.getText().toString().toLowerCase(Locale.ROOT);
+                Intent i = new Intent(HomeActivity.this, ContactActivity.class);
+                i.putExtra("searchText", value);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
+                //setHighLightedText(schoolTextView, searchTabEditText.getText().toString().toLowerCase(Locale.ROOT));
+            }
+        });
     }
 
     //Función que se ejecuta al hacer clic en el texto "oportunidadzapata@gmail.com"
@@ -545,5 +572,27 @@ public class HomeActivity extends AppCompatActivity {
                 .duration(300)
                 .repeat(0)
                 .playOn(view);
+    }
+
+    /**
+     * use this method to highlight a text in TextView
+     *
+     * @param tv              TextView or Edittext or Button (or derived from TextView)
+     * @param textToHighlight Text to highlight
+     */
+    public void setHighLightedText(TextView tv, String textToHighlight) {
+        String tvt = tv.getText().toString().toLowerCase(Locale.ROOT);
+        int ofe = tvt.indexOf(textToHighlight, 0);
+        Spannable wordToSpan = new SpannableString(tv.getText());
+        for (int ofs = 0; ofs < tvt.length() && ofe != -1; ofs = ofe + 1) {
+            ofe = tvt.indexOf(textToHighlight, ofs);
+            if (ofe == -1)
+                break;
+            else {
+                // set color here
+                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tv.setText(wordToSpan, TextView.BufferType.SPANNABLE);
+            }
+        }
     }
 }
