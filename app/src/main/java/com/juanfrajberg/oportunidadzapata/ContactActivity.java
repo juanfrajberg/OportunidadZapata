@@ -50,10 +50,6 @@ import java.util.Locale;
 
 public class ContactActivity extends AppCompatActivity {
 
-    int eliminatedElements = 0;
-    String valueToSearch;
-    int elementsFound = 0;
-
     //Botones de las distintas pestañas
     static ImageView homeButton; //Botón de Casa
     static ImageView proposalButton; //Botón de Propuestas
@@ -110,12 +106,28 @@ public class ContactActivity extends AppCompatActivity {
     boolean selectedArtesYEntretenimiento = false;
     boolean selectedOtros = false;
 
-    boolean selectedOptionBoolean = false;
+    //ScrollView donde están todas las propuestas
+    private ScrollView proposalsScrollView;
+
+    //Variable para detectar si ya se ha seleccionado una opción del menú de filtrado
+    boolean selectedOptionFiltering = false;
 
     //String usado para la filtración
     String selectedOptionString = "";
 
+    //ArrayList que guarda el ID de las propuestas para hacer más cómoda la filtración
     private ArrayList<Integer> proposalsIDs = new ArrayList<Integer>();;
+
+    //Variable para saber cuántos elementos se borraron y poder borrar los elementos correctos al seleccionar una opción
+    int eliminatedElements = 0;
+
+    //Variable que se recibe de HomeActivity en el EditText de búsqueda
+    String valueToSearch;
+
+    //Variable que guarda la cantidad de elementos que se encontraron al usar la búsqueda en HomeActivity
+    //Para un futuro, estaría bueno que esto funcione también al seleccionar distintas categorías y que diga cuántos resultados encuentran
+    //Pero, para hacer eso hay que cambiar una parte importante, por eso el Toast aclara que la búsqueda es en total
+    int elementsFoundSearch = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +141,7 @@ public class ContactActivity extends AppCompatActivity {
         //Buscar elementos en layout
         homeButton = findViewById(R.id.contact_home_imageview);
         proposalButton = findViewById(R.id.contact_proposal_imageview);
+        proposalsScrollView = findViewById(R.id.contact_layoutscroll_scrollview);
 
         //Nota: ninguno de estos botones se usan, pero pueden servir en un futuro
         //La idea era usarlos para enviar un mensaje de WhatsApp o llamar, pero es mucho
@@ -159,570 +172,6 @@ public class ContactActivity extends AppCompatActivity {
         secondProposal = findViewById(R.id.contact_secondexampleview_relativelayout);
         thirdProposal = findViewById(R.id.contact_thirdexampleview_relativelayout);
 
-        //Hacer que las descripciones se puedan scrollear
-        //Nota: lo reemplacé por NestedScrollView, este método no funciona cuando los textos
-        //están ubicados en un ScrollView
-        //firstExampleDescription.setMovementMethod(new ScrollingMovementMethod());
-        //secondExampleDescription.setMovementMethod(new ScrollingMovementMethod());
-        //thirdExampleDescription.setMovementMethod(new ScrollingMovementMethod());
-
-        //"Seleccionar" el ítem, cambiando su tipo de fuente y el de las demás
-        //Nota: es un verdadero lío, buscar otra solución en el futuro por favor
-
-        //Hasta la línea 706 hay código comentado
-        //Este código es muy pesado para cualquier celular
-        /*
-        salud.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(salud);
-
-                if (!selectedSalud) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedSalud = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Salud");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedSalud = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        tecnologia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(tecnologia);
-
-                if (!selectedTecnologia) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedTecnologia = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Tecnología");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedTecnologia = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        finanzas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(finanzas);
-
-                if (!selectedFinanzas) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedFinanzas = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Finanzas");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedFinanzas = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        educacion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(educacion);
-
-                if (!selectedEducacion) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedEducacion = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Educación");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedEducacion = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        ventas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(ventas);
-
-                if (!selectedVentas) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedVentas = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Ventas");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedVentas = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        ingenieria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(ingenieria);
-
-                if (!selectedIngenieria) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedIngenieria = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Ingeniería");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedIngenieria = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        recursosHumanos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(recursosHumanos);
-
-                if (!selectedRecursosHumanos) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedRecursosHumanos = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Recursos humanos");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedRecursosHumanos = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        servicios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(servicios);
-
-                if (!selectedServicios) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedServicios = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Servicios");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedServicios = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        asesoríaLegal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(asesoríaLegal);
-
-                if (!selectedAsesoriaLegal) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedAsesoriaLegal = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Asesoría legal");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedAsesoriaLegal = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        artesYEntretenimiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(artesYEntretenimiento);
-
-                if (!selectedArtesYEntretenimiento) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedArtesYEntretenimiento = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Artes y entretenimiento");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedArtesYEntretenimiento = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-
-        otros.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(otros);
-
-                if (!selectedOtros) {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                    selectedOtros = true;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("Otros");
-                }
-                else {
-                    salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                    selectedOtros = false;
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
-
-                    createAllProposals("All");
-                }
-            }
-        });
-         */
-
         //Abrir la pestaña de DataActivity
         firstProposal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -732,10 +181,6 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(firstProposal);
-                /*Lo usé antes, ahora sirve para las pruebas
-                //startActivity(new Intent(ContactActivity.this, DataActivity.class));
-                //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-                 */
                 openInfo(0, 1, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
@@ -748,10 +193,6 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(secondProposal);
-                /*Lo usé antes, ahora sirve para las pruebas
-                //startActivity(new Intent(ContactActivity.this, DataActivity.class));
-                //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-                 */
                 openInfo(0, 2, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
@@ -764,10 +205,6 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(thirdProposal);
-                /*Lo usé antes, ahora sirve para las pruebas
-                //startActivity(new Intent(ContactActivity.this, DataActivity.class));
-                //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-                 */
                 openInfo(0, 3, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
@@ -801,47 +238,28 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        createAllProposals("First");
-
-            //The key argument here must match that used in the other activity
-
-/*
-            LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-            int childCount = inflatedProposals.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View v = inflatedProposals.getChildAt(i);
-                RelativeLayout relativeLayout = findViewById(R.id.proposal_view_relativelayout);
-                View newView = relativeLayout.getChildAt(i);
-                if (newView instanceof TextView) {
-                    Log.d("OZ", "Here!");
-                    TextView optionSelectedTextView = (TextView) v;
-                    setHighLightedText(optionSelectedTextView, value);
-                }
-            }
-
- */
+        //Al final del onCreate(), se crean todas las propuestas indicando que es la primera vez
+        createAllProposals("FirstTime");
     }
 
-    /**
-     * use this method to highlight a text in TextView
-     *
-     * @param tv              TextView or Edittext or Button (or derived from TextView)
-     * @param textToHighlight Text to highlight
-     */
-    public void setHighLightedText(TextView tv, String textToHighlight) {
-        String tvt = tv.getText().toString().toLowerCase(Locale.ROOT);
-        int ofe = tvt.indexOf(textToHighlight, 0);
-        Spannable wordToSpan = new SpannableString(tv.getText());
-        for (int ofs = 0; ofs < tvt.length() && ofe != -1; ofs = ofe + 1) {
-            ofe = tvt.indexOf(textToHighlight, ofs);
-            if (ofe == -1)
+    //Función para resaltar el texto recibido de HomeActivity
+    public void highlightText(TextView textView, String textToHighlight) {
+        String textFromTextView = textView.getText().toString().toLowerCase(Locale.ROOT);
+        int a = textFromTextView.indexOf(textToHighlight, 0);
+        Spannable wordToSpan = new SpannableString(textView.getText());
+        
+        for (int i = 0; i < textFromTextView.length() && a != -1; i = a + 1) {
+            a = textFromTextView.indexOf(textToHighlight, i);
+            if (a == -1)
                 break;
             else {
-                // set color here
-                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                tv.setText(wordToSpan, TextView.BufferType.SPANNABLE);
-                elementsFound++;
+                //Resaltar texto con amarillo de fondo y negro de texto
+                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                textView.setText(wordToSpan, TextView.BufferType.SPANNABLE);
+
+                //Se incrementa el número de elementos encontrados para el Toast que dice cuántos hay
+                elementsFoundSearch++;
             }
         }
     }
@@ -1123,6 +541,7 @@ public class ContactActivity extends AppCompatActivity {
         firstProposal.setClickable(state);
         secondProposal.setClickable(state);
         thirdProposal.setClickable(state);
+        proposalsScrollView.setClickable(state);
     }
 
     //Función para abrir el chat de WhatsApp desde el Dialog con más información sobre una persona a contactar
@@ -1195,12 +614,13 @@ public class ContactActivity extends AppCompatActivity {
         TextView descriptionShortProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
         descriptionShortProposal.setText(Html.fromHtml(descriptionShort + " <font color='#3876F6'><u>Leer más.</u></font>"));
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            valueToSearch = extras.getString("searchText");
-            setHighLightedText(jobProposal, valueToSearch);
-            setHighLightedText(nameProposal, valueToSearch);
-            setHighLightedText(descriptionShortProposal, valueToSearch);
+        //Se consigue (si se envió) el texto de búsqueda de HomeActivity
+        Bundle bundleFromHomeActivity = getIntent().getExtras();
+        if (bundleFromHomeActivity != null) {
+            valueToSearch = bundleFromHomeActivity.getString("searchText");
+            highlightText(jobProposal, valueToSearch);
+            highlightText(nameProposal, valueToSearch);
+            highlightText(descriptionShortProposal, valueToSearch);
         }
 
         //Descripción para aquellas propuestas que fueron completadas con el formulario de Google inicial y no cuentan con el dato
@@ -1220,6 +640,7 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
+        //Se programa el onClick del teléfono y WhatsApp
         ImageView phoneButton = (ImageView) proposalToAdd.findViewById(R.id.proposal_phone_imageview);
         phoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1256,7 +677,9 @@ public class ContactActivity extends AppCompatActivity {
         });
     }
 
+    //Función para crear las propuestas (también cuando se llaman desde una categoría=
     public void createAllProposals(String categoryFromFunction) {
+        //Se usa más adelante para decidir qué propuestas borrar al seleccionar una categoría
         eliminatedElements = 0;
 
         //Se accede a la información guardada en la base de datos
@@ -1308,7 +731,7 @@ public class ContactActivity extends AppCompatActivity {
                     LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
 
                     //Se crean las propuestas con la información dada
-                    if (categoryFromFunction.equals("First")) {
+                    if (categoryFromFunction.equals("FirstTime")) {
                         createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                         proposalsIDs.add(i);
                     } else if (categoryFromFunction.equals("All")) {
@@ -1331,9 +754,9 @@ public class ContactActivity extends AppCompatActivity {
                     }
                 }
 
-                Bundle extras = getIntent().getExtras();
-                if (extras != null) {
-                    printElements();
+                Bundle bundleFromHomeActivity = getIntent().bundleFromHomeActivity();
+                if (bundleFromHomeActivity != null) {
+                    showToastElementsFound();
                 }
             }
 
@@ -1346,14 +769,16 @@ public class ContactActivity extends AppCompatActivity {
         //Log.d("OZ", "" + proposalsIDs);
     }
 
+    //Función que se llama al seleccionar una categoría
     public void selectedOption(View optionSelected) {
+        //Animación del elemento
         YoYo.with(Techniques.FlipInX)
                 .duration(450)
                 .repeat(0)
                 .playOn(optionSelected);
 
+        //Se pone en negrita la categoría seleccionada y las demás se deseleccionan
         LinearLayout optionsLayout = (LinearLayout) findViewById(R.id.contact_optionslayout_linearlayout);
-
         int numberOptions = optionsLayout.getChildCount();
         for (int i = 0; i < numberOptions; i++) {
             TextView option = (TextView) optionsLayout.getChildAt(i);
@@ -1362,12 +787,11 @@ public class ContactActivity extends AppCompatActivity {
 
         if (optionSelected instanceof TextView) {
             TextView optionSelectedTextView = (TextView) optionSelected;
-
-            if (selectedOptionBoolean == false) {
+            if (selectedOptionFiltering == false) {
                 createAllProposals(optionSelectedTextView.getText().toString());
                 optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
                 selectedOptionString = optionSelectedTextView.getText().toString();
-                selectedOptionBoolean = true;
+                selectedOptionFiltering = true;
             } else {
                 if (selectedOptionString.equals(optionSelectedTextView.getText().toString())) {
                     optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
@@ -1377,20 +801,21 @@ public class ContactActivity extends AppCompatActivity {
                     optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
                     createAllProposals(optionSelectedTextView.getText().toString());
                 }
-                selectedOptionBoolean = false;
+                selectedOptionFiltering = false;
             }
 
             //Log.d("OZ", "Variable -> " + selectedOptionString + "\nReal -> " + optionSelectedTextView.getText().toString());
         }
     }
 
-    public void printElements() {
-        if (elementsFound != 0) {
-            if (elementsFound == 1) {
+    //Función que se llama cuando desde HomeActivity se hizo una búsqueda para imprimir la cantidad de resultados encontrados
+    public void showToastElementsFound() {
+        if (elementsFoundSearch != 0) {
+            if (elementsFoundSearch == 1) {
                 Toast.makeText(getApplicationContext(), "Se encontró un resultado.", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFound + " resultados.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFoundSearch + " resultados.", Toast.LENGTH_SHORT).show();
             }
         }
         else {
