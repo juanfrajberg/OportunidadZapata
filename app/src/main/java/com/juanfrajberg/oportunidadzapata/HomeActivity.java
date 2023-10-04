@@ -279,7 +279,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         //Configurar la imagen para poder usar la AI de Oportunidad Zapata desde Poe (https://poe.com/OZapata)
-
         poeAI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -348,6 +347,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //Funciones para compartir la aplicación por un canal de mensajería y poder contactarnos        
         shareAppButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -566,33 +566,12 @@ public class HomeActivity extends AppCompatActivity {
         shareAppButton.setClickable(state);
     }
 
+    //Función que se llama al hacer clic en el botón de búsqueda
     public void onSearchClick(View view) {
         //Animación del botón
         YoYo.with(Techniques.Pulse)
                 .duration(300)
                 .repeat(0)
                 .playOn(view);
-    }
-
-    /**
-     * use this method to highlight a text in TextView
-     *
-     * @param tv              TextView or Edittext or Button (or derived from TextView)
-     * @param textToHighlight Text to highlight
-     */
-    public void setHighLightedText(TextView tv, String textToHighlight) {
-        String tvt = tv.getText().toString().toLowerCase(Locale.ROOT);
-        int ofe = tvt.indexOf(textToHighlight, 0);
-        Spannable wordToSpan = new SpannableString(tv.getText());
-        for (int ofs = 0; ofs < tvt.length() && ofe != -1; ofs = ofe + 1) {
-            ofe = tvt.indexOf(textToHighlight, ofs);
-            if (ofe == -1)
-                break;
-            else {
-                // set color here
-                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                tv.setText(wordToSpan, TextView.BufferType.SPANNABLE);
-            }
-        }
     }
 }
