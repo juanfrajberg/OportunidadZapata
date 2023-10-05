@@ -12,6 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -30,6 +33,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.util.Locale;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -233,6 +238,12 @@ public class HomeActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     //Limpiar el focus de este elemento al hacer clic en el botón de OK o terminado
                     searchTabEditText.clearFocus();
+                    String value = searchTabEditText.getText().toString().toLowerCase(Locale.ROOT);
+                    Intent i = new Intent(HomeActivity.this, ContactActivity.class);
+                    i.putExtra("searchText", value);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
+                    //Acá hacer el resto :)
                 }
                 return false;
             }
@@ -268,7 +279,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         //Configurar la imagen para poder usar la AI de Oportunidad Zapata desde Poe (https://poe.com/OZapata)
-
         poeAI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -337,6 +347,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //Funciones para compartir la aplicación por un canal de mensajería y poder contactarnos        
         shareAppButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -396,6 +407,22 @@ public class HomeActivity extends AppCompatActivity {
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
+            }
+        });
+
+        //Sistema de búsqueda
+        //TextHighlighter textHighlighter = new TextHighlighter();
+        ImageView homeSearchBtn = (ImageView) findViewById(R.id.home_search_imageview);
+        homeSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchTabEditText.clearFocus();
+                String value = searchTabEditText.getText().toString().toLowerCase(Locale.ROOT);
+                Intent i = new Intent(HomeActivity.this, ContactActivity.class);
+                i.putExtra("searchText", value);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left); //Animación
+                //setHighLightedText(schoolTextView, searchTabEditText.getText().toString().toLowerCase(Locale.ROOT));
             }
         });
     }
@@ -539,6 +566,7 @@ public class HomeActivity extends AppCompatActivity {
         shareAppButton.setClickable(state);
     }
 
+    //Función que se llama al hacer clic en el botón de búsqueda
     public void onSearchClick(View view) {
         //Animación del botón
         YoYo.with(Techniques.Pulse)

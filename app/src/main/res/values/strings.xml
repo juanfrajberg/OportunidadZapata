@@ -132,6 +132,8 @@
     </string>
     <string name="contact_reminder_text">¡Importante! Vas a observar en la esquina superior derecha de algunas propuestas un cartel de "ejemplo". Esto quiere decir que éstas no son solicitudes de empleadores reales, sino que fueron escritas a modo de ilustración para que puedas observar cómo deberías escribir tu propuesta de trabajo para publicar.</string>
 
+    <string name="proposal_archivossubtitle_text">(Opcional) Te recomendamos agregar a tu propuesta imágenes que sean relevantes / ayuden a promocionar tu servicio.\n<br></br><i><font color='#CACACA'>Aclaración: todavía esta sección no funciona, pero estamos trabajando en su desarrollo.</font></i></string>
+
     <string-array name="cursos_array">
         <item>Curso</item>
         <item>1ro</item>

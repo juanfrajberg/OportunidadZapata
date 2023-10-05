@@ -59,8 +59,11 @@ import java.util.TimeZone;
 
 public class SendProposalActivity extends AppCompatActivity {
 
-    //TextView que cuenta la cantidad de caracteres de la Descripción
-    private TextView maxCharactersDescripcionTextView;
+    //TextView que cuenta la cantidad de caracteres de la descripción corta
+    private TextView maxCharactersDescripcionShortTextView;
+
+    //TextView que cuenta la cantidad de caracteres de la descripción formal
+    private TextView maxCharactersDescripcionFormalTextView;
 
     //Último EditText del layout
     static private EditText nombreUsuarioEditText;
@@ -91,7 +94,8 @@ public class SendProposalActivity extends AppCompatActivity {
     static private EditText numeroTelefonoEditText;
     static private EditText profesionEditText;
     static private EditText nombreAlumnoEditText;
-    static private EditText descripcionEditText;
+    static private EditText descripcionShortEditText;
+    static private EditText descripcionFormalEditText;
 
     //Botón para adjuntar archivos
     static RelativeLayout adjuntarArchivosButton;
@@ -115,7 +119,8 @@ public class SendProposalActivity extends AppCompatActivity {
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         //Buscar elementos en layout
-        maxCharactersDescripcionTextView = findViewById(R.id.proposal_counterdescription_textview);
+        maxCharactersDescripcionShortTextView = findViewById(R.id.proposal_shortcounterdescription_textview);
+        maxCharactersDescripcionFormalTextView = findViewById(R.id.proposal_counterdescription_textview);
 
         arrowUpRubroLaboralImageView = findViewById(R.id.proposal_arrow_imageview);
 
@@ -135,15 +140,17 @@ public class SendProposalActivity extends AppCompatActivity {
         numeroTelefonoEditText = findViewById(R.id.proposal_numero_edittext);
         profesionEditText = findViewById(R.id.proposal_profesion_edittext);
         nombreAlumnoEditText = findViewById(R.id.proposal_alumno_editext);
-        descripcionEditText = findViewById(R.id.proposal_descripcion_edittext);
+        descripcionShortEditText = findViewById(R.id.proposal_shortdescripcion_edittext);
+        descripcionFormalEditText = findViewById(R.id.proposal_descripcion_edittext);
         nombreUsuarioEditText = findViewById(R.id.proposal_contacto_edittext);
 
         mostrarNombreAlumno = findViewById(R.id.proposal_checkboxalumno_checkbox);
 
         adjuntarArchivosButton = findViewById(R.id.proposal_archivosview_view);
 
-        //Detectar cuado el texto de la descripción se modifica
-        descripcionEditText.addTextChangedListener(descripcionTextEditorWatcher);
+        //Detectar cuado el texto de la descripción (corta y formal) se modifica
+        descripcionShortEditText.addTextChangedListener(descripcionShortTextEditorWatcher);
+        descripcionFormalEditText.addTextChangedListener(descripcionFormalTextEditorWatcher);
 
         //Detectar cuado el texto de cualquier EditText o Spinner se modifica
         nombreCompletoEditText.addTextChangedListener(nombreCompletoTextEditorWatcher);
@@ -151,7 +158,8 @@ public class SendProposalActivity extends AppCompatActivity {
         numeroTelefonoEditText.addTextChangedListener(numeroTelefonoTextEditorWatcher);
         profesionEditText.addTextChangedListener(profesionTextEditorWatcher);
         nombreAlumnoEditText.addTextChangedListener(nombreAlumnoTextEditorWatcher);
-        descripcionEditText.addTextChangedListener(descripcionTextoTextEditorWatcher);
+        descripcionShortEditText.addTextChangedListener(descripcionShortTextoTextEditorWatcher);
+        descripcionFormalEditText.addTextChangedListener(descripcionFormalTextoTextEditorWatcher);
         nombreUsuarioEditText.addTextChangedListener(nombreUsuarioTextEditorWatcher);
 
         //Para el CheckBox de elegir mostrar el nombre del alumno se usa este código
@@ -172,7 +180,8 @@ public class SendProposalActivity extends AppCompatActivity {
         numeroTelefonoEditText.setText(preferences.getString("phone", null));
         profesionEditText.setText(preferences.getString("job", null));
         nombreAlumnoEditText.setText(preferences.getString("student", null));
-        descripcionEditText.setText(preferences.getString("description", null));
+        descripcionShortEditText.setText(preferences.getString("descriptionShort", null));
+        descripcionFormalEditText.setText(preferences.getString("descriptionFormal", null));
         nombreUsuarioEditText.setText(preferences.getString("username", null));
 
         //Para los Spinner se usa un código distinto
@@ -227,6 +236,8 @@ public class SendProposalActivity extends AppCompatActivity {
                         || TextUtils.isEmpty(numeroTelefonoEditText.getText())
                         || TextUtils.isEmpty(profesionEditText.getText())
                         || TextUtils.isEmpty(nombreAlumnoEditText.getText())
+                        || TextUtils.isEmpty(descripcionShortEditText.getText())
+                        || TextUtils.isEmpty(descripcionFormalEditText.getText())
 
                         || cursosSpinner.getSelectedItem().toString().equals("Curso")
                         || divisionSpinner.getSelectedItem().toString().equals("División")
@@ -558,18 +569,30 @@ public class SendProposalActivity extends AppCompatActivity {
             }
         });
 
-        nombreUsuarioEditText.setOnTouchListener(new View.OnTouchListener() {
+        descripcionShortEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                contactoHorizontalScrollView.requestDisallowInterceptTouchEvent(true);
+                //Para poder deslizar por encima del EditText
+                if (descripcionShortEditText.hasFocus()) {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                }
+                else {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(false);
+                }
                 return false;
             }
         });
 
-        descripcionEditText.setOnTouchListener(new View.OnTouchListener() {
+        descripcionFormalEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                //Para poder deslizar por encima del EditText
+                if (descripcionFormalEditText.hasFocus()) {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                }
+                else {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(false);
+                }
                 return false;
             }
         });
@@ -577,7 +600,12 @@ public class SendProposalActivity extends AppCompatActivity {
         numeroTelefonoEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                if (numeroTelefonoEditText.hasFocus()) {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(true);
+                }
+                else {
+                    layoutScrollView.requestDisallowInterceptTouchEvent(false);
+                }
                 return false;
             }
         });
@@ -638,7 +666,16 @@ public class SendProposalActivity extends AppCompatActivity {
                 }
             }
         });
-        descripcionEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        descripcionShortEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+        descripcionFormalEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -649,13 +686,26 @@ public class SendProposalActivity extends AppCompatActivity {
         });
     }
 
-    //Función para detectar cuando el texto de la descripción cambia
-    private final TextWatcher descripcionTextEditorWatcher = new TextWatcher() {
+    //Función para detectar cuando el texto de la descripción corta cambia
+    private final TextWatcher descripcionShortTextEditorWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            maxCharactersDescripcionTextView.setText(String.valueOf(s.length()) + "/450");
+            maxCharactersDescripcionShortTextView.setText(String.valueOf(s.length()) + "/175");
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+    //Función para detectar cuando el texto de la descripción formal cambia
+    private final TextWatcher descripcionFormalTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            maxCharactersDescripcionFormalTextView.setText(String.valueOf(s.length()) + "/1250");
         }
 
         public void afterTextChanged(Editable s) {
@@ -737,14 +787,29 @@ public class SendProposalActivity extends AppCompatActivity {
         }
     };
 
-    private final TextWatcher descripcionTextoTextEditorWatcher = new TextWatcher() {
+    private final TextWatcher descripcionShortTextoTextEditorWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor dataPersonRegistered = preferences.edit();
-            dataPersonRegistered.putString("description", descripcionEditText.getText().toString());
+            dataPersonRegistered.putString("descriptionShort", descripcionShortEditText.getText().toString());
+            dataPersonRegistered.apply();
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+    private final TextWatcher descripcionFormalTextoTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor dataPersonRegistered = preferences.edit();
+            dataPersonRegistered.putString("descriptionFormal", descripcionFormalEditText.getText().toString());
             dataPersonRegistered.apply();
         }
 
@@ -871,7 +936,8 @@ public class SendProposalActivity extends AppCompatActivity {
         numeroTelefonoEditText.setClickable(state);
         profesionEditText.setClickable(state);
         nombreAlumnoEditText.setClickable(state);
-        descripcionEditText.setClickable(state);
+        descripcionShortEditText.setClickable(state);
+        descripcionFormalEditText.setClickable(state);
         adjuntarArchivosButton.setClickable(state);
         mostrarNombreAlumno.setClickable(state);
     }
@@ -921,11 +987,14 @@ public class SendProposalActivity extends AppCompatActivity {
         dataPersonRegistered.putString("student", nombreAlumnoEditText.getText().toString());
         dataPersonRegistered.putString("course", cursosSpinner.getSelectedItem().toString());
         dataPersonRegistered.putString("division", divisionSpinner.getSelectedItem().toString());
-        dataPersonRegistered.putString("description", descripcionEditText.getText().toString());
+        dataPersonRegistered.putString("descriptionShort", descripcionShortEditText.getText().toString());
+        dataPersonRegistered.putString("descriptionFormal", descripcionFormalEditText.getText().toString());
+        dataPersonRegistered.putBoolean("showStudent", mostrarNombreAlumno.isChecked());
+        dataPersonRegistered.putString("category", rubroLaboralSpinner.getSelectedItem().toString());
 
         //Verificar si hay algo escrito
         if (!contactoSpinner.getSelectedItem().toString().equals("Tipo") && !TextUtils.isEmpty(nombreUsuarioEditText.getText())) {
-            dataPersonRegistered.putString("contact", contactoSpinner.getSelectedItem().toString());
+            dataPersonRegistered.putString("socialMedia", contactoSpinner.getSelectedItem().toString());
             dataPersonRegistered.putString("username", nombreUsuarioEditText.getText().toString());
         }
 
@@ -959,7 +1028,12 @@ public class SendProposalActivity extends AppCompatActivity {
                             preferences.getString("student", "null"),
                             preferences.getString("course", "null"),
                             preferences.getString("division", "null"),
-                            preferences.getString("description", "null"),
+                            preferences.getString("descriptionShort", "null"),
+                            preferences.getString("descriptionFormal", "null"),
+                            preferences.getBoolean("showStudent", true),
+                            preferences.getString("category", "null"),
+                            preferences.getString("socialMedia", "null"),
+                            preferences.getString("username", "null"),
                             Integer.parseInt(lastID));
 
                     //Se almacena en nuestra Realtime Database

@@ -15,6 +15,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +46,8 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Random;
 
 public class ContactActivity extends AppCompatActivity {
 
@@ -89,6 +94,44 @@ public class ContactActivity extends AppCompatActivity {
     //Variable para saber si mostrar el Dialog al perderse la conexión
     boolean showWiFiStatus;
 
+    //Variables para indicar qué opción esta seleccionada
+    boolean selectedSalud = false;
+    boolean selectedTecnologia = false;
+    boolean selectedFinanzas = false;
+    boolean selectedEducacion = false;
+    boolean selectedVentas = false;
+    boolean selectedIngenieria = false;
+    boolean selectedRecursosHumanos = false;
+    boolean selectedServicios = false;
+    boolean selectedAsesoriaLegal = false;
+    boolean selectedArtesYEntretenimiento = false;
+    boolean selectedOtros = false;
+
+    //ScrollView donde están todas las propuestas
+    private static ScrollView proposalsScrollView;
+
+    //Variable para detectar si ya se ha seleccionado una opción del menú de filtrado
+    boolean selectedOptionFiltering = false;
+
+    //String usado para la filtración
+    String selectedOptionString = "";
+
+    //ArrayList que guarda el ID de las propuestas para hacer más cómoda la filtración
+    private ArrayList<Integer> proposalsIDs = new ArrayList<Integer>();
+
+    //Variable para saber cuántos elementos se borraron y poder borrar los elementos correctos al seleccionar una opción
+    int eliminatedElements = 0;
+
+    //Variable que se recibe de HomeActivity en el EditText de búsqueda
+    String valueToSearch;
+
+    //Variable que guarda la cantidad de elementos que se encontraron al usar la búsqueda en HomeActivity
+    //Para un futuro, estaría bueno que esto funcione también al seleccionar distintas categorías y que diga cuántos resultados encuentran
+    //Pero, para hacer eso hay que cambiar una parte importante, por eso el Toast aclara que la búsqueda es en total
+    int elementsFoundSearch = 0;
+
+    boolean alreadyShowedToastElementsFound = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
@@ -101,6 +144,7 @@ public class ContactActivity extends AppCompatActivity {
         //Buscar elementos en layout
         homeButton = findViewById(R.id.contact_home_imageview);
         proposalButton = findViewById(R.id.contact_proposal_imageview);
+        proposalsScrollView = findViewById(R.id.contact_layoutscroll_scrollview);
 
         //Nota: ninguno de estos botones se usan, pero pueden servir en un futuro
         //La idea era usarlos para enviar un mensaje de WhatsApp o llamar, pero es mucho
@@ -131,268 +175,6 @@ public class ContactActivity extends AppCompatActivity {
         secondProposal = findViewById(R.id.contact_secondexampleview_relativelayout);
         thirdProposal = findViewById(R.id.contact_thirdexampleview_relativelayout);
 
-        //Hacer que las descripciones se puedan scrollear
-        //Nota: lo reemplacé por NestedScrollView, este método no funciona cuando los textos
-        //están ubicados en un ScrollView
-        //firstExampleDescription.setMovementMethod(new ScrollingMovementMethod());
-        //secondExampleDescription.setMovementMethod(new ScrollingMovementMethod());
-        //thirdExampleDescription.setMovementMethod(new ScrollingMovementMethod());
-
-        //"Seleccionar" el ítem, cambiando su tipo de fuente y el de las demás
-        //Nota: es un verdadero lío, buscar otra solución en el futuro por favor
-        salud.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(salud);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        tecnologia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(tecnologia);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        finanzas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(finanzas);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        educacion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(educacion);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        ventas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(ventas);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        ingenieria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(ingenieria);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        recursosHumanos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(recursosHumanos);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        servicios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(servicios);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        asesoríaLegal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(asesoríaLegal);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        artesYEntretenimiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(artesYEntretenimiento);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-            }
-        });
-
-        otros.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Animación del texto
-                YoYo.with(Techniques.FlipInX)
-                        .duration(450)
-                        .repeat(0)
-                        .playOn(otros);
-
-                salud.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                tecnologia.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                finanzas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                educacion.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ventas.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                ingenieria.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                recursosHumanos.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                servicios.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                asesoríaLegal.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                artesYEntretenimiento.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
-                otros.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
-            }
-        });
-
         //Abrir la pestaña de DataActivity
         firstProposal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -402,11 +184,7 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(firstProposal);
-                /*Lo usé antes, ahora sirve para las pruebas
-                //startActivity(new Intent(ContactActivity.this, DataActivity.class));
-                //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-                 */
-                openInfo(0, 1,"", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 1, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -418,11 +196,7 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(secondProposal);
-                /*Lo usé antes, ahora sirve para las pruebas
-                //startActivity(new Intent(ContactActivity.this, DataActivity.class));
-                //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-                 */
-                openInfo(0, 2,"", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 2, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -434,11 +208,7 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(thirdProposal);
-                /*Lo usé antes, ahora sirve para las pruebas
-                //startActivity(new Intent(ContactActivity.this, DataActivity.class));
-                //overridePendingTransition(R.anim.scale_in, R.anim.scale_out);
-                 */
-                openInfo(0, 3, "", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 3, "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -471,57 +241,35 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        //Se accede a la información guardada en la base de datos
-        DatabaseReference databaseReference;
-        databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                inflatedProposals.removeAllViews();
+        //Al final del onCreate(), se crean todas las propuestas indicando que es la primera vez
+        createAllProposals("FirstTime");
+    }
 
-                //Para saber la cantidad de hijos (largo de la lista)
-                int size = (int) snapshot.getChildrenCount();
+    //Función para resaltar el texto recibido de HomeActivity
+    public void highlightText(TextView textView, String textToHighlight) {
+        String textFromTextView = textView.getText().toString().toLowerCase(Locale.ROOT);
+        int a = textFromTextView.indexOf(textToHighlight, 0);
+        Spannable wordToSpan = new SpannableString(textView.getText());
+        
+        for (int i = 0; i < textFromTextView.length() && a != -1; i = a + 1) {
+            a = textFromTextView.indexOf(textToHighlight, i);
+            if (a == -1)
+                break;
+            else {
+                //Resaltar texto con amarillo de fondo y negro de texto
+                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                textView.setText(wordToSpan, TextView.BufferType.SPANNABLE);
 
-                //Se crean los Strings que guardarán los datos
-                String name  = "";
-                String phone = "";
-                String time = "";
-                String email = "";
-                String job  = "";
-                String description  = "";
-                String student = "";
-                String course = "";
-                String division = "";
-
-                //Se le asigna el valor a estos Strings
-                for (int i=1; i<size+1; i++) {
-                    name = snapshot.child(String.valueOf(i)).child("fullname").getValue(String.class);
-                    phone = String.valueOf(snapshot.child(String.valueOf(i)).child("phone").getValue(Long.class));
-                    time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
-                    email = snapshot.child(String.valueOf(i)).child("email").getValue(String.class);
-                    job = snapshot.child(String.valueOf(i)).child("job").getValue(String.class);
-                    //Todavía no hay una descripción de cada trabajador en la base de datos (arreglar en un futuro)
-                    //description = snapshot.child(String.valueOf(i)).child("description").getValue(String.class);
-                    student = snapshot.child(String.valueOf(i)).child("student").getValue(String.class);
-                    course = snapshot.child(String.valueOf(i)).child("course").getValue(String.class);
-                    division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
-
-                    //Se crean las propuestas con la información dada
-                    createProposals(i, name, phone, time, email, job, student, course, division);
-                }
+                //Se incrementa el número de elementos encontrados para el Toast que dice cuántos hay
+                elementsFoundSearch++;
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "¡No se pudo acceder a las demás propuestas, revisá tu conexión!", Toast.LENGTH_LONG);
-            }
-        });
+        }
     }
 
     //Función para abrir el Dialog con más información de la persona seleccionada
     //En un futuro hay que añadir parámetros para que apenas abra tenga el nombre, mail y demás datos
-    private void openInfo(int id, int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone, String course, String division) {
+    private void openInfo(int id, int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone, String course, String division, String description, String showStudent) {
         infoDialog = new Dialog(ContactActivity.this);
         infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         infoDialog.getWindow().getAttributes().windowAnimations = R.style.InfoDialogAnimation;
@@ -536,16 +284,21 @@ public class ContactActivity extends AppCompatActivity {
                 TextView nameTextView = (TextView) infoDialog.findViewById(R.id.info_personname_textview);
                 nameTextView.setText(name);
                 TextView studentTextView = (TextView) infoDialog.findViewById(R.id.info_alumnoquelorecomienda_textview);
-                studentTextView.setText("Recomendado/a por " + student + " de " + course.substring(0,1) + "° " + division.substring(0,1) + "°");
+                if (showStudent.equals("true")) {
+                    studentTextView.setText("Recomendado/a por " + student + " de " + course.substring(0, 1) + "° " + division.substring(0, 1) + "°");
+                } else {
+                    studentTextView.setText("Prefiere ocultar el nombre del alumno/a que lo/la recomienda");
+                }
                 TextView dateTextView = (TextView) infoDialog.findViewById(R.id.info_time_textview);
                 dateTextView.setText("Publicado el " + timeDay + "/" + timeMonth + "/" + timeYear);
                 TextView mailTextView = (TextView) infoDialog.findViewById(R.id.info_personmail_textview);
                 mailTextView.setText(email);
                 TextView phoneTextView = (TextView) infoDialog.findViewById(R.id.info_whatsappnumber_textview);
-                phoneTextView.setText("+54 9 " + phone.substring(0,3) + " " + phone.substring(3,6) + "-" + phone.substring(6,phone.length()));
+                phoneTextView.setText("+54 9 " + phone.substring(0, 3) + " " + phone.substring(3, 6) + "-" + phone.substring(6, phone.length()));
                 TextView descriptionTextView = (TextView) infoDialog.findViewById(R.id.info_description_textview);
+                descriptionTextView.setText(description);
                 //int randomDescription = new Random().nextInt(3 - 1 + 1) + 1;
-                LinearLayout cardsLayout = findViewById(R.id.contact_inflatedproposals_linearlayout);
+                /*
                 int randomDescription = id % 3;
                 //Log.d("OZ", "ID -> " + id + "\nDescription -> " + randomDescription);
                 switch (randomDescription) {
@@ -559,6 +312,8 @@ public class ContactActivity extends AppCompatActivity {
                         descriptionTextView.setText("En mi profesión (" + job.toLowerCase() + "), me dedico a resolver problemas y lograr resultados efectivos. Utilizo mis habilidades y experiencia para contribuir al éxito en mi campo. Colaboro con equipos y aprovecho la tecnología para mejorar procesos. Siempre estoy dispuesto a aprender y crecer en cualquier entorno laboral en el que me encuentre.");
                         break;
                 }
+                break;
+                 */
                 break;
             case 1:
                 infoDialog.setContentView(R.layout.firstinfo_dialog);
@@ -613,7 +368,7 @@ public class ContactActivity extends AppCompatActivity {
 
         //Abrir Instagram al hacer clic en el texto e imagen de Instagram
         //Se ejecuta en un try porque no todos publican su usuario de Instagram, es opcional
-        try{
+        try {
             ImageView instagramImage = (ImageView) infoDialog.findViewById(R.id.info_instagramicon_imageview);
             instagramImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -638,7 +393,8 @@ public class ContactActivity extends AppCompatActivity {
                     openInstagramFromInfoDialog();
                 }
             });
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         infoDialog.show();
 
@@ -788,6 +544,7 @@ public class ContactActivity extends AppCompatActivity {
         firstProposal.setClickable(state);
         secondProposal.setClickable(state);
         thirdProposal.setClickable(state);
+        proposalsScrollView.setClickable(state);
     }
 
     //Función para abrir el chat de WhatsApp desde el Dialog con más información sobre una persona a contactar
@@ -820,29 +577,32 @@ public class ContactActivity extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
     }
 
-    private void createProposals(int id, String name, String phone, String time, String email, String job, String student, String course, String division) {
+    private void createProposals(int id, String name, String phone, String time, String email, String job, String student, String course, String division, String descriptionShort, String descriptionFormal, String showStudent, String category, String socialMedia, String username) {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
-        inflatedProposals.addView(proposalToAdd);
+        inflatedProposals.addView(proposalToAdd, id - 1);
+
+        //TextView idTextView = (TextView) proposalToAdd.findViewById(R.id.proposal_id_textview);
+        //idTextView.setText(id);
 
         //Para convertir el formato de la variable "time" a texto
         time = time.substring(0, 10);
         time = time.replace("-", "");
-        Log.d("OZ", time);
+        //Log.d("OZ", time);
         String timeYear = time.substring(0, 4);
         String timeMonth = time.substring(4, 6);
         timeMonth = timeMonth.replaceFirst("^0+(?!$)", "");
         String timeMonthInNumbers = timeMonth;
-        Log.d("OZ", timeMonth);
+        //Log.d("OZ", timeMonth);
         String timeDay = time.substring(6, 8);
         timeDay = timeDay.replaceFirst("^0+(?!$)", "");
-        Log.d("OZ", timeDay);
+        //Log.d("OZ", timeDay);
 
         //Para el mes se deben usar las siguientes líneas de código
         DateTimeFormatter fmt = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("MMMM").toFormatter(new Locale("es", "ES"));
         timeMonth = Month.of(Integer.parseInt(timeMonth)).getDisplayName(TextStyle.FULL_STANDALONE, new Locale("es", "ES"));
-        timeMonth = timeMonth.substring(0,1).toUpperCase() + timeMonth.substring(1).toLowerCase();
+        timeMonth = timeMonth.substring(0, 1).toUpperCase() + timeMonth.substring(1).toLowerCase();
 
         //Se les asigna el valor a los TextView
         TextView dateProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_time_textview);
@@ -854,9 +614,24 @@ public class ContactActivity extends AppCompatActivity {
         TextView nameProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_subtitlerl_textview);
         nameProposal.setText(name);
 
-        TextView descriptionProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
+        TextView descriptionShortProposal = (TextView) proposalToAdd.findViewById(R.id.proposal_descriptionrl_textview);
+        descriptionShortProposal.setText(Html.fromHtml(descriptionShort + " <font color='#3876F6'><u>Leer más.</u></font>"));
+
+        //Se consigue (si se envió) el texto de búsqueda de HomeActivity
+        Bundle bundleFromHomeActivity = getIntent().getExtras();
+        if (bundleFromHomeActivity != null) {
+            valueToSearch = bundleFromHomeActivity.getString("searchText");
+            highlightText(jobProposal, valueToSearch);
+            highlightText(nameProposal, valueToSearch);
+            highlightText(descriptionShortProposal, valueToSearch);
+            highlightText(dateProposal, valueToSearch);
+        }
+
+        //Descripción para aquellas propuestas que fueron completadas con el formulario de Google inicial y no cuentan con el dato
+        /*
         final int randomYears = new Random().nextInt(15) + 2;
         descriptionProposal.setText(Html.fromHtml("Me desempeño como " + job.toLowerCase() + " hace más de " + randomYears + " años. Fui recomendado/a por " + student + ". " + "<font color='#3876F6'><u>Leer más.</u></font>"));
+         */
 
         //Abrir el Dialog de más información
         RelativeLayout proposalLayout = proposalToAdd.findViewById(R.id.proposal_view_relativelayout);
@@ -864,10 +639,12 @@ public class ContactActivity extends AppCompatActivity {
         proposalLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division);
+                //Log.d("OZ", "" + descriptionFormal);
+                openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division, descriptionFormal, showStudent);
             }
         });
 
+        //Se programa el onClick del teléfono y WhatsApp
         ImageView phoneButton = (ImageView) proposalToAdd.findViewById(R.id.proposal_phone_imageview);
         phoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -902,5 +679,152 @@ public class ContactActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=+" + WhatsAppPhone + "&text=Hola%2C%20buenas%20tardes!%20Me%20contacto%20cone%20usted%20porque%20me%20interesan%20los%20servicios%20que%20ofrece%20en%20Oportunidad%20Zapata%20😁")));
             }
         });
+    }
+
+    //Función para crear las propuestas (también cuando se llaman desde una categoría=
+    public void createAllProposals(String categoryFromFunction) {
+        //Se usa más adelante para decidir qué propuestas borrar al seleccionar una categoría
+        eliminatedElements = 0;
+
+        //Se accede a la información guardada en la base de datos
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                //Para saber la cantidad de hijos (largo de la lista)
+                int size = (int) snapshot.getChildrenCount();
+                //Log.d("OZ", "Size -> " + size);
+
+                //Se crean los Strings que guardarán los datos
+                String name = "";
+                String phone = "";
+                String time = "";
+                String email = "";
+                String job = "";
+                String descriptionShort = "";
+                String descriptionFormal = "";
+                String student = "";
+                String course = "";
+                String division = "";
+                String showStudent = "";
+                String category = "";
+                String socialMedia = "";
+                String username = "";
+
+                //Se le asigna el valor a estos Strings
+                for (int i = 1; i < size + 1; i++) {
+                    name = snapshot.child(String.valueOf(i)).child("fullname").getValue(String.class);
+                    phone = String.valueOf(snapshot.child(String.valueOf(i)).child("phone").getValue(Long.class));
+                    time = snapshot.child(String.valueOf(i)).child("time").getValue(String.class);
+                    email = snapshot.child(String.valueOf(i)).child("email").getValue(String.class);
+                    job = snapshot.child(String.valueOf(i)).child("job").getValue(String.class);
+                    //Todavía no hay una descripción de cada trabajador en la base de datos (arreglar en un futuro)
+                    //description = snapshot.child(String.valueOf(i)).child("description").getValue(String.class);
+                    student = snapshot.child(String.valueOf(i)).child("student").getValue(String.class);
+                    course = snapshot.child(String.valueOf(i)).child("course").getValue(String.class);
+                    division = snapshot.child(String.valueOf(i)).child("division").getValue(String.class);
+                    descriptionShort = snapshot.child(String.valueOf(i)).child("descriptionShort").getValue(String.class);
+                    descriptionFormal = snapshot.child(String.valueOf(i)).child("descriptionFormal").getValue(String.class);
+                    showStudent = snapshot.child(String.valueOf(i)).child("showStudent").getValue(String.class);
+                    category = snapshot.child(String.valueOf(i)).child("category").getValue(String.class);
+                    socialMedia = snapshot.child(String.valueOf(i)).child("socialMedia").getValue(String.class);
+                    username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
+
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+
+                    //Se crean las propuestas con la información dada
+                    if (categoryFromFunction.equals("FirstTime")) {
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
+                    } else if (categoryFromFunction.equals("All")) {
+                        if (!proposalsIDs.contains(i)) {
+                            createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                            proposalsIDs.add(i);
+                        }
+                    } else if (!category.equals(categoryFromFunction)) {
+                        //Log.d("OZ", "Remove -> " + (i));
+                        try {
+                            eliminatedElements++;
+                            inflatedProposals.removeViewAt(i - eliminatedElements);
+                        } catch (Exception e) {
+                            Log.e("OZ", "" + e);
+                        }
+
+                        //Log.d("OZ", "" + proposalsIDs);
+                        proposalsIDs.remove(Integer.valueOf(i));
+                        //Log.d("OZ", "" + proposalsIDs);
+                    }
+                }
+
+                Bundle bundleFromHomeActivity = getIntent().getExtras();
+                if (bundleFromHomeActivity != null) {
+                    showToastElementsFound();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "¡No se pudo acceder a las demás propuestas, revisá tu conexión!", Toast.LENGTH_LONG);
+            }
+        });
+
+        //Log.d("OZ", "" + proposalsIDs);
+    }
+
+    //Función que se llama al seleccionar una categoría
+    public void selectedOption(View optionSelected) {
+        //Animación del elemento
+        YoYo.with(Techniques.FlipInX)
+                .duration(450)
+                .repeat(0)
+                .playOn(optionSelected);
+
+        //Se pone en negrita la categoría seleccionada y las demás se deseleccionan
+        LinearLayout optionsLayout = (LinearLayout) findViewById(R.id.contact_optionslayout_linearlayout);
+        int numberOptions = optionsLayout.getChildCount();
+        for (int i = 0; i < numberOptions; i++) {
+            TextView option = (TextView) optionsLayout.getChildAt(i);
+            option.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+        }
+
+        if (optionSelected instanceof TextView) {
+            TextView optionSelectedTextView = (TextView) optionSelected;
+            if (selectedOptionFiltering == false) {
+                createAllProposals(optionSelectedTextView.getText().toString());
+                optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                selectedOptionString = optionSelectedTextView.getText().toString();
+                selectedOptionFiltering = true;
+            } else {
+                if (selectedOptionString.equals(optionSelectedTextView.getText().toString())) {
+                    optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
+                    createAllProposals("All");
+                }
+                else {
+                    optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    createAllProposals(optionSelectedTextView.getText().toString());
+                }
+                selectedOptionFiltering = false;
+            }
+
+            //Log.d("OZ", "Variable -> " + selectedOptionString + "\nReal -> " + optionSelectedTextView.getText().toString());
+        }
+    }
+
+    //Función que se llama cuando desde HomeActivity se hizo una búsqueda para imprimir la cantidad de resultados encontrados
+    public void showToastElementsFound() {
+        if (!alreadyShowedToastElementsFound) {
+            if (elementsFoundSearch != 0) {
+                if (elementsFoundSearch == 1) {
+                    Toast.makeText(getApplicationContext(), "Se encontró un resultado.", Toast.LENGTH_SHORT).show();
+                }
+            else {
+                Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFoundSearch + " resultados.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        } else {
+            Toast.makeText(getApplicationContext(), "No se encontraron resultados.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
