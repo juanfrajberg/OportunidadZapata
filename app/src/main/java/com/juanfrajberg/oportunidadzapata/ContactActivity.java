@@ -116,7 +116,7 @@ public class ContactActivity extends AppCompatActivity {
     String selectedOptionString = "";
 
     //ArrayList que guarda el ID de las propuestas para hacer más cómoda la filtración
-    private ArrayList<Integer> proposalsIDs = new ArrayList<Integer>();;
+    private ArrayList<Integer> proposalsIDs = new ArrayList<Integer>();
 
     //Variable para saber cuántos elementos se borraron y poder borrar los elementos correctos al seleccionar una opción
     int eliminatedElements = 0;
@@ -128,6 +128,8 @@ public class ContactActivity extends AppCompatActivity {
     //Para un futuro, estaría bueno que esto funcione también al seleccionar distintas categorías y que diga cuántos resultados encuentran
     //Pero, para hacer eso hay que cambiar una parte importante, por eso el Toast aclara que la búsqueda es en total
     int elementsFoundSearch = 0;
+
+    boolean alreadyShowedToastElementsFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -578,7 +580,7 @@ public class ContactActivity extends AppCompatActivity {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
-        inflatedProposals.addView(proposalToAdd, id-1);
+        inflatedProposals.addView(proposalToAdd, id - 1);
 
         //TextView idTextView = (TextView) proposalToAdd.findViewById(R.id.proposal_id_textview);
         //idTextView.setText(id);
@@ -621,6 +623,7 @@ public class ContactActivity extends AppCompatActivity {
             highlightText(jobProposal, valueToSearch);
             highlightText(nameProposal, valueToSearch);
             highlightText(descriptionShortProposal, valueToSearch);
+            highlightText(dateProposal, valueToSearch);
         }
 
         //Descripción para aquellas propuestas que fueron completadas con el formulario de Google inicial y no cuentan con el dato
@@ -743,7 +746,7 @@ public class ContactActivity extends AppCompatActivity {
                         //Log.d("OZ", "Remove -> " + (i));
                         try {
                             eliminatedElements++;
-                            inflatedProposals.removeViewAt(i-eliminatedElements);
+                            inflatedProposals.removeViewAt(i - eliminatedElements);
                         } catch (Exception e) {
                             Log.e("OZ", "" + e);
                         }
@@ -810,15 +813,16 @@ public class ContactActivity extends AppCompatActivity {
 
     //Función que se llama cuando desde HomeActivity se hizo una búsqueda para imprimir la cantidad de resultados encontrados
     public void showToastElementsFound() {
-        if (elementsFoundSearch != 0) {
-            if (elementsFoundSearch == 1) {
-                Toast.makeText(getApplicationContext(), "Se encontró un resultado.", Toast.LENGTH_SHORT).show();
-            }
+        if (!alreadyShowedToastElementsFound) {
+            if (elementsFoundSearch != 0) {
+                if (elementsFoundSearch == 1) {
+                    Toast.makeText(getApplicationContext(), "Se encontró un resultado.", Toast.LENGTH_SHORT).show();
+                }
             else {
                 Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFoundSearch + " resultados.", Toast.LENGTH_SHORT).show();
             }
         }
-        else {
+        } else {
             Toast.makeText(getApplicationContext(), "No se encontraron resultados.", Toast.LENGTH_SHORT).show();
         }
     }
