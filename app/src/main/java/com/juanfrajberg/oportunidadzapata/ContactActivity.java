@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,7 +108,7 @@ public class ContactActivity extends AppCompatActivity {
     boolean selectedOtros = false;
 
     //ScrollView donde están todas las propuestas
-    private ScrollView proposalsScrollView;
+    private static ScrollView proposalsScrollView;
 
     //Variable para detectar si ya se ha seleccionado una opción del menú de filtrado
     boolean selectedOptionFiltering = false;
@@ -757,7 +758,7 @@ public class ContactActivity extends AppCompatActivity {
                     }
                 }
 
-                Bundle bundleFromHomeActivity = getIntent().bundleFromHomeActivity();
+                Bundle bundleFromHomeActivity = getIntent().getExtras();
                 if (bundleFromHomeActivity != null) {
                     showToastElementsFound();
                 }
