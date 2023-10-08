@@ -19,6 +19,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -580,11 +581,15 @@ public class ContactActivity extends AppCompatActivity {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
-        try {
+
+        /*try {
             inflatedProposals.addView(proposalToAdd, id - 1);
         } catch (Exception e) {
+            Log.e("OZ", "" + e);
             inflatedProposals.addView(proposalToAdd);
         }
+         */
+        inflatedProposals.addView(proposalToAdd);
 
         //TextView idTextView = (TextView) proposalToAdd.findViewById(R.id.proposal_id_textview);
         //idTextView.setText(id);
@@ -742,12 +747,18 @@ public class ContactActivity extends AppCompatActivity {
                         createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                         proposalsIDs.add(i);
                     } else if (categoryFromFunction.equals("All")) {
+                        /*
                         if (!proposalsIDs.contains(i)) {
                             createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                             proposalsIDs.add(i);
                         }
+                         */
+
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
                     } else if (category.equals(categoryFromFunction)) {
                         //Log.d("OZ", "Remove -> " + (i));
+                        /*
                         createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                         proposalsIDs.add(i);
                     } else {
@@ -757,10 +768,14 @@ public class ContactActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             //Log.e("OZ", "" + e);
                         }
-
                         //Log.d("OZ", "" + proposalsIDs);
                         proposalsIDs.remove(Integer.valueOf(i));
                         //Log.d("OZ", "" + proposalsIDs);
+                         */
+
+                        //Log.d("OZ", "Here");
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
                     }
                 }
 
@@ -810,25 +825,40 @@ public class ContactActivity extends AppCompatActivity {
 
         if (optionSelected instanceof TextView) {
             TextView optionSelectedTextView = (TextView) optionSelected;
-            if (selectedOptionFiltering == false) {
+            if (!selectedOptionFiltering) {
+                LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                inflatedProposals.removeAllViews();
+                Log.d("TRASH", "DELETE ALL!");
                 createAllProposals(optionSelectedTextView.getText().toString());
                 optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
                 selectedOptionString = optionSelectedTextView.getText().toString();
                 selectedOptionFiltering = true;
+                //Log.d("OZ", "1");
+                //Log.d("OZ", "Opción -> " + selectedOptionString + ".");
             } else {
                 if (selectedOptionString.equals(optionSelectedTextView.getText().toString())) {
                     optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     createAllProposals("All");
-                }
-                else {
+                    Log.d("SUN", "MAKE ALL!");
+                    selectedOptionString = optionSelectedTextView.getText().toString();
+                    //Log.d("OZ", "2");
+                    selectedOptionFiltering = false;
+                } else {
                     optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    inflatedProposals.removeAllViews();
+                    Log.d("TRASH", "DELETE ALL!");
                     createAllProposals(optionSelectedTextView.getText().toString());
+                    selectedOptionString = optionSelectedTextView.getText().toString();
+                    //Log.d("OZ", "3");
+                    selectedOptionFiltering = true;
                 }
-                selectedOptionFiltering = false;
             }
 
             //Log.d("OZ", "Variable -> " + selectedOptionString + "\nReal -> " + optionSelectedTextView.getText().toString());
         }
+
+        //Log.d("OZ", "" + selectedOptionFiltering);
     }
 
     //Función que se llama cuando desde HomeActivity se hizo una búsqueda para imprimir la cantidad de resultados encontrados
