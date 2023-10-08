@@ -19,7 +19,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -581,7 +580,11 @@ public class ContactActivity extends AppCompatActivity {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
-        inflatedProposals.addView(proposalToAdd, id - 1);
+        try {
+            inflatedProposals.addView(proposalToAdd, id - 1);
+        } catch (Exception e) {
+            inflatedProposals.addView(proposalToAdd);
+        }
 
         //TextView idTextView = (TextView) proposalToAdd.findViewById(R.id.proposal_id_textview);
         //idTextView.setText(id);
@@ -743,13 +746,16 @@ public class ContactActivity extends AppCompatActivity {
                             createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                             proposalsIDs.add(i);
                         }
-                    } else if (!category.equals(categoryFromFunction)) {
+                    } else if (category.equals(categoryFromFunction)) {
                         //Log.d("OZ", "Remove -> " + (i));
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
+                    } else {
                         try {
                             eliminatedElements++;
                             inflatedProposals.removeViewAt(i - eliminatedElements);
                         } catch (Exception e) {
-                            Log.e("OZ", "" + e);
+                            //Log.e("OZ", "" + e);
                         }
 
                         //Log.d("OZ", "" + proposalsIDs);
@@ -757,6 +763,19 @@ public class ContactActivity extends AppCompatActivity {
                         //Log.d("OZ", "" + proposalsIDs);
                     }
                 }
+
+                    /*
+                    } else if (category.equals(categoryFromFunction)) {
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
+
+                        //Log.d("OZ", "" + proposalsIDs);
+                    }
+
+                    //Log.d("OZ", "Category " + i + " -> " + category + ".");
+                }
+
+                     */
 
                 Bundle bundleFromHomeActivity = getIntent().getExtras();
                 if (bundleFromHomeActivity != null) {
