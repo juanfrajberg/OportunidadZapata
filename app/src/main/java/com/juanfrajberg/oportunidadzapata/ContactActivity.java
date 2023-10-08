@@ -694,6 +694,9 @@ public class ContactActivity extends AppCompatActivity {
         //Se usa más adelante para decidir qué propuestas borrar al seleccionar una categoría
         eliminatedElements = 0;
 
+        LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+        inflatedProposals.removeAllViews();
+
         //Se accede a la información guardada en la base de datos
         DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
@@ -739,8 +742,6 @@ public class ContactActivity extends AppCompatActivity {
                     category = snapshot.child(String.valueOf(i)).child("category").getValue(String.class);
                     socialMedia = snapshot.child(String.valueOf(i)).child("socialMedia").getValue(String.class);
                     username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
-
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
 
                     //Se crean las propuestas con la información dada
                     if (categoryFromFunction.equals("FirstTime")) {
@@ -827,7 +828,7 @@ public class ContactActivity extends AppCompatActivity {
             TextView optionSelectedTextView = (TextView) optionSelected;
             if (!selectedOptionFiltering) {
                 LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                inflatedProposals.removeAllViews();
+                //inflatedProposals.removeAllViews();
                 Log.d("TRASH", "DELETE ALL!");
                 createAllProposals(optionSelectedTextView.getText().toString());
                 optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
@@ -846,7 +847,7 @@ public class ContactActivity extends AppCompatActivity {
                 } else {
                     optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
                     LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-                    inflatedProposals.removeAllViews();
+                    //inflatedProposals.removeAllViews();
                     Log.d("TRASH", "DELETE ALL!");
                     createAllProposals(optionSelectedTextView.getText().toString());
                     selectedOptionString = optionSelectedTextView.getText().toString();
@@ -866,14 +867,15 @@ public class ContactActivity extends AppCompatActivity {
         if (!alreadyShowedToastElementsFound) {
             if (elementsFoundSearch != 0) {
                 if (elementsFoundSearch == 1) {
-                    Toast.makeText(getApplicationContext(), "Se encontró un resultado.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Se encontró un resultado en total.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFoundSearch + " resultados en total.", Toast.LENGTH_SHORT).show();
                 }
-            else {
-                Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFoundSearch + " resultados.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "No se encontraron resultados.", Toast.LENGTH_SHORT).show();
             }
         }
-        } else {
-            Toast.makeText(getApplicationContext(), "No se encontraron resultados.", Toast.LENGTH_SHORT).show();
-        }
+
+        alreadyShowedToastElementsFound = true;
     }
 }
