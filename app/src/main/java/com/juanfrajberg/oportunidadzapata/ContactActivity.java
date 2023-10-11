@@ -1,5 +1,6 @@
 package com.juanfrajberg.oportunidadzapata;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -88,6 +89,9 @@ public class ContactActivity extends AppCompatActivity {
     static RelativeLayout secondProposal;
     static RelativeLayout thirdProposal;
 
+    //Botón para salir del modo de búsqueda
+    static ImageView closeSearchImage;
+
     //Dialog en el que se muestra la información de cada persona
     Dialog infoDialog;
 
@@ -132,6 +136,12 @@ public class ContactActivity extends AppCompatActivity {
 
     boolean alreadyShowedToastElementsFound = false;
 
+    //Variable para saber si hay que borrar o no el resaltado de la búsqueda
+    boolean deleteSpan = false;
+
+    //Variable que guarda la posición del ScrollView para cuando se borran los resultados de la búsqueda
+    int scrollYPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
@@ -174,6 +184,24 @@ public class ContactActivity extends AppCompatActivity {
         firstProposal = findViewById(R.id.contact_firstexampleview_relativelayout);
         secondProposal = findViewById(R.id.contact_secondexampleview_relativelayout);
         thirdProposal = findViewById(R.id.contact_thirdexampleview_relativelayout);
+
+        closeSearchImage = findViewById(R.id.contact_closesearch_imageview);
+
+        closeSearchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Para que el ScrollView se deslice de manera fluida al inicio
+                try {
+                    ObjectAnimator.ofInt(proposalsScrollView, "scrollY",  0).setDuration(1500).start();
+                } catch (Exception e) {
+                    proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+                }
+
+                scrollYPosition = proposalsScrollView.getScrollY();
+                createAllProposals("FirstTime");
+                deleteSpan = true;
+            }
+        });
 
         //Abrir la pestaña de DataActivity
         firstProposal.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +274,7 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     //Función para resaltar el texto recibido de HomeActivity
-    public void highlightText(TextView textView, String textToHighlight) {
+    public void highlightText(TextView textView, String textToHighlight, boolean closeActionPerformed) {
         String textFromTextView = textView.getText().toString().toLowerCase(Locale.ROOT);
         int a = textFromTextView.indexOf(textToHighlight, 0);
         Spannable wordToSpan = new SpannableString(textView.getText());
@@ -256,13 +284,23 @@ public class ContactActivity extends AppCompatActivity {
             if (a == -1)
                 break;
             else {
-                //Resaltar texto con amarillo de fondo y negro de texto
-                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                textView.setText(wordToSpan, TextView.BufferType.SPANNABLE);
+                if (!closeActionPerformed) {
+                    //Resaltar texto con amarillo de fondo y negro de texto
+                    wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    textView.setText(wordToSpan, TextView.BufferType.SPANNABLE);
 
-                //Se incrementa el número de elementos encontrados para el Toast que dice cuántos hay
-                elementsFoundSearch++;
+                    //Se incrementa el número de elementos encontrados para el Toast que dice cuántos hay
+                    elementsFoundSearch++;
+                }
+                else {
+                    //Resaltar texto con amarillo de fondo y negro de texto
+                    SpannableString ss=(SpannableString)textView.getText();
+                    ForegroundColorSpan[] spans=ss.getSpans(0, textView.getText().length(), ForegroundColorSpan.class);
+                    for(int j=0; j<spans.length; j++){
+                        ss.removeSpan(spans[j]);
+                    }
+                }
             }
         }
     }
@@ -627,12 +665,23 @@ public class ContactActivity extends AppCompatActivity {
 
         //Se consigue (si se envió) el texto de búsqueda de HomeActivity
         Bundle bundleFromHomeActivity = getIntent().getExtras();
-        if (bundleFromHomeActivity != null) {
+        if (bundleFromHomeActivity != null && !deleteSpan) {
             valueToSearch = bundleFromHomeActivity.getString("searchText");
-            highlightText(jobProposal, valueToSearch);
-            highlightText(nameProposal, valueToSearch);
-            highlightText(descriptionShortProposal, valueToSearch);
-            highlightText(dateProposal, valueToSearch);
+            highlightText(jobProposal, valueToSearch, false);
+            highlightText(nameProposal, valueToSearch, false);
+            highlightText(descriptionShortProposal, valueToSearch, false);
+            highlightText(dateProposal, valueToSearch, false);
+        }
+        else {
+            try {
+                valueToSearch = bundleFromHomeActivity.getString("searchText");
+                highlightText(jobProposal, valueToSearch, true);
+                highlightText(nameProposal, valueToSearch, true);
+                highlightText(descriptionShortProposal, valueToSearch, true);
+                highlightText(dateProposal, valueToSearch, true);
+            } catch (Exception e) {
+                //No se ha usado la función de búsqueda si este "error" se produce
+            }
         }
 
         //Descripción para aquellas propuestas que fueron completadas con el formulario de Google inicial y no cuentan con el dato
@@ -744,6 +793,7 @@ public class ContactActivity extends AppCompatActivity {
                     username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
 
                     //Se crean las propuestas con la información dada
+                    //Solucionar error: FirstTime y All equivalen a lo mismo
                     if (categoryFromFunction.equals("FirstTime")) {
                         createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                         proposalsIDs.add(i);
@@ -754,7 +804,6 @@ public class ContactActivity extends AppCompatActivity {
                             proposalsIDs.add(i);
                         }
                          */
-
                         createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                         proposalsIDs.add(i);
                     } else if (category.equals(categoryFromFunction)) {
@@ -805,7 +854,18 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        //Log.d("OZ", "" + proposalsIDs);
+        //Para ir a la posición donde estabámos
+        Handler waitUntilProposalsAreCreated = new Handler();
+        waitUntilProposalsAreCreated.postDelayed(new Runnable() {
+            public void run() {
+                //Para que el ScrollView se deslice de manera fluida a la posición donde estábamos antes de borrar lo resaltado
+                try {
+                    ObjectAnimator.ofInt(proposalsScrollView, "scrollY",  scrollYPosition).setDuration(1500).start();
+                } catch (Exception e) {
+                    proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+                }
+            }
+        }, 1500);
     }
 
     //Función que se llama al seleccionar una categoría
