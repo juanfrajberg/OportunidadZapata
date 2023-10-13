@@ -378,6 +378,7 @@ public class HomeActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(contactUsButton);
 
+                /*
                 //Creación del builder para destinatario
                 Uri.Builder builder1 = new Uri.Builder();
                 builder1.scheme("mailto");
@@ -394,6 +395,15 @@ public class HomeActivity extends AppCompatActivity {
                 //Envío del mail y selección de aplicación para hacerlo
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
                 startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviar un correo a Oportunidad Zapata."));
+                 */
+
+                Intent intent = new Intent (Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"oportunidadzapata@gmail.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, getApplicationContext().getResources().getString(R.string.home_contactus_subjectmail));
+                intent.putExtra(Intent.EXTRA_TEXT, getApplicationContext().getResources().getString(R.string.home_contactusbodymail));
+                intent.setPackage("com.google.android.gm");
+                startActivity(intent);
             }
         });
 

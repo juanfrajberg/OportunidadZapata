@@ -690,6 +690,7 @@ public class ContactActivity extends AppCompatActivity {
         }
 
         if (socialMedia.equals("Gmail")) {
+            /*
             //Creación del builder para destinatario
             Uri.Builder builder1 = new Uri.Builder();
             builder1.scheme("mailto");
@@ -712,6 +713,19 @@ public class ContactActivity extends AppCompatActivity {
             //Envío del mail y selección de aplicación para hacerlo
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
             startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviarle un correo a " + name + "."));
+             */
+
+            Intent intent = new Intent (Intent.ACTION_SEND);
+            intent.setType("message/rfc822");
+            if (!username.contains("@")) {
+                username = username + "@gmail.com";
+            }
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{username});
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Interés en tu trabajo de Oportunidad Zapata");
+            intent.putExtra(Intent.EXTRA_TEXT, "Hola, ¿cómo estás? Vi en Oportunidad Zapata que te desempeñás como " + job +
+                    ", y me gustaría obtener más información sobre tus servicios.\n¡Muchas gracias!");
+            intent.setPackage("com.google.android.gm");
+            startActivity(intent);
         }
 
         if (socialMedia.equals("LinkedIn")) {
