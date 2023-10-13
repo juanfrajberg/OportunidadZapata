@@ -461,45 +461,47 @@ public class ContactActivity extends AppCompatActivity {
 
         //Abrir la red social al hacer clic en el texto e imagen
         //Se ejecuta en un try porque no todos publican otra forma de contacto, es opcional
-        try {
-            ImageView instagramImage = (ImageView) infoDialog.findViewById(R.id.info_socialmediaicon_imageview);
-            if (socialMediaSelected.equals("LinkedIn")) instagramImage.setImageResource(R.drawable.info_linkedin_imageview);
-            if (socialMediaSelected.equals("Gmail")) instagramImage.setImageResource(R.drawable.info_gmail_imageview);
-            if (socialMediaSelected.equals("Facebook")) instagramImage.setImageResource(R.drawable.info_facebook_imageview);
-            if (socialMediaSelected.equals("Instagram")) instagramImage.setImageResource(R.drawable.info_instagram_imageview);
-            if (socialMediaSelected.equals("Twitter")) instagramImage.setImageResource(R.drawable.info_twitter_imageview);
-            if (socialMediaSelected.equals("YouTube")) instagramImage.setImageResource(R.drawable.info_youtube_imageview);
-            instagramImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Animación del botón
-                    YoYo.with(Techniques.RubberBand)
-                            .duration(450)
-                            .repeat(0)
-                            .playOn(instagramImage);
-                    openSocialMediaFromInfoDialog(socialMediaSelected, username);
-                }
-            });
-            TextView instagramText = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
-            instagramText.setText(username);
-            if (socialMediaSelected.equals("LinkedIn") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
-            //if (instagramText.equals("Gmail"))
-            if (socialMediaSelected.equals("Facebook") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
-            if (socialMediaSelected.equals("Instagram") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
-            if (socialMediaSelected.equals("Twitter") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
-            if (socialMediaSelected.equals("YouTube") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
-            instagramText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Animación del botón
-                    YoYo.with(Techniques.RubberBand)
-                            .duration(450)
-                            .repeat(0)
-                            .playOn(instagramText);
-                    openSocialMediaFromInfoDialog(socialMediaSelected, username);
-                }
-            });
-        } catch (Exception e) {
+        if (numberInfo == 0) {
+            try {
+                ImageView instagramImage = (ImageView) infoDialog.findViewById(R.id.info_socialmediaicon_imageview);
+                if (socialMediaSelected.equals("LinkedIn")) instagramImage.setImageResource(R.drawable.info_linkedin_imageview);
+                if (socialMediaSelected.equals("Gmail")) instagramImage.setImageResource(R.drawable.info_gmail_imageview);
+                if (socialMediaSelected.equals("Facebook")) instagramImage.setImageResource(R.drawable.info_facebook_imageview);
+                if (socialMediaSelected.equals("Instagram")) instagramImage.setImageResource(R.drawable.info_instagram_imageview);
+                if (socialMediaSelected.equals("Twitter")) instagramImage.setImageResource(R.drawable.info_twitter_imageview);
+                if (socialMediaSelected.equals("YouTube")) instagramImage.setImageResource(R.drawable.info_youtube_imageview);
+                instagramImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Animación del botón
+                        YoYo.with(Techniques.RubberBand)
+                                .duration(450)
+                                .repeat(0)
+                                .playOn(instagramImage);
+                        openSocialMediaFromInfoDialog(socialMediaSelected, username, job, name);
+                    }
+                });
+                TextView instagramText = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
+                instagramText.setText(username);
+                if (socialMediaSelected.equals("LinkedIn") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+                //if (instagramText.equals("Gmail"))
+                if (socialMediaSelected.equals("Facebook") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+                if (socialMediaSelected.equals("Instagram") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+                if (socialMediaSelected.equals("Twitter") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+                if (socialMediaSelected.equals("YouTube") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+                instagramText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Animación del botón
+                        YoYo.with(Techniques.RubberBand)
+                                .duration(450)
+                                .repeat(0)
+                                .playOn(instagramText);
+                        openSocialMediaFromInfoDialog(socialMediaSelected, username, job, name);
+                    }
+                });
+            } catch (Exception e) {
+            }
         }
 
         infoDialog.show();
@@ -651,6 +653,7 @@ public class ContactActivity extends AppCompatActivity {
         secondProposal.setClickable(state);
         thirdProposal.setClickable(state);
         proposalsScrollView.setClickable(state);
+        closeSearchImage.setClickable(state);
     }
 
     //Función para abrir el chat de WhatsApp desde el Dialog con más información sobre una persona a contactar
@@ -671,7 +674,9 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     //Función para abrir el chat de WhatsApp desde el Dialog con más información sobre una persona a contactar
-    public void openSocialMediaFromInfoDialog(String socialMedia, String username) {
+    public void openSocialMediaFromInfoDialog(String socialMedia, String username, String job, String name) {
+        Log.d("OZ", "Social media -> " + socialMedia + "\nUsername -> " + username);
+
         if (socialMedia.equals("Instagram")) {
             //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
             TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
@@ -682,6 +687,31 @@ public class ContactActivity extends AppCompatActivity {
 
             //Abrimos Instagram con el perfil del Dialog
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
+        }
+
+        if (socialMedia.equals("Gmail")) {
+            //Creación del builder para destinatario
+            Uri.Builder builder1 = new Uri.Builder();
+            builder1.scheme("mailto");
+            if (!username.contains("@")) {
+                username = username + "@gmail.com";
+            }
+            builder1.opaquePart(username);
+
+
+            job = job.substring(0, 1).toLowerCase() + job.substring(1);
+            //Creación del builder para destinatario
+            Uri.Builder builder2 = new Uri.Builder();
+            builder2.appendQueryParameter("subject", "Interés en tu trabajo de Oportunidad Zapata");
+            builder2.appendQueryParameter("body", "Hola, ¿cómo estás? Vi en Oportunidad Zapata que te desempeñás como " + job +
+                    ", y me gustaría obtener más información sobre tus servicios.\n¡Muchas gracias!");
+
+            //Conversión de ambos builders a uno solo
+            Uri uri = Uri.parse(builder1.toString() + builder2.toString());
+
+            //Envío del mail y selección de aplicación para hacerlo
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
+            startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviarle un correo a " + name + "."));
         }
 
         if (socialMedia.equals("LinkedIn")) {

@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
                 android:text="@string/infodialog_exampleusername"
-                android:maxWidth="@dimen/_85sdp"
+                android:maxWidth="@dimen/_80sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp"
                 app:layout_constraintBottom_toBottomOf="@id/info_socialmediaicon_imageview"
