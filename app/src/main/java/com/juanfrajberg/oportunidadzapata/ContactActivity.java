@@ -192,12 +192,17 @@ public class ContactActivity extends AppCompatActivity {
 
         //Se detecta si se está o no en el modo de búsqueda
         bundleFromHomeActivity = getIntent().getExtras();
-        if (!bundleFromHomeActivity.getString("searchText").isEmpty()) {
-            closeSearchImage.setVisibility(View.VISIBLE);
-        }
-        else {
+        try {
+            if (!bundleFromHomeActivity.getString("searchText").isEmpty()) {
+                closeSearchImage.setVisibility(View.VISIBLE);
+            }
+            else {
+                closeSearchImage.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
             closeSearchImage.setVisibility(View.GONE);
         }
+
 
         View backgroundView = findViewById(R.id.contact_backgroundanimation_view);
         backgroundView.setVisibility(View.GONE);
@@ -262,7 +267,7 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(firstProposal);
-                openInfo(0, 1, "", "", "", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 1, "", "", "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -274,7 +279,7 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(secondProposal);
-                openInfo(0, 2, "", "", "", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 2, "", "", "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -286,7 +291,7 @@ public class ContactActivity extends AppCompatActivity {
                         .duration(450)
                         .repeat(0)
                         .playOn(thirdProposal);
-                openInfo(0, 3, "", "", "", "", "", "", "", "", "", "", "", "");
+                openInfo(0, 3, "", "", "", "", "", "", "", "", "", "", "", "", "", "");
             }
         });
 
@@ -357,7 +362,7 @@ public class ContactActivity extends AppCompatActivity {
 
     //Función para abrir el Dialog con más información de la persona seleccionada
     //En un futuro hay que añadir parámetros para que apenas abra tenga el nombre, mail y demás datos
-    private void openInfo(int id, int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone, String course, String division, String description, String showStudent) {
+    private void openInfo(int id, int numberInfo, String job, String name, String student, String timeDay, String timeMonth, String timeYear, String email, String phone, String course, String division, String description, String showStudent, String socialMediaSelected, String username) {
         infoDialog = new Dialog(ContactActivity.this);
         infoDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         infoDialog.getWindow().getAttributes().windowAnimations = R.style.InfoDialogAnimation;
@@ -454,10 +459,16 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        //Abrir Instagram al hacer clic en el texto e imagen de Instagram
-        //Se ejecuta en un try porque no todos publican su usuario de Instagram, es opcional
+        //Abrir la red social al hacer clic en el texto e imagen
+        //Se ejecuta en un try porque no todos publican otra forma de contacto, es opcional
         try {
-            ImageView instagramImage = (ImageView) infoDialog.findViewById(R.id.info_instagramicon_imageview);
+            ImageView instagramImage = (ImageView) infoDialog.findViewById(R.id.info_socialmediaicon_imageview);
+            if (socialMediaSelected.equals("LinkedIn")) instagramImage.setImageResource(R.drawable.info_linkedin_imageview);
+            if (socialMediaSelected.equals("Gmail")) instagramImage.setImageResource(R.drawable.info_gmail_imageview);
+            if (socialMediaSelected.equals("Facebook")) instagramImage.setImageResource(R.drawable.info_facebook_imageview);
+            if (socialMediaSelected.equals("Instagram")) instagramImage.setImageResource(R.drawable.info_instagram_imageview);
+            if (socialMediaSelected.equals("Twitter")) instagramImage.setImageResource(R.drawable.info_twitter_imageview);
+            if (socialMediaSelected.equals("YouTube")) instagramImage.setImageResource(R.drawable.info_youtube_imageview);
             instagramImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -466,10 +477,17 @@ public class ContactActivity extends AppCompatActivity {
                             .duration(450)
                             .repeat(0)
                             .playOn(instagramImage);
-                    openInstagramFromInfoDialog();
+                    openSocialMediaFromInfoDialog(socialMediaSelected, username);
                 }
             });
-            TextView instagramText = (TextView) infoDialog.findViewById(R.id.info_instagramusername_textview);
+            TextView instagramText = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
+            instagramText.setText(username);
+            if (socialMediaSelected.equals("LinkedIn") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+            //if (instagramText.equals("Gmail"))
+            if (socialMediaSelected.equals("Facebook") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+            if (socialMediaSelected.equals("Instagram") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+            if (socialMediaSelected.equals("Twitter") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
+            if (socialMediaSelected.equals("YouTube") && !instagramText.getText().toString().contains("@")) instagramText.setText("@" + username.toLowerCase(Locale.ROOT));
             instagramText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -478,7 +496,7 @@ public class ContactActivity extends AppCompatActivity {
                             .duration(450)
                             .repeat(0)
                             .playOn(instagramText);
-                    openInstagramFromInfoDialog();
+                    openSocialMediaFromInfoDialog(socialMediaSelected, username);
                 }
             });
         } catch (Exception e) {
@@ -653,16 +671,66 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     //Función para abrir el chat de WhatsApp desde el Dialog con más información sobre una persona a contactar
-    public void openInstagramFromInfoDialog() {
-        //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
-        TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_instagramusername_textview);
-        String instagramUserNameString = instagramUserName.getText().toString();
+    public void openSocialMediaFromInfoDialog(String socialMedia, String username) {
+        if (socialMedia.equals("Instagram")) {
+            //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
+            TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
+            String instagramUserNameString = instagramUserName.getText().toString();
 
-        //Eliminamos el @ (arroba) del String
-        instagramUserNameString = instagramUserNameString.replace("@", "");
+            //Eliminamos el @ (arroba) del String
+            instagramUserNameString = instagramUserNameString.replace("@", "");
 
-        //Abrimos Instagram con el perfil del Dialog
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
+            //Abrimos Instagram con el perfil del Dialog
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + instagramUserNameString)));
+        }
+
+        if (socialMedia.equals("LinkedIn")) {
+            //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
+            TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
+            String instagramUserNameString = instagramUserName.getText().toString();
+
+            //Eliminamos el @ (arroba) del String
+            instagramUserNameString = instagramUserNameString.replace("@", "");
+
+            //Abrimos Instagram con el perfil del Dialog
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://linkedin.com/in" + instagramUserNameString)));
+        }
+
+        if (socialMedia.equals("Facebook")) {
+            //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
+            TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
+            String instagramUserNameString = instagramUserName.getText().toString();
+
+            //Eliminamos el @ (arroba) del String
+            instagramUserNameString = instagramUserNameString.replace("@", "");
+
+            //Abrimos Instagram con el perfil del Dialog
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + instagramUserNameString)));
+        }
+
+        if (socialMedia.equals("Twitter")) {
+            //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
+            TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
+            String instagramUserNameString = instagramUserName.getText().toString();
+
+            //Eliminamos el @ (arroba) del String
+            instagramUserNameString = instagramUserNameString.replace("@", "");
+
+            //Abrimos Instagram con el perfil del Dialog
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/" + instagramUserNameString)));
+        }
+
+        if (socialMedia.equals("YouTube")) {
+            //Obtenemos el usuario de Instagram tal cual está escrito en el Dialog
+            TextView instagramUserName = (TextView) infoDialog.findViewById(R.id.info_socialmediausername_textview);
+            String instagramUserNameString = instagramUserName.getText().toString();
+
+            //Eliminamos el @ (arroba) del String
+            instagramUserNameString = instagramUserNameString.replace("@", "");
+
+            //Abrimos Instagram con el perfil del Dialog
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/@" + instagramUserNameString)));
+        }
     }
 
     private void createProposals(int id, String name, String phone, String time, String email, String job, String student, String course, String division, String descriptionShort, String descriptionFormal, String showStudent, String category, String socialMedia, String username) {
@@ -746,7 +814,7 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Log.d("OZ", "" + descriptionFormal);
-                openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division, descriptionFormal, showStudent);
+                openInfo(id, 0, job, name, student, finalTimeDay, timeMonthInNumbers, timeYear, email, phone, course, division, descriptionFormal, showStudent, socialMedia, username);
             }
         });
 
@@ -906,20 +974,22 @@ public class ContactActivity extends AppCompatActivity {
         //Pero primero, se detecta si se está o no en el modo de búsqueda y se ha hecho clic en el botón
         bundleFromHomeActivity = getIntent().getExtras();
         Log.d("OZ", deleteSpan + "");
-        if (!bundleFromHomeActivity.getString("searchText").isEmpty() && deleteSpan) {
-            Log.d("OZ", "Executed :)");
-            Handler waitUntilProposalsAreCreated = new Handler();
-            waitUntilProposalsAreCreated.postDelayed(new Runnable() {
-                public void run() {
-                    //Para que el ScrollView se deslice de manera fluida a la posición donde estábamos antes de borrar lo resaltado
-                    try {
-                        ObjectAnimator.ofInt(proposalsScrollView, "scrollY", scrollYPosition).setDuration(1500).start();
-                    } catch (Exception e) {
-                        proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+        try {
+            if (!bundleFromHomeActivity.getString("searchText").isEmpty() && deleteSpan) {
+                Log.d("OZ", "Executed :)");
+                Handler waitUntilProposalsAreCreated = new Handler();
+                waitUntilProposalsAreCreated.postDelayed(new Runnable() {
+                    public void run() {
+                        //Para que el ScrollView se deslice de manera fluida a la posición donde estábamos antes de borrar lo resaltado
+                        try {
+                            ObjectAnimator.ofInt(proposalsScrollView, "scrollY", scrollYPosition).setDuration(1500).start();
+                        } catch (Exception e) {
+                            proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+                        }
                     }
-                }
-            }, 0);
-        }
+                }, 0);
+            }
+        } catch (Exception e) {}
     }
 
     //Función que se llama al seleccionar una categoría
