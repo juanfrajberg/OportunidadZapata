@@ -142,6 +142,9 @@ public class ContactActivity extends AppCompatActivity {
     //Variable que guarda la posición del ScrollView para cuando se borran los resultados de la búsqueda
     int scrollYPosition = 0;
 
+    //Bundle donde se consigue la información de si es modo de búsqueda o no
+    Bundle bundleFromHomeActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
@@ -187,6 +190,18 @@ public class ContactActivity extends AppCompatActivity {
 
         closeSearchImage = findViewById(R.id.contact_closesearch_imageview);
 
+        //Se detecta si se está o no en el modo de búsqueda
+        bundleFromHomeActivity = getIntent().getExtras();
+        if (!bundleFromHomeActivity.getString("searchText").isEmpty()) {
+            closeSearchImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            closeSearchImage.setVisibility(View.GONE);
+        }
+
+        View backgroundView = findViewById(R.id.contact_backgroundanimation_view);
+        backgroundView.setVisibility(View.GONE);
+
         closeSearchImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,8 +212,44 @@ public class ContactActivity extends AppCompatActivity {
                     proposalsScrollView.smoothScrollTo(0, scrollYPosition);
                 }
 
+                //Animación del elemento
+                YoYo.with(Techniques.Pulse)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(closeSearchImage);
+
+                backgroundView.setVisibility(View.VISIBLE);
+                //Blurry.with(getApplicationContext()).radius(25).sampling(2).onto(backgroundView);
+                backgroundView.setAlpha(0f);
+                backgroundView.animate().alpha(1f).setDuration(1500);
+
+                Handler waitUntilAnimationIsFinished = new Handler();
+                waitUntilAnimationIsFinished.postDelayed(new Runnable() {
+                    public void run() {
+                        //Animación del elemento
+                        YoYo.with(Techniques.FadeOut)
+                                .duration(450)
+                                .repeat(0)
+                                .playOn(closeSearchImage);
+
+                        Handler waitForScrollViewToGoUp = new Handler();
+                        waitForScrollViewToGoUp.postDelayed(new Runnable() {
+                            public void run() {
+                                backgroundView.animate().alpha(0f).setDuration(1500);
+                                createAllProposals("FirstTime");
+
+                                Handler hideAfterEverything = new Handler();
+                                hideAfterEverything.postDelayed(new Runnable() {
+                                    public void run() {
+                                        backgroundView.setVisibility(View.GONE);
+                                    }
+                                }, 1500);
+                            }
+                        }, 1050); //El tiempo que tarda la animación del ScrollView en subir
+                    }
+                }, 450); //El tiempo que se demora la animación del botón
+
                 scrollYPosition = proposalsScrollView.getScrollY();
-                createAllProposals("FirstTime");
                 deleteSpan = true;
             }
         });
@@ -664,7 +715,6 @@ public class ContactActivity extends AppCompatActivity {
         descriptionShortProposal.setText(Html.fromHtml(descriptionShort + " <font color='#3876F6'><u>Leer más.</u></font>"));
 
         //Se consigue (si se envió) el texto de búsqueda de HomeActivity
-        Bundle bundleFromHomeActivity = getIntent().getExtras();
         if (bundleFromHomeActivity != null && !deleteSpan) {
             valueToSearch = bundleFromHomeActivity.getString("searchText");
             highlightText(jobProposal, valueToSearch, false);
@@ -842,7 +892,6 @@ public class ContactActivity extends AppCompatActivity {
 
                      */
 
-                Bundle bundleFromHomeActivity = getIntent().getExtras();
                 if (bundleFromHomeActivity != null) {
                     showToastElementsFound();
                 }
@@ -855,17 +904,23 @@ public class ContactActivity extends AppCompatActivity {
         });
 
         //Para ir a la posición donde estabámos
-        Handler waitUntilProposalsAreCreated = new Handler();
-        waitUntilProposalsAreCreated.postDelayed(new Runnable() {
-            public void run() {
-                //Para que el ScrollView se deslice de manera fluida a la posición donde estábamos antes de borrar lo resaltado
-                try {
-                    ObjectAnimator.ofInt(proposalsScrollView, "scrollY",  scrollYPosition).setDuration(1500).start();
-                } catch (Exception e) {
-                    proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+        //Pero primero, se detecta si se está o no en el modo de búsqueda y se ha hecho clic en el botón
+        bundleFromHomeActivity = getIntent().getExtras();
+        Log.d("OZ", deleteSpan + "");
+        if (!bundleFromHomeActivity.getString("searchText").isEmpty() && deleteSpan) {
+            Log.d("OZ", "Executed :)");
+            Handler waitUntilProposalsAreCreated = new Handler();
+            waitUntilProposalsAreCreated.postDelayed(new Runnable() {
+                public void run() {
+                    //Para que el ScrollView se deslice de manera fluida a la posición donde estábamos antes de borrar lo resaltado
+                    try {
+                        ObjectAnimator.ofInt(proposalsScrollView, "scrollY", scrollYPosition).setDuration(1500).start();
+                    } catch (Exception e) {
+                        proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+                    }
                 }
-            }
-        }, 1500);
+            }, 0);
+        }
     }
 
     //Función que se llama al seleccionar una categoría
