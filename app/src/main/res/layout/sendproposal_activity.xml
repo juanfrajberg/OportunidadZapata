@@ -59,7 +59,7 @@
         android:textColor="#B4B4B4"
         android:textSize="@dimen/_10ssp"
         android:layout_marginTop="@dimen/_1sdp"
-        android:text="Explorar inicio"
+        android:text="Descubrir"
         android:fontFamily="@font/nunito_bold" />
 
     <TextView
@@ -72,7 +72,7 @@
         android:textColor="#B4B4B4"
         android:textSize="@dimen/_10ssp"
         android:layout_marginTop="@dimen/_1sdp"
-        android:text="Ver propuestas"
+        android:text="Contratar"
         android:fontFamily="@font/nunito_bold" />
 
     <TextView

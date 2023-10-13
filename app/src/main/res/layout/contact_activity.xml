@@ -65,7 +65,7 @@
         android:textColor="#B4B4B4"
         android:textSize="@dimen/_10ssp"
         android:layout_marginTop="@dimen/_1sdp"
-        android:text="Explorar inicio"
+        android:text="Explorar"
         android:fontFamily="@font/nunito_bold" />
 
     <TextView
@@ -78,7 +78,7 @@
         android:textColor="#B4B4B4"
         android:textSize="@dimen/_10ssp"
         android:layout_marginTop="@dimen/_1sdp"
-        android:text="Enviar solicitud"
+        android:text="Postularme"
         android:fontFamily="@font/nunito_bold" />
 
     <TextView
