@@ -1,5 +1,6 @@
 package com.juanfrajberg.oportunidadzapata;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -88,6 +89,9 @@ public class ContactActivity extends AppCompatActivity {
     static RelativeLayout secondProposal;
     static RelativeLayout thirdProposal;
 
+    //Botón para salir del modo de búsqueda
+    static ImageView closeSearchImage;
+
     //Dialog en el que se muestra la información de cada persona
     Dialog infoDialog;
 
@@ -132,6 +136,15 @@ public class ContactActivity extends AppCompatActivity {
 
     boolean alreadyShowedToastElementsFound = false;
 
+    //Variable para saber si hay que borrar o no el resaltado de la búsqueda
+    boolean deleteSpan = false;
+
+    //Variable que guarda la posición del ScrollView para cuando se borran los resultados de la búsqueda
+    int scrollYPosition = 0;
+
+    //Bundle donde se consigue la información de si es modo de búsqueda o no
+    Bundle bundleFromHomeActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Código básico para que se muestre la interfaz
@@ -174,6 +187,71 @@ public class ContactActivity extends AppCompatActivity {
         firstProposal = findViewById(R.id.contact_firstexampleview_relativelayout);
         secondProposal = findViewById(R.id.contact_secondexampleview_relativelayout);
         thirdProposal = findViewById(R.id.contact_thirdexampleview_relativelayout);
+
+        closeSearchImage = findViewById(R.id.contact_closesearch_imageview);
+
+        //Se detecta si se está o no en el modo de búsqueda
+        bundleFromHomeActivity = getIntent().getExtras();
+        if (!bundleFromHomeActivity.getString("searchText").isEmpty()) {
+            closeSearchImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            closeSearchImage.setVisibility(View.GONE);
+        }
+
+        View backgroundView = findViewById(R.id.contact_backgroundanimation_view);
+        backgroundView.setVisibility(View.GONE);
+
+        closeSearchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Para que el ScrollView se deslice de manera fluida al inicio
+                try {
+                    ObjectAnimator.ofInt(proposalsScrollView, "scrollY",  0).setDuration(1500).start();
+                } catch (Exception e) {
+                    proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+                }
+
+                //Animación del elemento
+                YoYo.with(Techniques.Pulse)
+                        .duration(450)
+                        .repeat(0)
+                        .playOn(closeSearchImage);
+
+                backgroundView.setVisibility(View.VISIBLE);
+                backgroundView.setAlpha(0f);
+                backgroundView.animate().alpha(0.75f).setDuration(1500);
+
+                Handler waitUntilAnimationIsFinished = new Handler();
+                waitUntilAnimationIsFinished.postDelayed(new Runnable() {
+                    public void run() {
+                        //Animación del elemento
+                        YoYo.with(Techniques.FadeOut)
+                                .duration(450)
+                                .repeat(0)
+                                .playOn(closeSearchImage);
+
+                        Handler waitForScrollViewToGoUp = new Handler();
+                        waitForScrollViewToGoUp.postDelayed(new Runnable() {
+                            public void run() {
+                                backgroundView.animate().alpha(0f).setDuration(1500);
+                                createAllProposals("FirstTime");
+
+                                Handler hideAfterEverything = new Handler();
+                                hideAfterEverything.postDelayed(new Runnable() {
+                                    public void run() {
+                                        backgroundView.setVisibility(View.GONE);
+                                    }
+                                }, 1500);
+                            }
+                        }, 1050); //El tiempo que tarda la animación del ScrollView en subir
+                    }
+                }, 450); //El tiempo que se demora la animación del botón
+
+                scrollYPosition = proposalsScrollView.getScrollY();
+                deleteSpan = true;
+            }
+        });
 
         //Abrir la pestaña de DataActivity
         firstProposal.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +324,7 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     //Función para resaltar el texto recibido de HomeActivity
-    public void highlightText(TextView textView, String textToHighlight) {
+    public void highlightText(TextView textView, String textToHighlight, boolean closeActionPerformed) {
         String textFromTextView = textView.getText().toString().toLowerCase(Locale.ROOT);
         int a = textFromTextView.indexOf(textToHighlight, 0);
         Spannable wordToSpan = new SpannableString(textView.getText());
@@ -256,13 +334,23 @@ public class ContactActivity extends AppCompatActivity {
             if (a == -1)
                 break;
             else {
-                //Resaltar texto con amarillo de fondo y negro de texto
-                wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                textView.setText(wordToSpan, TextView.BufferType.SPANNABLE);
+                if (!closeActionPerformed) {
+                    //Resaltar texto con amarillo de fondo y negro de texto
+                    wordToSpan.setSpan(new BackgroundColorSpan(0xFFFFFF00), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    wordToSpan.setSpan(new ForegroundColorSpan(Color.parseColor("#000000")), a, a + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    textView.setText(wordToSpan, TextView.BufferType.SPANNABLE);
 
-                //Se incrementa el número de elementos encontrados para el Toast que dice cuántos hay
-                elementsFoundSearch++;
+                    //Se incrementa el número de elementos encontrados para el Toast que dice cuántos hay
+                    elementsFoundSearch++;
+                }
+                else {
+                    //Resaltar texto con amarillo de fondo y negro de texto
+                    SpannableString ss=(SpannableString)textView.getText();
+                    ForegroundColorSpan[] spans=ss.getSpans(0, textView.getText().length(), ForegroundColorSpan.class);
+                    for(int j=0; j<spans.length; j++){
+                        ss.removeSpan(spans[j]);
+                    }
+                }
             }
         }
     }
@@ -581,7 +669,15 @@ public class ContactActivity extends AppCompatActivity {
         //Se crea (infla) el layout con las propuestas
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         View proposalToAdd = getLayoutInflater().inflate(R.layout.proposal_layout, inflatedProposals, false);
-        inflatedProposals.addView(proposalToAdd, id - 1);
+
+        /*try {
+            inflatedProposals.addView(proposalToAdd, id - 1);
+        } catch (Exception e) {
+            Log.e("OZ", "" + e);
+            inflatedProposals.addView(proposalToAdd);
+        }
+         */
+        inflatedProposals.addView(proposalToAdd);
 
         //TextView idTextView = (TextView) proposalToAdd.findViewById(R.id.proposal_id_textview);
         //idTextView.setText(id);
@@ -618,13 +714,23 @@ public class ContactActivity extends AppCompatActivity {
         descriptionShortProposal.setText(Html.fromHtml(descriptionShort + " <font color='#3876F6'><u>Leer más.</u></font>"));
 
         //Se consigue (si se envió) el texto de búsqueda de HomeActivity
-        Bundle bundleFromHomeActivity = getIntent().getExtras();
-        if (bundleFromHomeActivity != null) {
+        if (bundleFromHomeActivity != null && !deleteSpan) {
             valueToSearch = bundleFromHomeActivity.getString("searchText");
-            highlightText(jobProposal, valueToSearch);
-            highlightText(nameProposal, valueToSearch);
-            highlightText(descriptionShortProposal, valueToSearch);
-            highlightText(dateProposal, valueToSearch);
+            highlightText(jobProposal, valueToSearch, false);
+            highlightText(nameProposal, valueToSearch, false);
+            highlightText(descriptionShortProposal, valueToSearch, false);
+            highlightText(dateProposal, valueToSearch, false);
+        }
+        else {
+            try {
+                valueToSearch = bundleFromHomeActivity.getString("searchText");
+                highlightText(jobProposal, valueToSearch, true);
+                highlightText(nameProposal, valueToSearch, true);
+                highlightText(descriptionShortProposal, valueToSearch, true);
+                highlightText(dateProposal, valueToSearch, true);
+            } catch (Exception e) {
+                //No se ha usado la función de búsqueda si este "error" se produce
+            }
         }
 
         //Descripción para aquellas propuestas que fueron completadas con el formulario de Google inicial y no cuentan con el dato
@@ -686,6 +792,9 @@ public class ContactActivity extends AppCompatActivity {
         //Se usa más adelante para decidir qué propuestas borrar al seleccionar una categoría
         eliminatedElements = 0;
 
+        LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+        inflatedProposals.removeAllViews();
+
         //Se accede a la información guardada en la base de datos
         DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference("1JcKn4lV9YC5cF8o_QyekJ7-72u-bRn748CLrLc9jTD0/workers");
@@ -732,33 +841,56 @@ public class ContactActivity extends AppCompatActivity {
                     socialMedia = snapshot.child(String.valueOf(i)).child("socialMedia").getValue(String.class);
                     username = snapshot.child(String.valueOf(i)).child("username").getValue(String.class);
 
-                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
-
                     //Se crean las propuestas con la información dada
+                    //Solucionar error: FirstTime y All equivalen a lo mismo
                     if (categoryFromFunction.equals("FirstTime")) {
                         createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                         proposalsIDs.add(i);
                     } else if (categoryFromFunction.equals("All")) {
+                        /*
                         if (!proposalsIDs.contains(i)) {
                             createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
                             proposalsIDs.add(i);
                         }
-                    } else if (!category.equals(categoryFromFunction)) {
+                         */
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
+                    } else if (category.equals(categoryFromFunction)) {
                         //Log.d("OZ", "Remove -> " + (i));
+                        /*
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
+                    } else {
                         try {
                             eliminatedElements++;
                             inflatedProposals.removeViewAt(i - eliminatedElements);
                         } catch (Exception e) {
-                            Log.e("OZ", "" + e);
+                            //Log.e("OZ", "" + e);
                         }
-
                         //Log.d("OZ", "" + proposalsIDs);
                         proposalsIDs.remove(Integer.valueOf(i));
                         //Log.d("OZ", "" + proposalsIDs);
+                         */
+
+                        //Log.d("OZ", "Here");
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
                     }
                 }
 
-                Bundle bundleFromHomeActivity = getIntent().getExtras();
+                    /*
+                    } else if (category.equals(categoryFromFunction)) {
+                        createProposals(i, name, phone, time, email, job, student, course, division, descriptionShort, descriptionFormal, showStudent, category, socialMedia, username);
+                        proposalsIDs.add(i);
+
+                        //Log.d("OZ", "" + proposalsIDs);
+                    }
+
+                    //Log.d("OZ", "Category " + i + " -> " + category + ".");
+                }
+
+                     */
+
                 if (bundleFromHomeActivity != null) {
                     showToastElementsFound();
                 }
@@ -770,7 +902,24 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        //Log.d("OZ", "" + proposalsIDs);
+        //Para ir a la posición donde estabámos
+        //Pero primero, se detecta si se está o no en el modo de búsqueda y se ha hecho clic en el botón
+        bundleFromHomeActivity = getIntent().getExtras();
+        Log.d("OZ", deleteSpan + "");
+        if (!bundleFromHomeActivity.getString("searchText").isEmpty() && deleteSpan) {
+            Log.d("OZ", "Executed :)");
+            Handler waitUntilProposalsAreCreated = new Handler();
+            waitUntilProposalsAreCreated.postDelayed(new Runnable() {
+                public void run() {
+                    //Para que el ScrollView se deslice de manera fluida a la posición donde estábamos antes de borrar lo resaltado
+                    try {
+                        ObjectAnimator.ofInt(proposalsScrollView, "scrollY", scrollYPosition).setDuration(1500).start();
+                    } catch (Exception e) {
+                        proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+                    }
+                }
+            }, 0);
+        }
     }
 
     //Función que se llama al seleccionar una categoría
@@ -791,25 +940,40 @@ public class ContactActivity extends AppCompatActivity {
 
         if (optionSelected instanceof TextView) {
             TextView optionSelectedTextView = (TextView) optionSelected;
-            if (selectedOptionFiltering == false) {
+            if (!selectedOptionFiltering) {
+                LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                //inflatedProposals.removeAllViews();
+                Log.d("TRASH", "DELETE ALL!");
                 createAllProposals(optionSelectedTextView.getText().toString());
                 optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
                 selectedOptionString = optionSelectedTextView.getText().toString();
                 selectedOptionFiltering = true;
+                //Log.d("OZ", "1");
+                //Log.d("OZ", "Opción -> " + selectedOptionString + ".");
             } else {
                 if (selectedOptionString.equals(optionSelectedTextView.getText().toString())) {
                     optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_semibold));
                     createAllProposals("All");
-                }
-                else {
+                    Log.d("SUN", "MAKE ALL!");
+                    selectedOptionString = optionSelectedTextView.getText().toString();
+                    //Log.d("OZ", "2");
+                    selectedOptionFiltering = false;
+                } else {
                     optionSelectedTextView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_extrabold));
+                    LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
+                    //inflatedProposals.removeAllViews();
+                    Log.d("TRASH", "DELETE ALL!");
                     createAllProposals(optionSelectedTextView.getText().toString());
+                    selectedOptionString = optionSelectedTextView.getText().toString();
+                    //Log.d("OZ", "3");
+                    selectedOptionFiltering = true;
                 }
-                selectedOptionFiltering = false;
             }
 
             //Log.d("OZ", "Variable -> " + selectedOptionString + "\nReal -> " + optionSelectedTextView.getText().toString());
         }
+
+        //Log.d("OZ", "" + selectedOptionFiltering);
     }
 
     //Función que se llama cuando desde HomeActivity se hizo una búsqueda para imprimir la cantidad de resultados encontrados
@@ -817,14 +981,15 @@ public class ContactActivity extends AppCompatActivity {
         if (!alreadyShowedToastElementsFound) {
             if (elementsFoundSearch != 0) {
                 if (elementsFoundSearch == 1) {
-                    Toast.makeText(getApplicationContext(), "Se encontró un resultado.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Se encontró un resultado en total.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFoundSearch + " resultados en total.", Toast.LENGTH_SHORT).show();
                 }
-            else {
-                Toast.makeText(getApplicationContext(), "Se encontraron " + elementsFoundSearch + " resultados.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "No se encontraron resultados.", Toast.LENGTH_SHORT).show();
             }
         }
-        } else {
-            Toast.makeText(getApplicationContext(), "No se encontraron resultados.", Toast.LENGTH_SHORT).show();
-        }
+
+        alreadyShowedToastElementsFound = true;
     }
 }

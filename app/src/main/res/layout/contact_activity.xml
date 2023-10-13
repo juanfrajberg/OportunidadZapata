@@ -94,6 +94,17 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    
+    <ImageView
+        android:id="@+id/contact_closesearch_imageview"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        android:src="@drawable/contact_closesearch_image"
+        app:layout_constraintTop_toTopOf="@id/contact_title_textview"
+        app:layout_constraintBottom_toBottomOf="@id/contact_title_textview"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/_20sdp">
+    </ImageView>
 
     <HorizontalScrollView
         android:id="@+id/contact_jobscroll_horizontalscrollview"
@@ -634,5 +645,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <View
+        android:id="@+id/contact_backgroundanimation_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@id/contact_layoutscroll_scrollview"
+        app:layout_constraintEnd_toEndOf="@id/contact_layoutscroll_scrollview"
+        app:layout_constraintTop_toTopOf="@id/contact_layoutscroll_scrollview"
+        app:layout_constraintBottom_toBottomOf="@id/contact_layoutscroll_scrollview">
+    </View>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
