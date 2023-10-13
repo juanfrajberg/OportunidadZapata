@@ -219,9 +219,8 @@ public class ContactActivity extends AppCompatActivity {
                         .playOn(closeSearchImage);
 
                 backgroundView.setVisibility(View.VISIBLE);
-                //Blurry.with(getApplicationContext()).radius(25).sampling(2).onto(backgroundView);
                 backgroundView.setAlpha(0f);
-                backgroundView.animate().alpha(1f).setDuration(1500);
+                backgroundView.animate().alpha(0.75f).setDuration(1500);
 
                 Handler waitUntilAnimationIsFinished = new Handler();
                 waitUntilAnimationIsFinished.postDelayed(new Runnable() {
