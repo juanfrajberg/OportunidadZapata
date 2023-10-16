@@ -138,12 +138,16 @@ public class ContactActivity extends AppCompatActivity {
 
     //Variable para saber si hay que borrar o no el resaltado de la búsqueda
     boolean deleteSpan = false;
+    boolean alreadyScrolledDown = false;
 
     //Variable que guarda la posición del ScrollView para cuando se borran los resultados de la búsqueda
     int scrollYPosition = 0;
 
     //Bundle donde se consigue la información de si es modo de búsqueda o no
     Bundle bundleFromHomeActivity;
+
+    //Para recordar la última categoría seleccionada y evitar errores al salir del modo de búsqueda
+    String categorySelected = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,7 +218,7 @@ public class ContactActivity extends AppCompatActivity {
                 try {
                     ObjectAnimator.ofInt(proposalsScrollView, "scrollY",  0).setDuration(1500).start();
                 } catch (Exception e) {
-                    proposalsScrollView.smoothScrollTo(0, scrollYPosition);
+                    proposalsScrollView.smoothScrollTo(0, 0);
                 }
 
                 //Animación del elemento
@@ -240,7 +244,7 @@ public class ContactActivity extends AppCompatActivity {
                         waitForScrollViewToGoUp.postDelayed(new Runnable() {
                             public void run() {
                                 backgroundView.animate().alpha(0f).setDuration(1500);
-                                createAllProposals("FirstTime");
+                                createAllProposals(categorySelected);
 
                                 Handler hideAfterEverything = new Handler();
                                 hideAfterEverything.postDelayed(new Runnable() {
@@ -690,42 +694,42 @@ public class ContactActivity extends AppCompatActivity {
         }
 
         if (socialMedia.equals("Gmail")) {
-            /*
-            //Creación del builder para destinatario
-            Uri.Builder builder1 = new Uri.Builder();
-            builder1.scheme("mailto");
-            if (!username.contains("@")) {
-                username = username + "@gmail.com";
+            try {
+                Intent intent = new Intent (Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                if (!username.contains("@")) {
+                    username = username + "@gmail.com";
+                }
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{username});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Interés en tu trabajo de Oportunidad Zapata");
+                intent.putExtra(Intent.EXTRA_TEXT, "Hola, ¿cómo estás? Vi en Oportunidad Zapata que te desempeñás como " + job +
+                        ", y me gustaría obtener más información sobre tus servicios.\n¡Muchas gracias!");
+                intent.setPackage("com.google.android.gm");
+                startActivity(intent);
+            } catch (Exception e) {
+                //Creación del builder para destinatario
+                Uri.Builder builder1 = new Uri.Builder();
+                builder1.scheme("mailto");
+                if (!username.contains("@")) {
+                    username = username + "@gmail.com";
+                }
+                builder1.opaquePart(username);
+
+
+                job = job.substring(0, 1).toLowerCase() + job.substring(1);
+                //Creación del builder para destinatario
+                Uri.Builder builder2 = new Uri.Builder();
+                builder2.appendQueryParameter("subject", "Interés en tu trabajo de Oportunidad Zapata");
+                builder2.appendQueryParameter("body", "Hola, ¿cómo estás? Vi en Oportunidad Zapata que te desempeñás como " + job +
+                        ", y me gustaría obtener más información sobre tus servicios.\n¡Muchas gracias!");
+
+                //Conversión de ambos builders a uno solo
+                Uri uri = Uri.parse(builder1.toString() + builder2.toString());
+
+                //Envío del mail y selección de aplicación para hacerlo
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviarle un correo a " + name + "."));
             }
-            builder1.opaquePart(username);
-
-
-            job = job.substring(0, 1).toLowerCase() + job.substring(1);
-            //Creación del builder para destinatario
-            Uri.Builder builder2 = new Uri.Builder();
-            builder2.appendQueryParameter("subject", "Interés en tu trabajo de Oportunidad Zapata");
-            builder2.appendQueryParameter("body", "Hola, ¿cómo estás? Vi en Oportunidad Zapata que te desempeñás como " + job +
-                    ", y me gustaría obtener más información sobre tus servicios.\n¡Muchas gracias!");
-
-            //Conversión de ambos builders a uno solo
-            Uri uri = Uri.parse(builder1.toString() + builder2.toString());
-
-            //Envío del mail y selección de aplicación para hacerlo
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
-            startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviarle un correo a " + name + "."));
-             */
-
-            Intent intent = new Intent (Intent.ACTION_SEND);
-            intent.setType("message/rfc822");
-            if (!username.contains("@")) {
-                username = username + "@gmail.com";
-            }
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{username});
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Interés en tu trabajo de Oportunidad Zapata");
-            intent.putExtra(Intent.EXTRA_TEXT, "Hola, ¿cómo estás? Vi en Oportunidad Zapata que te desempeñás como " + job +
-                    ", y me gustaría obtener más información sobre tus servicios.\n¡Muchas gracias!");
-            intent.setPackage("com.google.android.gm");
-            startActivity(intent);
         }
 
         if (socialMedia.equals("LinkedIn")) {
@@ -904,6 +908,9 @@ public class ContactActivity extends AppCompatActivity {
         //Se usa más adelante para decidir qué propuestas borrar al seleccionar una categoría
         eliminatedElements = 0;
 
+        //Para evitar errores al salir del modo de búsqueda
+        categorySelected = categoryFromFunction;
+
         LinearLayout inflatedProposals = (LinearLayout) findViewById(R.id.contact_inflatedproposals_linearlayout);
         inflatedProposals.removeAllViews();
 
@@ -1019,7 +1026,7 @@ public class ContactActivity extends AppCompatActivity {
         bundleFromHomeActivity = getIntent().getExtras();
         Log.d("OZ", deleteSpan + "");
         try {
-            if (!bundleFromHomeActivity.getString("searchText").isEmpty() && deleteSpan) {
+            if (!bundleFromHomeActivity.getString("searchText").isEmpty() && deleteSpan && !alreadyScrolledDown) {
                 Log.d("OZ", "Executed :)");
                 Handler waitUntilProposalsAreCreated = new Handler();
                 waitUntilProposalsAreCreated.postDelayed(new Runnable() {
@@ -1032,8 +1039,17 @@ public class ContactActivity extends AppCompatActivity {
                         }
                     }
                 }, 0);
+                alreadyScrolledDown = true;
             }
         } catch (Exception e) {}
+
+        /*
+        try {
+            ObjectAnimator.ofInt(proposalsScrollView, "scrollY", 0).setDuration(0).start();
+        } catch (Exception e) {
+            proposalsScrollView.scrollTo(0, 0);
+        }
+         */
     }
 
     //Función que se llama al seleccionar una categoría
