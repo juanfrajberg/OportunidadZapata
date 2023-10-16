@@ -378,22 +378,32 @@ public class HomeActivity extends AppCompatActivity {
                         .repeat(0)
                         .playOn(contactUsButton);
 
-                //Creación del builder para destinatario
-                Uri.Builder builder1 = new Uri.Builder();
-                builder1.scheme("mailto");
-                builder1.opaquePart("oportunidadzapata@gmail.com");
+                try {
+                    Intent intent = new Intent (Intent.ACTION_SEND);
+                    intent.setType("message/rfc822");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"oportunidadzapata@gmail.com"});
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getApplicationContext().getResources().getString(R.string.home_contactus_subjectmail));
+                    intent.putExtra(Intent.EXTRA_TEXT, getApplicationContext().getResources().getString(R.string.home_contactusbodymail));
+                    intent.setPackage("com.google.android.gm");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    //Creación del builder para destinatario
+                    Uri.Builder builder1 = new Uri.Builder();
+                    builder1.scheme("mailto");
+                    builder1.opaquePart("oportunidadzapata@gmail.com");
 
-                //Creación del builder para destinatario
-                Uri.Builder builder2 = new Uri.Builder();
-                builder2.appendQueryParameter("subject", getApplicationContext().getResources().getString(R.string.home_contactus_subjectmail));
-                builder2.appendQueryParameter("body", getApplicationContext().getResources().getString(R.string.home_contactusbodymail));
+                    //Creación del builder para destinatario
+                    Uri.Builder builder2 = new Uri.Builder();
+                    builder2.appendQueryParameter("subject", getApplicationContext().getResources().getString(R.string.home_contactus_subjectmail));
+                    builder2.appendQueryParameter("body", getApplicationContext().getResources().getString(R.string.home_contactusbodymail));
 
-                //Conversión de ambos builders a uno solo
-                Uri uri = Uri.parse(builder1.toString() + builder2.toString());
+                    //Conversión de ambos builders a uno solo
+                    Uri uri = Uri.parse(builder1.toString() + builder2.toString());
 
-                //Envío del mail y selección de aplicación para hacerlo
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
-                startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviar un correo a Oportunidad Zapata."));
+                    //Envío del mail y selección de aplicación para hacerlo
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                    startActivity(Intent.createChooser(emailIntent, "Por favor, elige una aplicación para enviar un correo a Oportunidad Zapata."));
+                }
             }
         });
 

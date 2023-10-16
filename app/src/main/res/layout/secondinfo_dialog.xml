@@ -213,26 +213,27 @@
                 app:layout_constraintTop_toTopOf="@+id/info_whatsappicon_imageview" />
 
             <ImageView
-                android:id="@+id/info_instagramicon_imageview"
+                android:id="@+id/info_socialmediaicon_imageview"
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginEnd="@dimen/_3sdp"
                 android:src="@drawable/info_instagram_imageview"
-                app:layout_constraintEnd_toStartOf="@id/info_instagramusername_textview"
+                app:layout_constraintEnd_toStartOf="@id/info_socialmediausername_textview"
                 app:layout_constraintTop_toBottomOf="@+id/info_firstimageview_view" />
 
             <TextView
-                android:id="@+id/info_instagramusername_textview"
+                android:id="@+id/info_socialmediausername_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
-                android:text="@diegopediatra"
+                android:text="@string/secondinfodialog_exampleusername"
+                android:maxWidth="@dimen/_80sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp"
-                app:layout_constraintBottom_toBottomOf="@id/info_instagramicon_imageview"
+                app:layout_constraintBottom_toBottomOf="@id/info_socialmediaicon_imageview"
                 app:layout_constraintEnd_toEndOf="@+id/info_secondimageview_view"
-                app:layout_constraintTop_toTopOf="@+id/info_instagramicon_imageview" />
+                app:layout_constraintTop_toTopOf="@+id/info_socialmediaicon_imageview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
